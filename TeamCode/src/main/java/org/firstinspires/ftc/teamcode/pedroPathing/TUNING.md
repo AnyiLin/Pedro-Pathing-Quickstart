@@ -2,10 +2,11 @@
 Obviously, you have to have a robot to use Pedro Pathing. Also, Pedro Pathing is only able to work
 with omnidirectional drives, like mecanum drive. There is currently no support for swerve drives.
 You must also have a localizer of some sort. Pedro Pathing currently has the three-wheel localizer
-from Road Runner, but we have plans to create our own localizer soon. Additionally, using
-[FTC Dashboard](http://192.168.43.1:8080/dash) will help a lot in tuning, and we have a slightly
-scuffed Desmos path visualizer [here](https://www.desmos.com/calculator/3so1zx0hcd).
-
+from Road Runner, but we have plans to create our own localizer soon. You will need to have your
+localizer tuned before starting tuning Pedro Pathing, since Pedro Pathing needs to know where your
+robot is at all times. Additionally, using [FTC Dashboard](http://192.168.43.1:8080/dash) will help
+a lot in tuning, and we have a slightly scuffed Desmos path visualizer [here](https://www.desmos.com/calculator/3so1zx0hcd).
+One last thing to note is that Pedro Pathing operates in inches and radians.
 ## Tuning
 * To start with, we need the mass of the robot in kg. This is used for the centripetal force
 correction, and the mass should be put on line `114` in the `FollowerConstants` class under the
