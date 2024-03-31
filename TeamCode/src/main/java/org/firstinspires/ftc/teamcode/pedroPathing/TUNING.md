@@ -7,6 +7,7 @@ localizer tuned before starting tuning Pedro Pathing, since Pedro Pathing needs 
 robot is at all times. Additionally, using [FTC Dashboard](http://192.168.43.1:8080/dash) will help
 a lot in tuning, and we have a slightly scuffed Desmos path visualizer [here](https://www.desmos.com/calculator/3so1zx0hcd).
 One last thing to note is that Pedro Pathing operates in inches and radians.
+
 ## Tuning
 * To start with, we need the mass of the robot in kg. This is used for the centripetal force
 correction, and the mass should be put on line `114` in the `FollowerConstants` class under the
