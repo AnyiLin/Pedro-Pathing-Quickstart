@@ -38,32 +38,32 @@ public class Path {
     // Decreasing this will cause the deceleration at the end of the Path to be slower, making the
     // robot slower but reducing risk of end-of-path overshoots or localization slippage.
     // This can be set individually for each Path, but this is the default.
-    private static double zeroPowerAccelerationMultiplier = FollowerConstants.zeroPowerAccelerationMultiplier;
+    private double zeroPowerAccelerationMultiplier = FollowerConstants.zeroPowerAccelerationMultiplier;
 
     // When the robot is at the end of its current Path or PathChain and the velocity goes
     // this value, then end the Path. This is in inches/second.
     // This can be custom set for each Path.
-    private static double pathEndVelocityConstraint = FollowerConstants.pathEndVelocityConstraint;
+    private double pathEndVelocityConstraint = FollowerConstants.pathEndVelocityConstraint;
 
     // When the robot is at the end of its current Path or PathChain and the translational error
     // goes below this value, then end the Path. This is in inches.
     // This can be custom set for each Path.
-    private static double pathEndTranslationalConstraint = FollowerConstants.pathEndTranslationalConstraint;
+    private double pathEndTranslationalConstraint = FollowerConstants.pathEndTranslationalConstraint;
 
     // When the robot is at the end of its current Path or PathChain and the heading error goes
     // below this value, then end the Path. This is in radians.
     // This can be custom set for each Path.
-    private static double pathEndHeadingConstraint = FollowerConstants.pathEndHeadingConstraint;
+    private double pathEndHeadingConstraint = FollowerConstants.pathEndHeadingConstraint;
 
     // When the t-value of the closest point to the robot on the Path is greater than this value,
     // then the Path is considered at its end.
     // This can be custom set for each Path.
-    private static double pathEndTValueConstraint = FollowerConstants.pathEndTValueConstraint;
+    private double pathEndTValueConstraint = FollowerConstants.pathEndTValueConstraint;
 
     // When the Path is considered at its end parametrically, then the Follower has this many
     // seconds to further correct by default.
     // This can be custom set for each Path.
-    private static double pathEndTimeoutConstraint = FollowerConstants.pathEndTimeoutConstraint;
+    private double pathEndTimeoutConstraint = FollowerConstants.pathEndTimeoutConstraint;
 
     /**
      * Creates a new Path from a BezierCurve. The default heading interpolation is tangential.
