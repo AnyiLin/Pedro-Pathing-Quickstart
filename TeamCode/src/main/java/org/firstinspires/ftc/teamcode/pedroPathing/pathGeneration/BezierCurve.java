@@ -164,7 +164,7 @@ public class BezierCurve {
     public double getCurvature(double t) {
         t = MathFunctions.clamp(t, 0, 1);
         Vector derivative = getDerivative(t);
-        Vector secondDerivative = new Vector(getSecondDerivative(t).getMagnitude(), getApproxSecondDerivative(t).getTheta());
+        Vector secondDerivative = getSecondDerivative(t);
 
         if (derivative.getMagnitude() == 0) return 0;
         return (MathFunctions.crossProduct(derivative, secondDerivative))/Math.pow(derivative.getMagnitude(),3);

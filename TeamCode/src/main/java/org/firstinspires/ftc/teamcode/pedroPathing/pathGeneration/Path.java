@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration;
 
-import com.acmerobotics.roadrunner.geometry.Pose2d;
-
+import org.firstinspires.ftc.teamcode.pedroPathing.localization.Pose;
 import org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants;
 
 import java.util.ArrayList;
@@ -132,7 +131,7 @@ public class Path {
      * @param searchStepLimit the binary search step limit.
      * @return returns the closest Point.
      */
-    public Pose2d getClosestPoint(Pose2d pose, int searchStepLimit) {
+    public Pose getClosestPoint(Pose pose, int searchStepLimit) {
         double lower = 0;
         double upper = 1;
         Point returnPoint;
@@ -156,7 +155,7 @@ public class Path {
 
         closestPointCurvature = curve.getCurvature(closestPointTValue);
 
-        return new Pose2d(returnPoint.getX(), returnPoint.getY(), getClosestPointHeadingGoal());
+        return new Pose(returnPoint.getX(), returnPoint.getY(), getClosestPointHeadingGoal());
     }
 
     /**

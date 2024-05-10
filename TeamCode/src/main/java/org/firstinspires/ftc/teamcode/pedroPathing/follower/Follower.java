@@ -12,9 +12,10 @@ import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstan
 import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.smallTranslationalPIDFFeedForward;
 import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.translationalPIDFSwitch;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -22,6 +23,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.pedroPathing.localization.Pose;
 import org.firstinspires.ftc.teamcode.pedroPathing.localization.PoseUpdater;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.BezierPoint;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.MathFunctions;
@@ -29,8 +31,10 @@ import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Path;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.PathBuilder;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.PathCallback;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.PathChain;
+import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Point;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Vector;
 import org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants;
+import org.firstinspires.ftc.teamcode.pedroPathing.util.Drawing;
 import org.firstinspires.ftc.teamcode.pedroPathing.util.PIDFController;
 
 import java.util.ArrayList;
@@ -60,7 +64,7 @@ public class Follower {
 
     private PoseUpdater poseUpdater;
 
-    private Pose2d closestPose;
+    private Pose closestPose;
 
     private Path currentPath;
 
@@ -118,6 +122,7 @@ public class Follower {
     private PIDFController largeDrivePIDF = new PIDFController(FollowerConstants.largeDrivePIDFCoefficients);
 
 
+    public static boolean drawStuff = true;
     public static boolean useTranslational = true;
     public static boolean useCentripetal = true;
     public static boolean useHeading = true;
@@ -184,6 +189,7 @@ public class Follower {
             accelerations.add(new Vector());
         }
         calculateAveragedVelocityAndAcceleration();
+        draw();
     }
 
     /**
@@ -207,20 +213,33 @@ public class Follower {
     }
 
     /**
+     * This gets a Point from the current Path from a specified t-value.
+     *
+     * @return returns the Point.
+     */
+    public Point getPointFromPath(double t) {
+        if (currentPath != null) {
+            return currentPath.getPoint(t);
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * This returns the current pose from the PoseUpdater.
      *
      * @return returns the pose
      */
-    public Pose2d getPose() {
+    public Pose getPose() {
         return poseUpdater.getPose();
     }
 
     /**
-     * This sets the current pose in the PoseUpdater using Road Runner's setPoseEstimate() method.
+     * This sets the current pose in the PoseUpdater without using offsets.
      *
      * @param pose The pose to set the current pose to.
      */
-    public void setPose(Pose2d pose) {
+    public void setPose(Pose pose) {
         poseUpdater.setPose(pose);
     }
 
@@ -256,7 +275,7 @@ public class Follower {
      *
      * @param pose the pose to set the starting pose to.
      */
-    public void setStartingPose(Pose2d pose) {
+    public void setStartingPose(Pose pose) {
         poseUpdater.setStartingPose(pose);
     }
 
@@ -267,7 +286,7 @@ public class Follower {
      *
      * @param set The pose to set the current pose to.
      */
-    public void setCurrentPoseWithOffset(Pose2d set) {
+    public void setCurrentPoseWithOffset(Pose set) {
         poseUpdater.setCurrentPoseWithOffset(set);
     }
 
@@ -327,7 +346,7 @@ public class Follower {
 
     /**
      * This resets all offsets set to the PoseUpdater. If you have reset your pose using the
-     * setCurrentPoseUsingOffset(Pose2d set) method, then your pose will be returned to what the
+     * setCurrentPoseUsingOffset(Pose set) method, then your pose will be returned to what the
      * PoseUpdater thinks your pose would be, not the pose you reset to.
      */
     public void resetOffset() {
@@ -476,6 +495,14 @@ public class Follower {
                 motors.get(i).setPower(drivePowers[i]);
             }
         }
+        draw();
+    }
+
+    public void draw() {
+        TelemetryPacket packet = new TelemetryPacket();
+        packet.fieldOverlay().setStroke("#3F51B5");
+        Drawing.drawRobot(packet.fieldOverlay(), getPose());
+        FtcDashboard.getInstance().sendTelemetryPacket(packet);
     }
 
     /**
@@ -757,19 +784,18 @@ public class Follower {
      * @return returns the centripetal force correction vector.
      */
     public Vector getCentripetalForceCorrection() {
-        return new Vector();
-//        if (!useCentripetal) return new Vector();
-//        double curvature;
-//        if (auto) {
-//            curvature = currentPath.getClosestPointCurvature();
-//        } else {
-//            double yPrime = averageVelocity.getYComponent() / averageVelocity.getXComponent();
-//            double yDoublePrime = averageAcceleration.getYComponent() / averageVelocity.getXComponent();
-//            curvature = (Math.pow(Math.sqrt(1 + Math.pow(yPrime, 2)), 3)) / (yDoublePrime);
-//        }
-//        if (Double.isNaN(curvature)) return new Vector();
-//        centripetalVector = new Vector(MathFunctions.clamp(Math.abs(FollowerConstants.centripetalScaling * FollowerConstants.mass * Math.pow(MathFunctions.dotProduct(poseUpdater.getVelocity(), MathFunctions.normalizeVector(currentPath.getClosestPointTangentVector())), 2) * curvature), -1, 1), currentPath.getClosestPointTangentVector().getTheta() + Math.PI / 2 * MathFunctions.getSign(currentPath.getClosestPointNormalVector().getTheta()));
-//        return centripetalVector;
+        if (!useCentripetal) return new Vector();
+        double curvature;
+        if (auto) {
+            curvature = currentPath.getClosestPointCurvature();
+        } else {
+            double yPrime = averageVelocity.getYComponent() / averageVelocity.getXComponent();
+            double yDoublePrime = averageAcceleration.getYComponent() / averageVelocity.getXComponent();
+            curvature = (Math.pow(Math.sqrt(1 + Math.pow(yPrime, 2)), 3)) / (yDoublePrime);
+        }
+        if (Double.isNaN(curvature)) return new Vector();
+        centripetalVector = new Vector(MathFunctions.clamp(FollowerConstants.centripetalScaling * FollowerConstants.mass * Math.pow(MathFunctions.dotProduct(poseUpdater.getVelocity(), MathFunctions.normalizeVector(currentPath.getClosestPointTangentVector())), 2) * curvature, -1, 1), currentPath.getClosestPointTangentVector().getTheta() + Math.PI / 2 * MathFunctions.getSign(currentPath.getClosestPointNormalVector().getTheta()));
+        return centripetalVector;
     }
 
     /**
@@ -779,7 +805,7 @@ public class Follower {
      *
      * @return returns the closest pose.
      */
-    public Pose2d getClosestPose() {
+    public Pose getClosestPose() {
         return closestPose;
     }
 
@@ -863,9 +889,18 @@ public class Follower {
         telemetry.addData("x", getPose().getX());
         telemetry.addData("y", getPose().getY());
         telemetry.addData("heading", getPose().getHeading());
+        telemetry.addData("total heading", poseUpdater.getTotalHeading());
         telemetry.addData("velocity magnitude", getVelocity().getMagnitude());
         telemetry.addData("velocity heading", getVelocity().getTheta());
         telemetry.update();
+        TelemetryPacket packet = new TelemetryPacket();
+        //Draws the current target path that the robot would like to follow
+        packet.fieldOverlay().setStroke("#4CAF50");
+        Drawing.drawRobot(packet.fieldOverlay(), new Pose(getPose().getX(), getPose().getY(), getPose().getHeading()));
+        //Draws the current path that the robot is following
+        packet.fieldOverlay().setStroke("#3F51B5");
+        if (currentPath != null) Drawing.drawRobot(packet.fieldOverlay(), getPointFromPath(currentPath.getClosestPointTValue()));
+        FtcDashboard.getInstance().sendTelemetryPacket(packet);
     }
 
     /**
@@ -876,5 +911,14 @@ public class Follower {
      */
     public void telemetryDebug(Telemetry telemetry) {
         telemetryDebug(new MultipleTelemetry(telemetry));
+    }
+
+    /**
+     * This returns the total number of radians the robot has turned.
+     *
+     * @return the total heading.
+     */
+    public double getTotalHeading() {
+        return poseUpdater.getTotalHeading();
     }
 }

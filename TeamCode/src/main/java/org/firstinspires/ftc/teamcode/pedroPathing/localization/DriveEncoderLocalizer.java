@@ -9,31 +9,14 @@ import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Vector;
 import org.firstinspires.ftc.teamcode.pedroPathing.util.NanoTimer;
 
 /**
- * This is the ThreeWheelLocalizer class. This class extends the Localizer superclass and is a
- * localizer that uses the three wheel odometry set up. The diagram below, which is taken from
- * Road Runner, shows a typical set up.
- *
- * The view is from the bottom of the robot looking upwards.
- *
- * left on robot is y pos
- *
- * front on robot is x pos
- *
- *    /--------------\
- *    |     ____     |
- *    |     ----     |
- *    | ||        || |
- *    | ||        || |   left (y pos)
- *    |              |
- *    |              |
- *    \--------------/
- *      front (x pos)
+ * This is the DriveEncoderLocalizer class. This class extends the Localizer superclass and is a
+ * localizer that uses the drive encoder set up.
  *
  * @author Anyi Lin - 10158 Scott's Bots
  * @version 1.0, 4/2/2024
  */
 @Config
-public class ThreeWheelLocalizer extends Localizer {
+public class DriveEncoderLocalizer extends Localizer { // todo: make drive encoders work
     private HardwareMap hardwareMap;
     private Pose startPose;
     private Pose displacementPose;
@@ -41,47 +24,42 @@ public class ThreeWheelLocalizer extends Localizer {
     private Matrix prevRotationMatrix;
     private NanoTimer timer;
     private long deltaTimeNano;
-    private Encoder leftEncoder;
-    private Encoder rightEncoder;
-    private Encoder strafeEncoder;
-    private Pose leftEncoderPose;
-    private Pose rightEncoderPose;
-    private Pose strafeEncoderPose;
+    private Encoder leftFront;
+    private Encoder rightFront;
+    private Encoder leftRear;
+    private Encoder rightRear;
     private double totalHeading;
-    public static double FORWARD_TICKS_TO_INCHES = 0.00052189;//8192 * 1.37795 * 2 * Math.PI * 0.5008239963;
-    public static double STRAFE_TICKS_TO_INCHES = 0.00052189;//8192 * 1.37795 * 2 * Math.PI * 0.5018874659;
-    public static double TURN_TICKS_TO_RADIANS = 0.00053717;//8192 * 1.37795 * 2 * Math.PI * 0.5;
+    public static double FORWARD_TICKS_TO_INCHES = 1;
+    public static double STRAFE_TICKS_TO_INCHES = 1;
+    public static double TURN_TICKS_TO_RADIANS = 1;
+    public static double ROBOT_WIDTH = 1;
+    public static double ROBOT_LENGTH = 1;
 
-    public ThreeWheelLocalizer(HardwareMap map) {
+    public DriveEncoderLocalizer(HardwareMap map) {
         this(map, new Pose());
     }
 
-    public ThreeWheelLocalizer(HardwareMap map, Pose setStartPose) {
-        // TODO: replace these with your encoder positions
-        leftEncoderPose = new Pose(-18.5/25.4 - 0.1, 164.4/25.4, 0);
-        rightEncoderPose = new Pose(-18.4/25.4 - 0.1, -159.6/25.4, 0);
-        strafeEncoderPose = new Pose(0*(-107.9/25.4+8)+-107.9/25.4+0.25, -1.1/25.4-0.23, Math.toRadians(90));
+    public DriveEncoderLocalizer(HardwareMap map, Pose setStartPose) {
 
         hardwareMap = map;
 
         // TODO: replace these with your encoder ports
-        leftEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "leftRear"));
-        rightEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "rightFront"));
-        strafeEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "strafeEncoder"));
+        leftFront = new Encoder(hardwareMap.get(DcMotorEx.class, "leftFront"));
+        rightFront = new Encoder(hardwareMap.get(DcMotorEx.class, "rightFront"));
+        leftRear = new Encoder(hardwareMap.get(DcMotorEx.class, "leftRear"));
+        rightRear = new Encoder(hardwareMap.get(DcMotorEx.class, "rightRear"));
 
         // TODO: reverse any encoders necessary
-        leftEncoder.setDirection(Encoder.REVERSE);
-        rightEncoder.setDirection(Encoder.REVERSE);
-        strafeEncoder.setDirection(Encoder.FORWARD);
+        leftFront.setDirection(Encoder.REVERSE);
+        rightRear.setDirection(Encoder.REVERSE);
+        leftRear.setDirection(Encoder.FORWARD);
+        rightRear.setDirection(Encoder.FORWARD);
 
         setStartPose(setStartPose);
         timer = new NanoTimer();
         deltaTimeNano = 1;
         displacementPose = new Pose();
         currentVelocity = new Pose();
-        totalHeading = 0;
-
-        resetEncoders();
     }
 
     @Override
@@ -153,25 +131,27 @@ public class ThreeWheelLocalizer extends Localizer {
     }
 
     public void updateEncoders() {
-        leftEncoder.update();
-        rightEncoder.update();
-        strafeEncoder.update();
+        leftFront.update();
+        rightFront.update();
+        leftRear.update();
+        rightRear.update();
     }
 
     public void resetEncoders() {
-        leftEncoder.reset();
-        rightEncoder.reset();
-        strafeEncoder.reset();
+        leftFront.reset();
+        rightFront.reset();
+        leftRear.reset();
+        rightRear.reset();
     }
 
     public Matrix getRobotDeltas() {
         Matrix returnMatrix = new Matrix(3,1);
         // x/forward movement
-        returnMatrix.set(0,0, FORWARD_TICKS_TO_INCHES * ((rightEncoder.getDeltaPosition() * leftEncoderPose.getY() - leftEncoder.getDeltaPosition() * rightEncoderPose.getY()) / (leftEncoderPose.getY() - rightEncoderPose.getY())));
+        returnMatrix.set(0,0, FORWARD_TICKS_TO_INCHES * (leftFront.getDeltaPosition() + rightFront.getDeltaPosition() + leftRear.getDeltaPosition() + rightRear.getDeltaPosition()));
         //y/strafe movement
-        returnMatrix.set(1,0, STRAFE_TICKS_TO_INCHES * (strafeEncoder.getDeltaPosition() - strafeEncoderPose.getX() * ((rightEncoder.getDeltaPosition() - leftEncoder.getDeltaPosition()) / (leftEncoderPose.getY() - rightEncoderPose.getY()))));
+        returnMatrix.set(1,0, STRAFE_TICKS_TO_INCHES * (-leftFront.getDeltaPosition() + rightFront.getDeltaPosition() + leftRear.getDeltaPosition() - rightRear.getDeltaPosition()));
         // theta/turning
-        returnMatrix.set(2,0, TURN_TICKS_TO_RADIANS * ((rightEncoder.getDeltaPosition() - leftEncoder.getDeltaPosition()) / (leftEncoderPose.getY() - rightEncoderPose.getY())));
+        returnMatrix.set(2,0, TURN_TICKS_TO_RADIANS * ((-leftFront.getDeltaPosition() + rightFront.getDeltaPosition() - leftRear.getDeltaPosition() + rightRear.getDeltaPosition()) / (ROBOT_WIDTH + ROBOT_LENGTH)));
         return returnMatrix;
     }
 
