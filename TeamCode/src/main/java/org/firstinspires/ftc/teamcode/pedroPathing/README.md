@@ -24,4 +24,5 @@ implementation 'com.acmerobotics.dashboard:dashboard:0.4.5'
 5. In this gradle file, add the following dependency:
 ```
 implementation 'com.fasterxml/jackson.core:jacson-databind:2.12.7'
+implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.4.21'
 ```
