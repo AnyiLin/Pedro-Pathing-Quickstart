@@ -1,6 +1,6 @@
 ## Welcome!
-This is the Pedro Pathing path following program developed by FTC team 10158 Scott's Bots in the
-2023-2024 Centerstage season.
+This is the Pedro Pathing path following program developed by FTC team 10158 Scott's Bots with Logan
+Nash in the 2023-2024 Centerstage season.
 
 ## Installation
 The quickest way to get started is with the quickstart [here](https://github.com/brotherhobo/Pedro-Pathing-Quickstart).
@@ -19,11 +19,9 @@ maven { url = 'https://maven.brott.dev/' }
 3. Then, add the following code to the end of your `dependencies` block:
 ```
 implementation 'com.acmerobotics.dashboard:dashboard:0.4.5'
-```
+``` 
 4. Find the `build.gradle` file under the `teamcode` folder.
-5. In this gradle file, add the following dependencies:
+5. In this gradle file, add the following dependency:
 ```
-implementation 'org.apache.commons:commons-math3:3.6.1'
 implementation 'com.fasterxml/jackson.core:jacson-databind:2.12.7'
-implementation 'com.acmerobotics.com.roadrunner:core:0.5.6'
 ```
