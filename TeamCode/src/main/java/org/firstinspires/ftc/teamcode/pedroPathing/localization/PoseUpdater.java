@@ -44,19 +44,29 @@ public class PoseUpdater {
     private long currentPoseTime;
 
     /**
-     * Creates a new PoseUpdater from a HardwareMap.
+     * Creates a new PoseUpdater from a HardwareMap and a Localizer.
      *
      * @param hardwareMap the HardwareMap
+     * @param localizer the Localizer
      */
-    public PoseUpdater(HardwareMap hardwareMap) {
+    public PoseUpdater(HardwareMap hardwareMap, Localizer localizer) {
         this.hardwareMap = hardwareMap;
 
         for (LynxModule module : hardwareMap.getAll(LynxModule.class)) {
             module.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
 
-        // TODO: change this to your preferred localizer
-        localizer = new ThreeWheelLocalizer(hardwareMap);
+        this.localizer = localizer;
+    }
+
+    /**
+     * Creates a new PoseUpdater from a HardwareMap.
+     *
+     * @param hardwareMap the HardwareMap
+     */
+    public PoseUpdater(HardwareMap hardwareMap) {
+        // TODO: replace the second argument with your preferred localizer
+        this(hardwareMap, new ThreeWheelLocalizer(hardwareMap));
     }
 
     /**

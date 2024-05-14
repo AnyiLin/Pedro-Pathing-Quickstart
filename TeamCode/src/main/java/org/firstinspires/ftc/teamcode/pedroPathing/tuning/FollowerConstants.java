@@ -116,7 +116,7 @@ public class FollowerConstants {
     // Centripetal force to power scaling
     // todo: there are currently issues with the centripetal force correction, so just don't use it for now
     // i will fix these in another commit soon
-    public static double centripetalScaling = 0.001;
+    public static double centripetalScaling = 0.0005;
 
     // Acceleration of the drivetrain when power is cut in inches/second^2 (should be negative)
     // if not negative, then the robot thinks that its going to go faster under 0 power
@@ -158,9 +158,9 @@ public class FollowerConstants {
     public static double pathEndTValueConstraint = 0.995;
 
     // When the Path is considered at its end parametrically, then the Follower has this many
-    // seconds to further correct by default.
+    // milliseconds to further correct by default.
     // This can be custom set for each Path.
-    public static double pathEndTimeoutConstraint = 1.5;
+    public static double pathEndTimeoutConstraint = 500;
 
     // This is how many steps the BezierCurve class uses to approximate the length of a BezierCurve.
     public static int APPROXIMATION_STEPS = 1000;

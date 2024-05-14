@@ -12,10 +12,8 @@ import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstan
 import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.smallTranslationalPIDFFeedForward;
 import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.translationalPIDFSwitch;
 
-import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -34,6 +32,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.PathChain;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Point;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Vector;
 import org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants;
+import org.firstinspires.ftc.teamcode.pedroPathing.util.DashboardPoseTracker;
 import org.firstinspires.ftc.teamcode.pedroPathing.util.Drawing;
 import org.firstinspires.ftc.teamcode.pedroPathing.util.PIDFController;
 
@@ -63,6 +62,7 @@ public class Follower {
     private DriveVectorScaler driveVectorScaler;
 
     private PoseUpdater poseUpdater;
+    private DashboardPoseTracker dashboardPoseTracker;
 
     private Pose closestPose;
 
@@ -122,7 +122,7 @@ public class Follower {
     private PIDFController largeDrivePIDF = new PIDFController(FollowerConstants.largeDrivePIDFCoefficients);
 
 
-    public static boolean drawStuff = true;
+    public static boolean drawOnDashboard = true;
     public static boolean useTranslational = true;
     public static boolean useCentripetal = true;
     public static boolean useHeading = true;
@@ -189,7 +189,8 @@ public class Follower {
             accelerations.add(new Vector());
         }
         calculateAveragedVelocityAndAcceleration();
-        draw();
+
+        dashboardPoseTracker = new DashboardPoseTracker(poseUpdater);
     }
 
     /**
@@ -427,6 +428,11 @@ public class Follower {
      */
     public void update() {
         poseUpdater.update();
+
+        if (drawOnDashboard) {
+            dashboardPoseTracker.update();
+        }
+
         if (auto) {
             if (holdingPosition) {
                 closestPose = currentPath.getClosestPoint(poseUpdater.getPose(), 1);
@@ -495,14 +501,6 @@ public class Follower {
                 motors.get(i).setPower(drivePowers[i]);
             }
         }
-        draw();
-    }
-
-    public void draw() {
-        TelemetryPacket packet = new TelemetryPacket();
-        packet.fieldOverlay().setStroke("#3F51B5");
-        Drawing.drawRobot(packet.fieldOverlay(), getPose());
-        FtcDashboard.getInstance().sendTelemetryPacket(packet);
     }
 
     /**
@@ -893,14 +891,9 @@ public class Follower {
         telemetry.addData("velocity magnitude", getVelocity().getMagnitude());
         telemetry.addData("velocity heading", getVelocity().getTheta());
         telemetry.update();
-        TelemetryPacket packet = new TelemetryPacket();
-        //Draws the current target path that the robot would like to follow
-        packet.fieldOverlay().setStroke("#4CAF50");
-        Drawing.drawRobot(packet.fieldOverlay(), new Pose(getPose().getX(), getPose().getY(), getPose().getHeading()));
-        //Draws the current path that the robot is following
-        packet.fieldOverlay().setStroke("#3F51B5");
-        if (currentPath != null) Drawing.drawRobot(packet.fieldOverlay(), getPointFromPath(currentPath.getClosestPointTValue()));
-        FtcDashboard.getInstance().sendTelemetryPacket(packet);
+        if (drawOnDashboard) {
+            Drawing.drawDebug(this);
+        }
     }
 
     /**
@@ -920,5 +913,23 @@ public class Follower {
      */
     public double getTotalHeading() {
         return poseUpdater.getTotalHeading();
+    }
+
+    /**
+     * This returns the current Path the Follower is following. This can be null.
+     *
+     * @return returns the current Path.
+     */
+    public Path getCurrentPath() {
+        return currentPath;
+    }
+
+    /**
+     * This returns the pose tracker for the robot to draw on the Dashboard.
+     *
+     * @return returns the pose tracker
+     */
+    public DashboardPoseTracker getDashboardPoseTracker() {
+        return dashboardPoseTracker;
     }
 }

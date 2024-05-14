@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.pedroPathing.localization.tuning;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -13,6 +12,7 @@ import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigu
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.pedroPathing.localization.PoseUpdater;
+import org.firstinspires.ftc.teamcode.pedroPathing.util.DashboardPoseTracker;
 import org.firstinspires.ftc.teamcode.pedroPathing.util.Drawing;
 
 import java.util.Arrays;
@@ -30,6 +30,7 @@ import java.util.List;
 @TeleOp(group = "Pedro Pathing Tuning", name = "Localization Test")
 public class LocalizationTest extends OpMode {
     private PoseUpdater poseUpdater;
+    private DashboardPoseTracker dashboardPoseTracker;
     private Telemetry telemetryA;
 
     private DcMotorEx leftFront;
@@ -38,9 +39,14 @@ public class LocalizationTest extends OpMode {
     private DcMotorEx rightRear;
     private List<DcMotorEx> motors;
 
+    /**
+     * This initializes the PoseUpdater, the mecanum drive motors, and the FTC Dashboard telemetry.
+     */
     @Override
     public void init() {
         poseUpdater = new PoseUpdater(hardwareMap);
+
+        dashboardPoseTracker = new DashboardPoseTracker(poseUpdater);
 
         leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
         leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
@@ -67,20 +73,18 @@ public class LocalizationTest extends OpMode {
                 + "allowing robot control through a basic mecanum drive on gamepad 1.");
         telemetryA.update();
 
-        TelemetryPacket packet = new TelemetryPacket();
-        packet.fieldOverlay().setStroke("#3F51B5");
-        Drawing.drawRobot(packet.fieldOverlay(), poseUpdater.getPose());
-        FtcDashboard.getInstance().sendTelemetryPacket(packet);
+        Drawing.drawRobot(poseUpdater.getPose(), "#4CAF50");
+        Drawing.sendPacket();
     }
 
-    @Override
-    public void start() {
-        //poseUpdater.setPose(new Pose());
-    }
-
+    /**
+     * This updates the robot's pose estimate, the simple mecanum drive, and updates the FTC
+     * Dashboard telemetry with the robot's position as well as draws the robot's position.
+     */
     @Override
     public void loop() {
         poseUpdater.update();
+        dashboardPoseTracker.update();
 
         double y = -gamepad1.left_stick_y; // Remember, this is reversed!
         double x = gamepad1.left_stick_x; // this is strafing
@@ -106,9 +110,8 @@ public class LocalizationTest extends OpMode {
         telemetryA.addData("total heading", poseUpdater.getTotalHeading());
         telemetryA.update();
 
-        TelemetryPacket packet = new TelemetryPacket();
-        packet.fieldOverlay().setStroke("#3F51B5");
-        Drawing.drawRobot(packet.fieldOverlay(), poseUpdater.getPose());
-        FtcDashboard.getInstance().sendTelemetryPacket(packet);
+        Drawing.drawPoseHistory(dashboardPoseTracker, "#4CAF50");
+        Drawing.drawRobot(poseUpdater.getPose(), "#4CAF50");
+        Drawing.sendPacket();
     }
 }

@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration;
 import org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * This is the BezierCurve class. This class handles the creation of Bezier curves, which are used
@@ -27,6 +28,10 @@ public class BezierCurve {
     private Vector endTangent = new Vector();
 
     private final int APPROXIMATION_STEPS = FollowerConstants.APPROXIMATION_STEPS;
+
+    private final int DASHBOARD_DRAWING_APPROXIMATION_STEPS = 100;
+
+    private double[][] dashboardDrawingPoints;
 
     private double UNIT_TO_TIME;
     private double length;
@@ -55,11 +60,7 @@ public class BezierCurve {
             }
         }
         this.controlPoints = controlPoints;
-        generateBezierCurve();
-        length = approximateLength();
-        UNIT_TO_TIME = 1/length;
-        endTangent.setOrthogonalComponents(controlPoints.get(controlPoints.size()-1).getX()-controlPoints.get(controlPoints.size()-2).getX(), controlPoints.get(controlPoints.size()-1).getY()-controlPoints.get(controlPoints.size()-2).getY());
-        endTangent = MathFunctions.normalizeVector(endTangent);
+        initialize();
     }
 
     /**
@@ -80,11 +81,41 @@ public class BezierCurve {
                 e.printStackTrace();
             }
         }
+        initialize();
+    }
+
+    /**
+     * This handles most of the initialization of the BezierCurve that is called from the constructor.
+     */
+    public void initialize() {
         generateBezierCurve();
         length = approximateLength();
         UNIT_TO_TIME = 1/length;
-        endTangent.setOrthogonalComponents(this.controlPoints.get(this.controlPoints.size()-1).getX()-this.controlPoints.get(this.controlPoints.size()-2).getX(), this.controlPoints.get(this.controlPoints.size()-1).getY()-this.controlPoints.get(this.controlPoints.size()-2).getY());
+        endTangent.setOrthogonalComponents(controlPoints.get(controlPoints.size()-1).getX()-controlPoints.get(controlPoints.size()-2).getX(), controlPoints.get(controlPoints.size()-1).getY()-controlPoints.get(controlPoints.size()-2).getY());
         endTangent = MathFunctions.normalizeVector(endTangent);
+        initializeDashboardDrawingPoints();
+    }
+
+    /**
+     * This creates the Array that holds the Points to draw on the Dashboard.
+     */
+    public void initializeDashboardDrawingPoints() {
+        dashboardDrawingPoints = new double[2][DASHBOARD_DRAWING_APPROXIMATION_STEPS + 1];
+        for (int i = 0; i <= DASHBOARD_DRAWING_APPROXIMATION_STEPS; i++) {
+            Point currentPoint = getPoint(i/(double) (DASHBOARD_DRAWING_APPROXIMATION_STEPS));
+            dashboardDrawingPoints[0][i] = currentPoint.getX();
+            dashboardDrawingPoints[1][i] = currentPoint.getY();
+        }
+    }
+
+    /**
+     * This returns a 2D Array of doubles containing the x and y positions of points to draw on FTC
+     * Dashboard.
+     *
+     * @return returns the 2D Array to draw on FTC Dashboard
+     */
+    public double[][] getDashboardDrawingPoints() {
+        return dashboardDrawingPoints;
     }
 
     /**

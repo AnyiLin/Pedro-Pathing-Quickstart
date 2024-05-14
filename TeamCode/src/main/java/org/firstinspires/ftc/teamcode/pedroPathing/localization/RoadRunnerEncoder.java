@@ -5,8 +5,15 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 /**
- * Wraps a motor instance to provide corrected velocity counts and allow reversing independently of the corresponding
- * slot's motor direction
+ * This class is adapted from the Road Runner Encoder class. Later, this will be replaced with a
+ * custom encoder class. According to Road Runner, this wraps a motor instance to provide corrected
+ * velocity counts and allow reversing independently of the corresponding slot's motor direction.
+ *
+ * I'm fairly sure I didn't make any changes to this class, just copied it so I wouldn't have to have
+ * import statements, so I'm not crediting myself as an author for this.
+ *
+ * @author Road Runner dev team
+ * @version 1.0, 5/9/2024
  */
 public class RoadRunnerEncoder {
     private final static int CPS_STEP = 0x10000;

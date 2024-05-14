@@ -31,7 +31,13 @@ import java.util.List;
 
 /**
  * This class is adapted from the Road Runner StandardTrackingWheelLocalizer class. Later, this will
- * be replaced with a custom localizer.
+ * be replaced with a custom localizer. I made some minor changes, so I'm crediting myself as an
+ * 'author' of sorts, but really this is pretty much Road Runner's code, just moved to be local to
+ * Pedro Pathing to avoid having imports.
+ *
+ * @author Road Runner dev team
+ * @author Anyi Lin - 10158 Scott's Bots
+ * @version 1.0, 5/9/2024
  */
 @Config
 public class RoadRunnerThreeWheelLocalizer extends ThreeTrackingWheelLocalizer {

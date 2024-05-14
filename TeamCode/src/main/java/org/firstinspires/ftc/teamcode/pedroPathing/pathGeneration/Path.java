@@ -473,4 +473,14 @@ public class Path {
     public String pathType() {
         return curve.pathType();
     }
+
+    /**
+     * This returns a 2D Array of doubles containing the x and y positions of points to draw on FTC
+     * Dashboard.
+     *
+     * @return returns the 2D Array to draw on FTC Dashboard
+     */
+    public double[][] getDashboardDrawingPoints() {
+        return curve.getDashboardDrawingPoints();
+    }
 }
