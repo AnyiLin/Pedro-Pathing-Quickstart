@@ -18,7 +18,7 @@ public class DashboardPoseTracker {
     private double[] yPositions;
     private PoseUpdater poseUpdater;
     private long lastUpdateTime;
-    private final int TRACKING_LENGTH = 2000;
+    private final int TRACKING_LENGTH = 1500;
     private final long UPDATE_TIME = 50;
     private final int TRACKING_SIZE = TRACKING_LENGTH / (int) UPDATE_TIME;
 
