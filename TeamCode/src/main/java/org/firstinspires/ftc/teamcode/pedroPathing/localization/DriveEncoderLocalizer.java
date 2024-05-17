@@ -53,7 +53,6 @@ public class DriveEncoderLocalizer extends Localizer { // todo: make drive encod
      * @param setStartPose the Pose to start from
      */
     public DriveEncoderLocalizer(HardwareMap map, Pose setStartPose) {
-
         hardwareMap = map;
 
         // TODO: replace these with your encoder ports

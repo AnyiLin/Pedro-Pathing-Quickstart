@@ -27,29 +27,6 @@ public class FollowerConstants {
     private static double[] convertToPolar = Point.cartesianToPolar(xMovement, -yMovement);
     public static Vector frontLeftVector = MathFunctions.normalizeVector(new Vector(convertToPolar[0],convertToPolar[1]));
 
-    // Large heading error PIDF coefficients
-    public static CustomPIDFCoefficients largeHeadingPIDFCoefficients = new CustomPIDFCoefficients(
-            1,
-            0,
-            0,
-            0);
-
-    // Feed forward constant added on to the large heading PIDF
-    public static double largeHeadingPIDFFeedForward = 0.01;
-
-    // the limit at which the heading PIDF switches between the large and small heading PIDFs
-    public static double headingPIDFSwitch = Math.PI/20;
-
-    // Small heading error PIDF coefficients
-    public static CustomPIDFCoefficients smallHeadingPIDFCoefficients = new CustomPIDFCoefficients(
-            5,
-            0,
-            0.08,
-            0);
-
-    // Feed forward constant added on to the small heading PIDF
-    public static double smallHeadingPIDFFeedForward = 0.01;
-
     // Large translational PIDF coefficients
     public static CustomPIDFCoefficients largeTranslationalPIDFCoefficients = new CustomPIDFCoefficients(
             0.1,
@@ -87,6 +64,29 @@ public class FollowerConstants {
     // Feed forward constant added on to the small translational PIDF
     public static double smallTranslationalPIDFFeedForward = 0.015;
 
+    // Large heading error PIDF coefficients
+    public static CustomPIDFCoefficients largeHeadingPIDFCoefficients = new CustomPIDFCoefficients(
+            1,
+            0,
+            0,
+            0);
+
+    // Feed forward constant added on to the large heading PIDF
+    public static double largeHeadingPIDFFeedForward = 0.01;
+
+    // the limit at which the heading PIDF switches between the large and small heading PIDFs
+    public static double headingPIDFSwitch = Math.PI/20;
+
+    // Small heading error PIDF coefficients
+    public static CustomPIDFCoefficients smallHeadingPIDFCoefficients = new CustomPIDFCoefficients(
+            5,
+            0,
+            0.08,
+            0);
+
+    // Feed forward constant added on to the small heading PIDF
+    public static double smallHeadingPIDFFeedForward = 0.01;
+
     // Large drive PIDF coefficients
     public static CustomPIDFCoefficients largeDrivePIDFCoefficients = new CustomPIDFCoefficients(
             0.025,
@@ -118,12 +118,10 @@ public class FollowerConstants {
 
     // Acceleration of the drivetrain when power is cut in inches/second^2 (should be negative)
     // if not negative, then the robot thinks that its going to go faster under 0 power
-    // this is for curves
     public static double forwardZeroPowerAcceleration = -34.62719;
 
     // Acceleration of the drivetrain when power is cut in inches/second^2 (should be negative)
     // if not negative, then the robot thinks that its going to go faster under 0 power
-    // this is for curves
     public static double lateralZeroPowerAcceleration = -78.15554;
 
     // A multiplier for the zero power acceleration to change the speed the robot decelerates at

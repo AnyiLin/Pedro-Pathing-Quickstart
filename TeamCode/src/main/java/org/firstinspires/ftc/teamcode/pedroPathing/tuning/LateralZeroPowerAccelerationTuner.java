@@ -19,6 +19,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * This is the LateralZeroPowerAccelerationTuner autonomous tuning OpMode. This runs the robot
+ * to the right until a specified velocity is achieved. Then, the robot cuts power to the motors, setting
+ * them to zero power. The deceleration, or negative acceleration, is then measured until the robot
+ * stops. The accelerations across the entire time the robot is slowing down is then averaged and
+ * that number is then printed. This is used to determine how the robot will decelerate in the
+ * forward direction when power is cut, making the estimations used in the calculations for the
+ * drive Vector more accurate and giving better braking at the end of Paths.
+ * You can adjust the max velocity the robot will hit on FTC Dashboard: 192/168/43/1:8080/dash
+ *
+ * @author Anyi Lin - 10158 Scott's Bots
+ * @author Aaron Yang - 10158 Scott's Bots
+ * @author Harrison Womack - 10158 Scott's Bots
+ * @version 1.0, 3/13/2024
+ */
 @Config
 @Autonomous (name = "Lateral Zero Power Acceleration Tuner", group = "Autonomous Pathing Tuning")
 public class LateralZeroPowerAccelerationTuner extends OpMode {
