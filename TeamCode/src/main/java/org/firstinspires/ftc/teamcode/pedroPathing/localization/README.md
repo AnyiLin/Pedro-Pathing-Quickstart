@@ -8,6 +8,7 @@ by Tyler Veness.
 ## Setting Your Localizer
 Go to line `69` in the `PoseUpdater` class, and replace the `new ThreeWheelLocalizer(hardwareMap)`
 with the localizer that applies to you:
+* If you're using the Sparkfun OTOS sensor, put `new OTOSLocalizer(hardwareMap)`
 * If you're using drive encoders, put `new DriveEncoderLocalizer(hardwareMap)`
 * If you're using two wheel odometry, put `new TwoWheelLocalizer(hardwareMap)`
 * If you're using three wheel odometry, put `new ThreeWheelLocalizer(hardwareMap)`, so basically
