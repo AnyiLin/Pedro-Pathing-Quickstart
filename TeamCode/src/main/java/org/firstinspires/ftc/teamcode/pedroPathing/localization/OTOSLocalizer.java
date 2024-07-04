@@ -98,7 +98,7 @@ public class OTOSLocalizer extends Localizer {
 
 
         //TODO need to create convert functions
-        otos.setPosition(RRPoseToOTOSPose(startPose));
+        otos.setPosition(PedroToOTOSPose(startPose));
         // The IMU on the OTOS includes a gyroscope and accelerometer, which could
         // have an offset. Note that as of firmware version 1.0, the calibration
         // will be lost after a power cycle; the OTOS performs a quick calibration
@@ -203,8 +203,7 @@ public class OTOSLocalizer extends Localizer {
         deltaTimeNano = timer.getElapsedTime();
         timer.resetTimer();
 
-        /** Have this disabled, not sure if it auto updates*/
-        //updateEncoders();
+        updateOtos();
         Matrix robotDeltas = getRobotDeltas();
         Matrix globalDeltas;
 
@@ -238,9 +237,9 @@ public class OTOSLocalizer extends Localizer {
      * This updates the Encoders.
      * Have this disabled, not sure if it auto updates*/
 
-     /* public void updateEncoders() {
-        otos.update();
-    }*/
+     public void updateOtos() {
+        otos.getPosition();
+     }
 
     /**
      * This resets the Encoders.
