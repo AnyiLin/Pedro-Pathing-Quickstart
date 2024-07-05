@@ -293,4 +293,12 @@ public class OTOSLocalizer extends Localizer {
     public double getTurningMultiplier() {
         return 0;
     }
+
+    public static Pose OTOSToPedroPose(SparkFunOTOS.Pose2D otosPose) {
+        return new Pose(otosPose.x + 72, otosPose.y + 72, otosPose.h);
+    }
+
+    public static SparkFunOTOS.Pose2D PedroToOTOSPose(Pose pedroPose) {
+        return new SparkFunOTOS.Pose2D(pedroPose.getX() - 72, pedroPose.getY() - 72, pedroPose.getHeading());
+    }
 }
