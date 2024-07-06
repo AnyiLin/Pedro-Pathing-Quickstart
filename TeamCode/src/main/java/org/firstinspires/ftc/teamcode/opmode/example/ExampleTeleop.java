@@ -35,7 +35,7 @@ public class ExampleTeleop extends OpMode {
     private Vector driveVector;
     private Vector headingVector;
 
-
+    /** This method is call once when init is played, it initlizes the follower and subsystems **/
     @Override
     public void init() {
         follower = new Follower(hardwareMap, false);
@@ -68,29 +68,41 @@ public class ExampleTeleop extends OpMode {
     /** This is the main loop of the Opmode and runs continuously after play **/
     @Override
     public void loop() {
+
         /** Movement Sector **/
         driveVector.setOrthogonalComponents(-gamepad1.left_stick_y, gamepad1.left_stick_x);
         driveVector.setMagnitude(MathFunctions.clamp(driveVector.getMagnitude(), 0, 1));
         driveVector.rotateVector(follower.getPose().getHeading());
-
         headingVector.setComponents(-gamepad1.left_stick_x, follower.getPose().getHeading());
-
         follower.setMovementVectors(new Vector(), headingVector, driveVector);
         follower.update();
 
         /** Claw Sector **/
-        if (gamepad1.left_trigger > 0.5) {
+        if (gamepad1.left_bumper) {
             claw.closeLClaw();
         } else {
             claw.openLClaw();
         }
 
-        if (gamepad1.right_trigger > 0.5) {
+        if (gamepad1.right_bumper) {
             claw.closeRClaw();
         } else {
             claw.openRClaw();
         }
 
+        /** This could be paired with a PIDF to set the target position of the lift in teleop.
+         * For this, you would have to update the lift pid and make sure to initilize the lift subsystem.
+        **/
+
+        /*
+        if (gamepad1.left_trigger > 0.5) {
+            lift.setTarget(lTarget-50);
+        }
+
+        if (gamepad1.right_trigger > 0.5) {
+            lift.setTarget(lTarget+50);
+        }
+        */
     }
 
     /** We do not use this because everything automatically should disable **/
