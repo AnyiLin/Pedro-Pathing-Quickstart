@@ -1,7 +1,6 @@
 
 package org.firstinspires.ftc.teamcode.opmode.example;
 
-import com.qualcomm.hardware.dfrobot.HuskyLens;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -10,20 +9,17 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import org.firstinspires.ftc.teamcode.config.pedroPathing.pathGeneration.MathFunctions;
 import org.firstinspires.ftc.teamcode.config.pedroPathing.pathGeneration.Vector;
 import org.firstinspires.ftc.teamcode.config.pedroPathing.follower.Follower;
-import org.firstinspires.ftc.teamcode.config.pedroPathing.util.Timer;
 import org.firstinspires.ftc.teamcode.config.subsystem.ClawSubsystem;
 
 /**
- * This is the TeleOpEnhancements OpMode. It is an example usage of the TeleOp enhancements that
- * Pedro Pathing is capable of.
+ * This is an example teleop that showcases movement and control of three servos and robot-centric driving.
  *
- * @author Anyi Lin - 10158 Scott's Bots
- * @author Aaron Yang - 10158 Scott's Bots
- * @author Harrison Womack - 10158 Scott's Bots
- * @version 1.0, 3/21/2024
+ * @author Baron Henderson - 20077 The Indubitables
+ * @version 1.0, 7/5/2024
  */
-@TeleOp(name = "Example Teleop", group = "Examples")
-public class ExampleTeleop extends OpMode {
+
+@TeleOp(name = "Example Robot-Centric Teleop", group = "Examples")
+public class ExampleTeleop_RobotCentric extends OpMode {
     private Follower follower;
     private ClawSubsystem claw;
 
@@ -35,7 +31,7 @@ public class ExampleTeleop extends OpMode {
     private Vector driveVector;
     private Vector headingVector;
 
-    /** This method is call once when init is played, it initlizes the follower and subsystems **/
+    /** This method is call once when init is played, it initializes the follower and subsystems **/
     @Override
     public void init() {
         follower = new Follower(hardwareMap, false);
@@ -55,7 +51,7 @@ public class ExampleTeleop extends OpMode {
         headingVector = new Vector();
     }
 
-    /** This method is called continously after Init while waiting to be started. **/
+    /** This method is called continuously after Init while waiting to be started. **/
     @Override
     public void init_loop() {
     }
@@ -65,7 +61,7 @@ public class ExampleTeleop extends OpMode {
     public void start() {
     }
 
-    /** This is the main loop of the Opmode and runs continuously after play **/
+    /** This is the main loop of the opmode and runs continuously after play **/
     @Override
     public void loop() {
 
@@ -91,7 +87,7 @@ public class ExampleTeleop extends OpMode {
         }
 
         /** This could be paired with a PIDF to set the target position of the lift in teleop.
-         * For this, you would have to update the lift pid and make sure to initilize the lift subsystem.
+         * For this, you would have to update the lift pid and make sure to initialize the lift subsystem.
         **/
 
         /*
