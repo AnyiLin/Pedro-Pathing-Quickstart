@@ -18,8 +18,18 @@ import org.firstinspires.ftc.teamcode.config.subsystem.ClawSubsystem;
 
 import java.util.concurrent.TimeUnit;
 
-@Autonomous(name = "Example Auto", group = "Examples")
-public class ExampleAuto extends OpMode {
+/**
+ * This is an example auto that showcases movement and control of three servos autonomously.
+ * It is able to detect the team element using a huskylens and then use that information to go to the correct spike mark and backdrop position.
+ * There are examples of different ways to build paths.
+ * A custom action system have been created that can be based on time, position, or other factors.
+ *
+ * @author Baron Henderson - 20077 The Indubitables
+ * @version 1.0, 7/5/2024
+ */
+
+@Autonomous(name = "Example Auto Blue", group = "Examples")
+public class ExampleAuto_Blue extends OpMode {
 
     private Follower follower;
     private Timer pathTimer, actionTimer, opmodeTimer;
@@ -28,28 +38,30 @@ public class ExampleAuto extends OpMode {
     public ClawSubsystem claw;
     private HuskyLens huskyLens;
 
+    /** Create and Define Poses + Paths **/
+    //Start Pose
     private Pose startPose = new Pose(8.5, 84, 0);
     //Spike mark locations
-    private Pose LeftSpikeMark = new Pose(52, 104, Math.toRadians(270)); //51
+    private Pose LeftSpikeMark = new Pose(52, 104, Math.toRadians(270));
     private Pose MiddleSpikeMark = new Pose(59, 94.5, Math.toRadians(270));
     private Pose RightSpikeMark = new Pose(52, 82.75, Math.toRadians(270));
     //Backdrop zone locations
-    private Pose LeftBackdrop = new Pose(44, 121.75, Math.toRadians(270)); //117+1+3+0.5
+    private Pose LeftBackdrop = new Pose(44, 121.75, Math.toRadians(270));
     private Pose MiddleBackdrop = new Pose(49.5, 121.75, Math.toRadians(270));
     private Pose RightBackdrop = new Pose(58, 121.25, Math.toRadians(270));
     private Pose WhiteBackdrop = new Pose(40, 122.25, Math.toRadians(270));
-    private Pose WhiteBackdrop2 = new Pose(40, 122.75, Math.toRadians(270));
-    //Through Truss
-    private Pose TopTruss = new Pose(28, 84, Math.toRadians(270)); //22
-    private Pose BottomTruss = new Pose(28, 36, Math.toRadians(270));
-    // white pixel stack locations
-    private Pose Stack = new Pose(46, 11.5, Math.toRadians(270)); //47
-    private Pose spikeMarkGoalPose, initialBackdropGoalPose, firstCycleStackPose, firstCycleBackdropGoalPose, secondCycleStackPose, secondCycleBackdropGoalPose;
 
+    // Poses and Paths for Purple and Yellow
+    private Pose spikeMarkGoalPose, initialBackdropGoalPose, firstCycleStackPose, firstCycleBackdropGoalPose, secondCycleStackPose, secondCycleBackdropGoalPose;
     private Path scoreSpikeMark, initialScoreOnBackdrop, scoreSpikeMarkChosen;
+
+    // White Stack Cycle Poses + Path Chains
+    private Pose TopTruss = new Pose(28, 84, Math.toRadians(270));
+    private Pose BottomTruss = new Pose(28, 36, Math.toRadians(270));
+    private Pose Stack = new Pose(46, 11.5, Math.toRadians(270));
     private PathChain cycleStackTo, cycleStackBack, cycleStackToBezier;
 
-
+    /** Generate Spike Mark and Backdrop Paths based off of the team element location **/
     public void setBackdropGoalPose() {
         switch (navigation) {
             default:
@@ -74,6 +86,8 @@ public class ExampleAuto extends OpMode {
         }
     }
 
+    /** Build the paths for the auto (adds, for example, constant/linear headings while doing paths)
+     * It is necessary to do this so that all the paths are built before the auto starts. **/
     public void buildPaths() {
         scoreSpikeMark = scoreSpikeMarkChosen;
         scoreSpikeMark.setLinearHeadingInterpolation(startPose.getHeading(), spikeMarkGoalPose.getHeading());
@@ -82,6 +96,7 @@ public class ExampleAuto extends OpMode {
         initialScoreOnBackdrop = new Path(new BezierLine(new Point(spikeMarkGoalPose), new Point(initialBackdropGoalPose)));
         initialScoreOnBackdrop.setLinearHeadingInterpolation(spikeMarkGoalPose.getHeading(), initialBackdropGoalPose.getHeading());
         initialScoreOnBackdrop.setPathEndTimeoutConstraint(0);
+
 
 
         cycleStackTo = follower.pathBuilder()
@@ -116,6 +131,8 @@ public class ExampleAuto extends OpMode {
 
     }
 
+    /** This switch is called continuously and runs the pathing, at certain points, it triggers the action state.
+     * The followPath() function sets the follower to run the specific path, but does NOT wait for it to finish before moving on. **/
     public void autonomousPathUpdate() {
         switch (pathState) {
             case 10:
@@ -138,6 +155,8 @@ public class ExampleAuto extends OpMode {
         }
     }
 
+    /** This switch is called continuously and runs the necessary actions, when finished, it will set the state to -1.
+     * (Therefore, it will not run the action continuously) **/
     public void autonomousActionUpdate() {
         switch (actionState) {
             case 0:
@@ -151,7 +170,8 @@ public class ExampleAuto extends OpMode {
         }
     }
 
-    /** This switch is called continuously and runs the necessary actions, when finished, it will set the state to -1. (Therefore, it will not run the action continously) **/
+    /** This switch is called continuously and runs the necessary actions, when finished, it will set the state to -1.
+     * (Therefore, it will not run the action continuously) **/
     public void clawUpdate() {
         switch (clawState) {
             case 0:
@@ -228,7 +248,7 @@ public class ExampleAuto extends OpMode {
         claw.startClaw();
     }
 
-    /** This method is called continously after Init while waiting to be started. **/
+    /** This method is called continuously after Init while waiting to be started. **/
     @Override
     public void init_loop() {
 
