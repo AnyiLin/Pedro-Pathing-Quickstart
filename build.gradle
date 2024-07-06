@@ -8,6 +8,7 @@ buildscript {
     repositories {
         mavenCentral()
         google()
+        maven { url 'https://maven.brott.dev/' }
     }
     dependencies {
         // Note for FTC Teams: Do not modify this yourself.
