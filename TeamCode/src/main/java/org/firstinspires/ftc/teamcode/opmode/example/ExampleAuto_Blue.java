@@ -97,6 +97,13 @@ public class ExampleAuto_Blue extends OpMode {
         scoreSpikeMark.setLinearHeadingInterpolation(startPose.getHeading(), spikeMarkGoalPose.getHeading());
         scoreSpikeMark.setPathEndTimeoutConstraint(0);
 
+        /** There are two major types of paths: BezierCurves and BezierLines.
+         *    * BezierCurves are curved, and require > 3 points. There are the start and end points, and the control points.
+         *    - Control points manipulate the curve between the start and end points.
+         *    - A good visualizer for this is [this](https://www.desmos.com/calculator/3so1zx0hcd).
+         *    * BezierLines are straight, and require 2 points. There are the start and end points.
+         */
+
         initialScoreOnBackdrop = new Path(new BezierLine(new Point(spikeMarkGoalPose), new Point(initialBackdropGoalPose)));
         initialScoreOnBackdrop.setLinearHeadingInterpolation(spikeMarkGoalPose.getHeading(), initialBackdropGoalPose.getHeading());
         initialScoreOnBackdrop.setPathEndTimeoutConstraint(0);
