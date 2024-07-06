@@ -4,9 +4,18 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.config.RobotConstants;
 
+/** This is a subsystem, for the claw of our robot
+ * Here we make methods to manipulate the servos
+ * We also import RobotConstants to get the positions of the servos */
+
 public class ClawSubsystem {
 
     private Servo pivot, clawL, clawR;
+
+    /** This is the constructor for the subsystem, it maps the servos to the hardwareMap.
+     * The device names should align with the configuration names on the driver hub.
+     * To use this subsystem, we have to import this file, declare the subsystem (private ClawSubsystem claw;),
+     * and then call the below constructor in the init() method. */
 
     public ClawSubsystem(HardwareMap hardwareMap) {
         pivot = hardwareMap.get(Servo.class, "pivot");
@@ -15,7 +24,6 @@ public class ClawSubsystem {
     }
 
     //------------------------------Close Claws------------------------------//
-
     public void closeLClaw() {
         clawL.setPosition(RobotConstants.closedL);
     }
@@ -56,6 +64,5 @@ public class ClawSubsystem {
     public void scoringClaw() {
         pivot.setPosition(RobotConstants.scoringClaw);
     }
-
 
 }

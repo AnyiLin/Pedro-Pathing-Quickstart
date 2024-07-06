@@ -1,8 +1,9 @@
 package org.firstinspires.ftc.teamcode.config;
 
+/** Everything that we want to store globally, for example positions of servos, motors, etc. goes in here. **/
 public class RobotConstants {
 
-    /** Variables are positions for the 3 claw servos. **/
+    /** Variables are positions for the claw servos. **/
     public static double closedL = 0.32; //33
     public static double closedR = 0.38; //37
     public static double openL = 0.47;//.42

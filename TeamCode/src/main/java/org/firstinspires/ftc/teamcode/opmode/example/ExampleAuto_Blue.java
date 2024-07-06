@@ -275,7 +275,7 @@ public class ExampleAuto_Blue extends OpMode {
         }
     }
 
-    /** This method is called once at the start of the OpMode. \
+    /** This method is called once at the start of the OpMode.
      * It runs all the setup actions, including building paths and starting the path system **/
     @Override
     public void start() {
