@@ -38,7 +38,11 @@ public class ExampleAuto_Blue extends OpMode {
     public ClawSubsystem claw;
     private HuskyLens huskyLens;
 
-    /** Create and Define Poses + Paths **/
+    /** Create and Define Poses + Paths
+     * Poses are built with three constructors: x, y, and heading (in Radians).
+     * Pedro uses 0 - 144 for x and y, with 0, 0 being on the bottom left.
+     * (For Centerstage, this would be blue far side/red human player station.)
+     * Even though Pedro uses a different coordinate system than RR, you can convert any roadrunner pose by adding +72 both the x and y. **/
     //Start Pose
     private Pose startPose = new Pose(8.5, 84, 0);
     //Spike mark locations
