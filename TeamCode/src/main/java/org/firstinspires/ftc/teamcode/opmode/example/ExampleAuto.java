@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmode.auto;
+package org.firstinspires.ftc.teamcode.opmode.example;
 
 
 import com.qualcomm.hardware.dfrobot.HuskyLens;
@@ -10,7 +10,6 @@ import org.firstinspires.ftc.teamcode.config.pedroPathing.follower.Follower;
 import org.firstinspires.ftc.teamcode.config.pedroPathing.localization.Pose;
 import org.firstinspires.ftc.teamcode.config.pedroPathing.pathGeneration.BezierCurve;
 import org.firstinspires.ftc.teamcode.config.pedroPathing.pathGeneration.BezierLine;
-import org.firstinspires.ftc.teamcode.config.pedroPathing.pathGeneration.BezierPoint;
 import org.firstinspires.ftc.teamcode.config.pedroPathing.pathGeneration.Path;
 import org.firstinspires.ftc.teamcode.config.pedroPathing.pathGeneration.PathChain;
 import org.firstinspires.ftc.teamcode.config.pedroPathing.pathGeneration.Point;
@@ -19,7 +18,7 @@ import org.firstinspires.ftc.teamcode.config.subsystem.ClawSubsystem;
 
 import java.util.concurrent.TimeUnit;
 
-@Autonomous(name = "Example", group = "Examples")
+@Autonomous(name = "Example Auto", group = "Examples")
 public class ExampleAuto extends OpMode {
 
     private Follower follower;

@@ -1,5 +1,7 @@
-package org.firstinspires.ftc.teamcode.config.pedroPathing.examples;
 
+package org.firstinspires.ftc.teamcode.opmode.example;
+
+import com.qualcomm.hardware.dfrobot.HuskyLens;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -8,6 +10,8 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import org.firstinspires.ftc.teamcode.config.pedroPathing.pathGeneration.MathFunctions;
 import org.firstinspires.ftc.teamcode.config.pedroPathing.pathGeneration.Vector;
 import org.firstinspires.ftc.teamcode.config.pedroPathing.follower.Follower;
+import org.firstinspires.ftc.teamcode.config.pedroPathing.util.Timer;
+import org.firstinspires.ftc.teamcode.config.subsystem.ClawSubsystem;
 
 /**
  * This is the TeleOpEnhancements OpMode. It is an example usage of the TeleOp enhancements that
@@ -18,9 +22,10 @@ import org.firstinspires.ftc.teamcode.config.pedroPathing.follower.Follower;
  * @author Harrison Womack - 10158 Scott's Bots
  * @version 1.0, 3/21/2024
  */
-@TeleOp(name = "Pedro Pathing TeleOp Enhancements", group = "Test")
-public class TeleOpEnhancements extends OpMode {
+@TeleOp(name = "Example Teleop", group = "Examples")
+public class ExampleTeleop extends OpMode {
     private Follower follower;
+    private ClawSubsystem claw;
 
     private DcMotorEx leftFront;
     private DcMotorEx leftRear;
@@ -30,12 +35,11 @@ public class TeleOpEnhancements extends OpMode {
     private Vector driveVector;
     private Vector headingVector;
 
-    /**
-     * This initializes the drive motors as well as the Follower and motion Vectors.
-     */
+
     @Override
     public void init() {
         follower = new Follower(hardwareMap, false);
+        claw = new ClawSubsystem(hardwareMap);
 
         leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
         leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
@@ -51,19 +55,46 @@ public class TeleOpEnhancements extends OpMode {
         headingVector = new Vector();
     }
 
-    /**
-     * This runs the OpMode. This is only drive control with Pedro Pathing live centripetal force
-     * correction.
-     */
+    /** This method is called continously after Init while waiting to be started. **/
+    @Override
+    public void init_loop() {
+    }
+
+    /** This method is called once at the start of the OpMode. **/
+    @Override
+    public void start() {
+    }
+
+    /** This is the main loop of the Opmode and runs continuously after play **/
     @Override
     public void loop() {
-        driveVector.setOrthogonalComponents(-gamepad1.left_stick_y, -gamepad1.left_stick_x);
+        /** Movement Sector **/
+        driveVector.setOrthogonalComponents(-gamepad1.left_stick_y, gamepad1.left_stick_x);
         driveVector.setMagnitude(MathFunctions.clamp(driveVector.getMagnitude(), 0, 1));
         driveVector.rotateVector(follower.getPose().getHeading());
 
         headingVector.setComponents(-gamepad1.left_stick_x, follower.getPose().getHeading());
 
-        follower.setMovementVectors(follower.getCentripetalForceCorrection(), headingVector, driveVector);
+        follower.setMovementVectors(new Vector(), headingVector, driveVector);
         follower.update();
+
+        /** Claw Sector **/
+        if (gamepad1.left_trigger > 0.5) {
+            claw.closeLClaw();
+        } else {
+            claw.openLClaw();
+        }
+
+        if (gamepad1.right_trigger > 0.5) {
+            claw.closeRClaw();
+        } else {
+            claw.openRClaw();
+        }
+
+    }
+
+    /** We do not use this because everything automatically should disable **/
+    @Override
+    public void stop() {
     }
 }
