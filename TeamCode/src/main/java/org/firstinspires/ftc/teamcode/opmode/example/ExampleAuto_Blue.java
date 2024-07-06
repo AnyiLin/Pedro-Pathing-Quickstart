@@ -108,7 +108,7 @@ public class ExampleAuto_Blue extends OpMode {
         initialScoreOnBackdrop.setLinearHeadingInterpolation(spikeMarkGoalPose.getHeading(), initialBackdropGoalPose.getHeading());
         initialScoreOnBackdrop.setPathEndTimeoutConstraint(0);
 
-        /** This is a path chain, defined on line 62
+        /** This is a path chain, defined on line 66
          * It, well, chains multiple paths together. Here we use a constant heading from the board to the stack.
          * On line 97, we set the Linear Interpolation,
          * which means that Pedro will slowly change the heading of the robot from the startHeading to the endHeading over the course of the entire path */
