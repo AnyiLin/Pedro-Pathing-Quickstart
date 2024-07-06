@@ -97,7 +97,10 @@ public class ExampleAuto_Blue extends OpMode {
         initialScoreOnBackdrop.setLinearHeadingInterpolation(spikeMarkGoalPose.getHeading(), initialBackdropGoalPose.getHeading());
         initialScoreOnBackdrop.setPathEndTimeoutConstraint(0);
 
-
+        /** This is a path chain, defined on line 62
+         * It, well, chains multiple paths together. Here we use a constant heading from the board to the stack.
+         * On line 97, we set the Linear Interpolation,
+         * which means that Pedro will slowly change the heading of the robot from the startHeading to the endHeading over the course of the entire path */
 
         cycleStackTo = follower.pathBuilder()
                 .addPath(new BezierLine(new Point(initialBackdropGoalPose), new Point(TopTruss)))
@@ -109,7 +112,6 @@ public class ExampleAuto_Blue extends OpMode {
                 .setPathEndTimeoutConstraint(0)
                 .build();
 
-
         cycleStackBack = follower.pathBuilder()
                 .addPath(new BezierLine(new Point(Stack), new Point(BottomTruss)))
                 .setConstantHeadingInterpolation(WhiteBackdrop.getHeading())
@@ -120,7 +122,6 @@ public class ExampleAuto_Blue extends OpMode {
                 .setPathEndTimeoutConstraint(0)
                 .build();
 
-
         cycleStackToBezier = follower.pathBuilder()
                 .addPath(new BezierCurve(new Point(initialBackdropGoalPose), new Point(30+14,91.6, Point.CARTESIAN), new Point(13+14, 130.8, Point.CARTESIAN), new Point(BottomTruss)))
                 .setConstantHeadingInterpolation(WhiteBackdrop.getHeading())
@@ -128,10 +129,10 @@ public class ExampleAuto_Blue extends OpMode {
                 .setConstantHeadingInterpolation(WhiteBackdrop.getHeading())
                 .setPathEndTimeoutConstraint(0)
                 .build();
-
     }
 
     /** This switch is called continuously and runs the pathing, at certain points, it triggers the action state.
+     * Everytime the switch changes case, it will reset the timer. (This is because of the setPathState() function on line 193)
      * The followPath() function sets the follower to run the specific path, but does NOT wait for it to finish before moving on. **/
     public void autonomousPathUpdate() {
         switch (pathState) {
@@ -170,7 +171,7 @@ public class ExampleAuto_Blue extends OpMode {
         }
     }
 
-    /** This switch is called continuously and runs the necessary actions, when finished, it will set the state to -1.
+    /** This switch is called continuously and runs the claw actions, when finished, it will set the state to -1.
      * (Therefore, it will not run the action continuously) **/
     public void clawUpdate() {
         switch (clawState) {
@@ -187,7 +188,8 @@ public class ExampleAuto_Blue extends OpMode {
     }
 
 
-    /** These change the states of the paths and actions. **/
+    /** These change the states of the paths and actions
+     * It will also reset the timers of the individual switches **/
     public void setPathState(int pState) {
         pathState = pState;
         pathTimer.resetTimer();
@@ -248,11 +250,11 @@ public class ExampleAuto_Blue extends OpMode {
         claw.startClaw();
     }
 
-    /** This method is called continuously after Init while waiting to be started. **/
+    /** This method is called continuously after Init while waiting for "play". **/
     @Override
     public void init_loop() {
 
-        //Huskylens Scanning for Team Element
+        // Scanning for Team Element
         HuskyLens.Block[] blocks = huskyLens.blocks();
         for (int i = 0; i < blocks.length; i++) {
             //----------------------------1----------------------------\\
@@ -273,7 +275,8 @@ public class ExampleAuto_Blue extends OpMode {
         }
     }
 
-    /** This method is called once at the start of the OpMode. **/
+    /** This method is called once at the start of the OpMode. \
+     * It runs all the setup actions, including building paths and starting the path system **/
     @Override
     public void start() {
         claw.closeClaws();
@@ -284,7 +287,7 @@ public class ExampleAuto_Blue extends OpMode {
         setActionState(0);
     }
 
-    /** We do not use this because everything automatically should disable **/
+    /** We do not use this because everything should automatically disable **/
     @Override
     public void stop() {
     }
