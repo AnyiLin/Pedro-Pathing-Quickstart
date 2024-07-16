@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
  * There are examples of different ways to build paths.
  * A custom action system have been created that can be based on time, position, or other factors.
  *
- * @author Baron Henderson - 20077 The Indubitables
+ * @author Baron Henderson - 24122 Tomorrow Team & 20077 The Indubitables
  * @version 1.0, 7/5/2024
  */
 

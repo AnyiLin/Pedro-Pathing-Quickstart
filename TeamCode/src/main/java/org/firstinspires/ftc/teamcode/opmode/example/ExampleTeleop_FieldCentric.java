@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.config.subsystem.ClawSubsystem;
 /**
  * This is an example teleop that showcases movement and control of three servos and field-centric driving.
  *
- * @author Baron Henderson - 20077 The Indubitables
+ * @author Baron Henderson - 24122 Tomorrow Team & 20077 The Indubitables
  * @version 1.0, 7/5/2024
  */
 
