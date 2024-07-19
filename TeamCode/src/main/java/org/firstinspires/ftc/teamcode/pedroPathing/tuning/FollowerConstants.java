@@ -2,10 +2,12 @@ package org.firstinspires.ftc.teamcode.pedroPathing.tuning;
 
 import com.acmerobotics.dashboard.config.Config;
 
+import org.firstinspires.ftc.teamcode.pedroPathing.util.CustomFilteredPIDFCoefficients;
 import org.firstinspires.ftc.teamcode.pedroPathing.util.CustomPIDFCoefficients;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.MathFunctions;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Point;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Vector;
+import org.firstinspires.ftc.teamcode.pedroPathing.util.KalmanFilterParameters;
 
 /**
  * This is the FollowerConstants class. It holds many constants and parameters for various parts of
@@ -88,10 +90,11 @@ public class FollowerConstants {
     public static double smallHeadingPIDFFeedForward = 0.01;
 
     // Large drive PIDF coefficients
-    public static CustomPIDFCoefficients largeDrivePIDFCoefficients = new CustomPIDFCoefficients(
+    public static CustomFilteredPIDFCoefficients largeDrivePIDFCoefficients = new CustomFilteredPIDFCoefficients(
             0.025,
             0,
             0.00001,
+            0.01,
             0);
 
     // Feed forward constant added on to the large drive PIDF
@@ -101,14 +104,24 @@ public class FollowerConstants {
     public static double drivePIDFSwitch = 20;
 
     // Small drive PIDF coefficients
-    public static CustomPIDFCoefficients smallDrivePIDFCoefficients = new CustomPIDFCoefficients(
+    public static CustomFilteredPIDFCoefficients smallDrivePIDFCoefficients = new CustomFilteredPIDFCoefficients(
             0.02,
             0,
             0.000005,
+            0.01,
             0);
 
     // Feed forward constant added on to the small drive PIDF
     public static double smallDrivePIDFFeedForward = 0.01;
+
+    // Kalman filter parameters for the drive error Kalman filter
+    public static KalmanFilterParameters driveKalmanFilterParameters = new KalmanFilterParameters(
+            0.4,
+            0.1);
+
+    // These are the empirically tuned parameters for the drive error Kalman filter so it works faster.
+    public static double tunedDriveErrorVariance = 1;
+    public static double tunedDriveErrorKalmanGain = 1;
 
     // Mass of robot in kilograms
     public static double mass = 10.65942;
