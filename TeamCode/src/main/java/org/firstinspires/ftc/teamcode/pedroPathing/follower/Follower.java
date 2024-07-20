@@ -11,8 +11,6 @@ import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstan
 import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.smallHeadingPIDFFeedForward;
 import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.smallTranslationalPIDFFeedForward;
 import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.translationalPIDFSwitch;
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.tunedDriveErrorKalmanGain;
-import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.tunedDriveErrorVariance;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -126,10 +124,9 @@ public class Follower {
     private FilteredPIDFController largeDrivePIDF = new FilteredPIDFController(FollowerConstants.largeDrivePIDFCoefficients);
 
     private KalmanFilter driveKalmanFilter = new KalmanFilter(FollowerConstants.driveKalmanFilterParameters);
-    private long[] driveErrorTimes;
     private double[] driveErrors;
-    private double rawDriverError;
-    private double previousRawDriverError;
+    private double rawDriveError;
+    private double previousRawDriveError;
 
     public static boolean drawOnDashboard = true;
     public static boolean useTranslational = true;
@@ -589,14 +586,13 @@ public class Follower {
         correctiveVector = new Vector();
         driveError = 0;
         headingError = 0;
-        rawDriverError = 0;
-        previousRawDriverError = 0;
-        driveErrors = new double[3];
-        driveErrorTimes = new long[3];
-        for (int i = 0; i < driveErrorTimes.length; i++) {
-            driveErrorTimes[i] = System.currentTimeMillis();
+        rawDriveError = 0;
+        previousRawDriveError = 0;
+        driveErrors = new double[2];
+        for (int i = 0; i < driveErrors.length; i++) {
+            driveErrors[i] = 0;
         }
-        driveKalmanFilter.reset(0, tunedDriveErrorVariance, tunedDriveErrorKalmanGain);
+        driveKalmanFilter.reset();
 
         for (int i = 0; i < motors.size(); i++) {
             motors.get(i).setPower(0);
@@ -682,24 +678,17 @@ public class Follower {
         Vector lateralVelocityError = new Vector(lateralVelocityGoal - lateralVelocityZeroPowerDecay - lateralVelocity, lateralHeadingVector.getTheta());
         Vector velocityErrorVector = MathFunctions.addVectors(forwardVelocityError, lateralVelocityError);
 
-        previousRawDriverError = rawDriverError;
-        rawDriverError =  velocityErrorVector.getMagnitude() * MathFunctions.getSign(MathFunctions.dotProduct(velocityErrorVector, currentPath.getClosestPointTangentVector()));
+        previousRawDriveError = rawDriveError;
+        rawDriveError =  velocityErrorVector.getMagnitude() * MathFunctions.getSign(MathFunctions.dotProduct(velocityErrorVector, currentPath.getClosestPointTangentVector()));
 
-        double previousErrorVelocity = (driveErrors[1] - driveErrors[0]) / ((driveErrorTimes[1] - driveErrorTimes[0]) / 1000.0);
-        double errorVelocity = (driveErrors[2] - driveErrors[1]) / ((driveErrorTimes[2] - driveErrorTimes[1]) / 1000.0);
-        double errorAcceleration = ((errorVelocity - previousErrorVelocity) / ((((driveErrorTimes[2] - driveErrorTimes[1]) / 1000.0) / 2.0) - (((driveErrorTimes[1] - driveErrorTimes[0]) / 1000.0) / 2.0)));
-        double time = (((driveErrorTimes[2] - driveErrorTimes[1]) / 1000.0) + ((driveErrorTimes[1] - driveErrorTimes[0]) / 1000.0)) / 2.0;
+        double projection = 2 * driveErrors[2] - driveErrors[1];
 
-        double projection = errorVelocity * time + 0.5 * errorAcceleration * Math.pow(time, 2);
-
-        driveKalmanFilter.update(rawDriverError - previousRawDriverError, projection);
+        driveKalmanFilter.update(rawDriveError - previousRawDriveError, projection);
 
         for (int i = 0; i < driveErrors.length - 1; i++) {
             driveErrors[i] = driveErrors[i + 1];
-            driveErrorTimes[i] = driveErrorTimes[i + 1];
         }
         driveErrors[2] = driveKalmanFilter.getState();
-        driveErrorTimes[2] = System.currentTimeMillis();
 
         return driveKalmanFilter.getState();
     }

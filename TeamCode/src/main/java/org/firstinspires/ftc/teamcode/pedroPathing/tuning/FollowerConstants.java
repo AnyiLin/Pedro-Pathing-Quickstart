@@ -94,7 +94,7 @@ public class FollowerConstants {
             0.025,
             0,
             0.00001,
-            0.01,
+            0.6,
             0);
 
     // Feed forward constant added on to the large drive PIDF
@@ -108,7 +108,7 @@ public class FollowerConstants {
             0.02,
             0,
             0.000005,
-            0.01,
+            0.6,
             0);
 
     // Feed forward constant added on to the small drive PIDF
@@ -116,12 +116,8 @@ public class FollowerConstants {
 
     // Kalman filter parameters for the drive error Kalman filter
     public static KalmanFilterParameters driveKalmanFilterParameters = new KalmanFilterParameters(
-            0.4,
-            0.1);
-
-    // These are the empirically tuned parameters for the drive error Kalman filter so it works faster.
-    public static double tunedDriveErrorVariance = 1;
-    public static double tunedDriveErrorKalmanGain = 1;
+            6,
+            1);
 
     // Mass of robot in kilograms
     public static double mass = 10.65942;
