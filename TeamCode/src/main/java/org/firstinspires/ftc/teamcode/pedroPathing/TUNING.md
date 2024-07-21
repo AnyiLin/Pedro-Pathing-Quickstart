@@ -10,7 +10,7 @@ One last thing to note is that Pedro Pathing operates in inches and radians.
 
 ## Tuning
 * To start with, we need the mass of the robot in kg. This is used for the centripetal force
-  correction, and the mass should be put on line `114` in the `FollowerConstants` class under the
+  correction, and the mass should be put on line `123` in the `FollowerConstants` class under the
   `tuning` package.
 
 * Next, we need to find the preferred mecanum drive vectors. The rollers on mecanum wheels point at a
@@ -21,8 +21,8 @@ One last thing to note is that Pedro Pathing operates in inches and radians.
   Dashboard under the dropdown for each respective class, but higher distances work better. After the
   distance has finished running, the end velocity will be output to telemetry. The robot may continue
   to drift a little bit after the robot has finished running the distance, so make sure you have
-  plenty of room. Once you're done, put the velocity for the `Forward Velocity Tuner` on line `25` in
-  the `FollowerConstants` class, and the velocity for the `Strafe Velocity Tuner` on line `26` in the
+  plenty of room. Once you're done, put the velocity for the `Forward Velocity Tuner` on line `27` in
+  the `FollowerConstants` class, and the velocity for the `Strafe Velocity Tuner` on line `28` in the
   `FollowerConstants` class.
 
 * The last set of automatic tuners you'll need to run are the zero power acceleration tuners. These
@@ -36,8 +36,8 @@ One last thing to note is that Pedro Pathing operates in inches and radians.
   which point it will display the deceleration in telemetry. This robot will need to drift to a stop
   to properly work, and the higher the velocity the greater the drift distance, so make sure you have
   enough room. Once you're done, put the zero power acceleration for the
-  `Forward Zero Power Acceleration Tuner` on line `122` in the `FollowerConstants` class and the zero
-  power acceleration for the `Lateral Zero Power Acceleration Tuner` on line `127` in the
+  `Forward Zero Power Acceleration Tuner` on line `130` in the `FollowerConstants` class and the zero
+  power acceleration for the `Lateral Zero Power Acceleration Tuner` on line `134` in the
   `FollowerConstants` class.
 
 * After this, we will want to tune the translational PIDs. Go to FTC Dashboard and disable all but
@@ -68,7 +68,7 @@ One last thing to note is that Pedro Pathing operates in inches and radians.
   `zeroPowerAccelerationMultiplier`. This determines how fast your robot will decelerate as a factor
   of how fast your robot will coast to a stop. Honestly, this is up to you. I personally used 4, but
   what works best for you is most important. Higher numbers will cause a faster brake, but increase
-  oscillations at the end. Lower numbers will do the opposite. This can be found on line `136` in
+  oscillations at the end. Lower numbers will do the opposite. This can be found on line `143` in
   `FollowerConstants`. There are once again two PIDs for the drive vector, but these PIDs are much,
   much more sensitive than the others. For reference, my P values were in the hundredths and
   thousandths place values, and my D values were in the hundred thousandths and millionths place
@@ -78,12 +78,24 @@ One last thing to note is that Pedro Pathing operates in inches and radians.
   this, it is very important to try to reduce oscillations. Additionally, I would absolutely not
   recommend using the I, or integral, part of the PID for this. Using integral in drivetrain PIDs is
   already not ideal, but it will continuously build up error in this PID, causing major issues when
-  it gets too strong. So, just don't use it. P and D are enough.
+  it gets too strong. So, just don't use it. P and D are enough. In the versions of Pedro Pathing
+  from after late July 2024, there is a Kalman filter on the drive error and the drive PIDs have a
+  filter as well. These smooth out the drive error and PID response so that there is not as much
+  oscillation during the braking portion of each path. The Kalman filter is tuned to have 6 for the
+  model covariance and 1 for the data covariance. These values should work, but if you feel inclined
+  to tune the Kalman filter yourself, a higher ratio of model covariance to data covariance means that
+  the filter will rely more on its previous output rather than the data, and the opposite ratio will
+  mean that the filter will rely more so on the data input (the raw drive error) rather than the model.
+  The filtered PIDs function like normal PIDs, except the derivative term is a weighted average of the
+  current derivative and the previous derivative. Currently, the weighting, or time constant for the
+  drive filtered PIDs is 0.6, so the derivative output is 0.6 times the previous derivative plus 0.4
+  times the current derivative. Feel free to mess around with these values and find what works best
+  for your robot!
 
 * Finally, we will want to tune the centripetal force correction. This is a pretty simple tune. Open
   up FTC Dashboard and enable everything under the `Follower` tab. Then, run `CurvedBackAndForth`
   and turn off its timer. If you notice the robot is correcting towards the inside of the curve
-  as/after running a path, then increase `centripetalScaling`, which can be found on line `117` of
+  as/after running a path, then increase `centripetalScaling`, which can be found on line `126` of
   `FollowerConstants`. If the robot is correcting towards the outside of the curve, then decrease
   `centripetalScaling`.
 
