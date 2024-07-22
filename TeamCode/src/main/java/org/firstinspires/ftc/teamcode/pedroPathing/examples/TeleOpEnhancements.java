@@ -59,6 +59,8 @@ public class TeleOpEnhancements extends OpMode {
     public void loop() {
         driveVector.setOrthogonalComponents(-gamepad1.left_stick_y, -gamepad1.left_stick_x);
         driveVector.setMagnitude(MathFunctions.clamp(driveVector.getMagnitude(), 0, 1));
+
+        // TODO: if you want to make this field centric, then just remove this line
         driveVector.rotateVector(follower.getPose().getHeading());
 
         headingVector.setComponents(-gamepad1.left_stick_x, follower.getPose().getHeading());
