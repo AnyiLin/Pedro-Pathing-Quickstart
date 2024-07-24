@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
+import org.firstinspires.ftc.teamcode.config.pedroPathing.localization.Pose;
 import org.firstinspires.ftc.teamcode.config.pedroPathing.pathGeneration.MathFunctions;
 import org.firstinspires.ftc.teamcode.config.pedroPathing.pathGeneration.Vector;
 import org.firstinspires.ftc.teamcode.config.pedroPathing.follower.Follower;
@@ -15,37 +16,24 @@ import org.firstinspires.ftc.teamcode.config.subsystem.ClawSubsystem;
  * This is an example teleop that showcases movement and control of three servos and robot-centric driving.
  *
  * @author Baron Henderson - 24122 Tomorrow Team & 20077 The Indubitables
- * @version 1.0, 7/5/2024
+ * @version 1.1, 7/23/2024
  */
 
 @TeleOp(name = "Example Robot-Centric Teleop", group = "Examples")
 public class ExampleTeleop_RobotCentric extends OpMode {
     private Follower follower;
     private ClawSubsystem claw;
-
-    private DcMotorEx leftFront;
-    private DcMotorEx leftRear;
-    private DcMotorEx rightFront;
-    private DcMotorEx rightRear;
-
     private Vector driveVector;
     private Vector headingVector;
+    private final Pose startPose = new Pose(0,0,0);
 
     /** This method is call once when init is played, it initializes the follower and subsystems **/
     @Override
     public void init() {
         follower = new Follower(hardwareMap, false);
+        follower.setStartingPose(startPose);
+
         claw = new ClawSubsystem(hardwareMap);
-
-        leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
-        leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
-        rightRear = hardwareMap.get(DcMotorEx.class, "rightRear");
-        rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
-
-        leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        leftRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         driveVector = new Vector();
         headingVector = new Vector();
@@ -66,10 +54,10 @@ public class ExampleTeleop_RobotCentric extends OpMode {
     public void loop() {
 
         /** Movement Sector **/
-        driveVector.setOrthogonalComponents(-gamepad1.left_stick_y, gamepad1.left_stick_x);
+        driveVector.setOrthogonalComponents(-gamepad1.left_stick_y, -gamepad1.left_stick_x);
         driveVector.setMagnitude(MathFunctions.clamp(driveVector.getMagnitude(), 0, 1));
         driveVector.rotateVector(follower.getPose().getHeading());
-        headingVector.setComponents(-gamepad1.left_stick_x, follower.getPose().getHeading());
+        headingVector.setComponents(-gamepad1.right_stick_x, follower.getPose().getHeading());
         follower.setMovementVectors(new Vector(), headingVector, driveVector);
         follower.update();
 
@@ -99,6 +87,10 @@ public class ExampleTeleop_RobotCentric extends OpMode {
             lift.setTarget(lTarget+50);
         }
         */
+
+        telemetry.addData("X", follower.getPose().getX());
+        telemetry.addData("Y", follower.getPose().getY());
+        telemetry.addData("Heading in Degrees", Math.toDegrees(follower.getPose().getHeading()));
     }
 
     /** We do not use this because everything automatically should disable **/
