@@ -63,7 +63,7 @@ public class TeleOpEnhancements extends OpMode {
         // TODO: if you want to make this field centric, then just remove this line
         driveVector.rotateVector(follower.getPose().getHeading());
 
-        headingVector.setComponents(-gamepad1.left_stick_x, follower.getPose().getHeading());
+        headingVector.setComponents(-gamepad1.right_stick_x, follower.getPose().getHeading());
 
         follower.setMovementVectors(follower.getCentripetalForceCorrection(), headingVector, driveVector);
         follower.update();
