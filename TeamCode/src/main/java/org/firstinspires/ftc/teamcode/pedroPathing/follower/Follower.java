@@ -85,7 +85,6 @@ public class Follower {
     private boolean reachedParametricPathEnd;
     private boolean holdPositionAtEnd;
     private boolean teleopDrive;
-    private boolean fieldCentric;
 
     private double maxPower = 1;
     private double previousSmallTranslationalIntegral;
@@ -110,6 +109,8 @@ public class Follower {
     private Vector averageAcceleration;
     private Vector smallTranslationalIntegralVector;
     private Vector largeTranslationalIntegralVector;
+    private Vector teleopDriveVector;
+    private Vector teleopHeadingVector;
     public Vector driveVector;
     public Vector headingVector;
     public Vector translationalVector;
@@ -176,9 +177,6 @@ public class Follower {
         for (DcMotorEx motor : motors) {
             motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         }
-
-        // TODO: Set this to true if you want to use field centric teleop drive.
-        fieldCentric = false;
 
         dashboardPoseTracker = new DashboardPoseTracker(poseUpdater);
 
@@ -493,18 +491,6 @@ public class Follower {
 
             calculateAveragedVelocityAndAcceleration();
 
-            Vector teleopDriveVector = new Vector();
-            Vector teleopHeadingVector = new Vector();
-
-            teleopDriveVector.setOrthogonalComponents(teleopDriveValues[0], teleopDriveValues[1]);
-            teleopDriveVector.setMagnitude(MathFunctions.clamp(driveVector.getMagnitude(), 0, 1));
-
-            if (!fieldCentric) {
-                teleopDriveVector.rotateVector(getPose().getHeading());
-            }
-
-            teleopHeadingVector.setComponents(teleopDriveValues[2], getPose().getHeading());
-
             drivePowers = driveVectorScaler.getDrivePowers(getCentripetalForceCorrection(), teleopHeadingVector, teleopDriveVector, poseUpdater.getPose().getHeading());
 
             limitDrivePowers();
@@ -516,7 +502,7 @@ public class Follower {
     }
 
     /**
-     * This sets the teleop drive vectors.
+     * This sets the teleop drive vectors. This defaults to robot centric.
      *
      * @param forwardDrive determines the forward drive vector for the robot in teleop. In field centric
      *                     movement, this is the x-axis.
@@ -525,9 +511,31 @@ public class Follower {
      * @param heading determines the heading vector for the robot in teleop.
      */
     public void setTeleOpMovementVectors(double forwardDrive, double lateralDrive, double heading) {
+        setTeleOpMovementVectors(forwardDrive, lateralDrive, heading, true);
+    }
+
+    /**
+     * This sets the teleop drive vectors.
+     *
+     * @param forwardDrive determines the forward drive vector for the robot in teleop. In field centric
+     *                     movement, this is the x-axis.
+     * @param lateralDrive determines the lateral drive vector for the robot in teleop. In field centric
+     *                     movement, this is the y-axis.
+     * @param heading determines the heading vector for the robot in teleop.
+     * @param robotCentric sets if the movement will be field or robot centric
+     */
+    public void setTeleOpMovementVectors(double forwardDrive, double lateralDrive, double heading, boolean robotCentric) {
         teleopDriveValues[0] = MathFunctions.clamp(forwardDrive, -1, 1);
         teleopDriveValues[1] = MathFunctions.clamp(lateralDrive, -1, 1);
         teleopDriveValues[2] = MathFunctions.clamp(heading, -1, 1);
+        teleopDriveVector.setOrthogonalComponents(teleopDriveValues[0], teleopDriveValues[1]);
+        teleopDriveVector.setMagnitude(MathFunctions.clamp(teleopDriveVector.getMagnitude(), 0, 1));
+
+        if (robotCentric) {
+            teleopDriveVector.rotateVector(getPose().getHeading());
+        }
+
+        teleopHeadingVector.setComponents(teleopDriveValues[2], getPose().getHeading());
     }
 
     /**
@@ -624,6 +632,8 @@ public class Follower {
         }
         calculateAveragedVelocityAndAcceleration();
         teleopDriveValues = new double[3];
+        teleopDriveVector = new Vector();
+        teleopHeadingVector = new Vector();
 
         for (int i = 0; i < motors.size(); i++) {
             motors.get(i).setPower(0);
