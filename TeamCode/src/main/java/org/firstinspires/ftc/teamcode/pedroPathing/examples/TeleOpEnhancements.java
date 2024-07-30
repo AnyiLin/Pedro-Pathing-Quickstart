@@ -6,8 +6,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.follower.Follower;
-import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.MathFunctions;
-import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Vector;
 
 /**
  * This is the TeleOpEnhancements OpMode. It is an example usage of the TeleOp enhancements that
@@ -27,15 +25,12 @@ public class TeleOpEnhancements extends OpMode {
     private DcMotorEx rightFront;
     private DcMotorEx rightRear;
 
-    private Vector driveVector;
-    private Vector headingVector;
-
     /**
      * This initializes the drive motors as well as the Follower and motion Vectors.
      */
     @Override
     public void init() {
-        follower = new Follower(hardwareMap, false);
+        follower = new Follower(hardwareMap);
 
         leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
         leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
@@ -47,8 +42,7 @@ public class TeleOpEnhancements extends OpMode {
         rightRear.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        driveVector = new Vector();
-        headingVector = new Vector();
+        follower.startTeleopDrive();
     }
 
     /**
@@ -57,15 +51,7 @@ public class TeleOpEnhancements extends OpMode {
      */
     @Override
     public void loop() {
-        driveVector.setOrthogonalComponents(-gamepad1.left_stick_y, -gamepad1.left_stick_x);
-        driveVector.setMagnitude(MathFunctions.clamp(driveVector.getMagnitude(), 0, 1));
-
-        // TODO: if you want to make this field centric, then just remove this line
-        driveVector.rotateVector(follower.getPose().getHeading());
-
-        headingVector.setComponents(-gamepad1.right_stick_x, follower.getPose().getHeading());
-
-        follower.setMovementVectors(follower.getCentripetalForceCorrection(), headingVector, driveVector);
+        follower.setTeleOpMovementVectors(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x);
         follower.update();
     }
 }
