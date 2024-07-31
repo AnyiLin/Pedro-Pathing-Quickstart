@@ -86,6 +86,7 @@ public class ThreeWheelIMULocalizer extends Localizer {
     public ThreeWheelIMULocalizer(HardwareMap map, Pose setStartPose) {
         hardwareMap = map;
         imu = hardwareMap.get(IMU.class, "imu");
+
         // TODO: replace this with your IMU's orientation
         imu.initialize(new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.LEFT, RevHubOrientationOnRobot.UsbFacingDirection.UP)));
 
@@ -93,7 +94,6 @@ public class ThreeWheelIMULocalizer extends Localizer {
         leftEncoderPose = new Pose(-3, 5.7, 0);
         rightEncoderPose = new Pose(-3, -5.7, 0);
         strafeEncoderPose = new Pose(6.9, 1, Math.toRadians(90));
-
 
 
         // TODO: replace these with your encoder ports
