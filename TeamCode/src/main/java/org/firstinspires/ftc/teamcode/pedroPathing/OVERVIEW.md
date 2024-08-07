@@ -68,27 +68,18 @@ calculate the force necessary to keep the robot on the path, and then tune a sca
 that force into a corresponding power for the robot.
 
 ### Translational Correction
-This is as simple as it sounds: this corrects error in the robot's position only. However, the
-robot's translational error is actually used within two different PIDs to move the robot. A large
-PID and a small PID are used. The large PID is used when error exceeds a certain limit. and the small
-PID is used when the error is within that limit.
-
-When the robot encounters error, the large PID, if applicable, is used to bring the robot within the
-small PID error range without much overshoot to avoid oscillations. Then, the small PID is used to
-bring the robot to within acceptable error ranges. The reason for this double PID is to allow for 
-aggressive correction to bring the robot within tight tolerances, while not correcting too
-aggressively at larger ranges, which would've caused oscillations.
+This is as simple as it sounds: this corrects error in the robot's position only. The robot's translational
+error is corrected with a PID control. The translational correction does not act along the path the
+robot takes, but instead moves the robot back to the closest point on the path.
 
 ### Heading Correction
 The heading correction operates very similarly to the translational correction, except this corrects
-the direction the robot is facing. It also uses a small and large PID rather than a single PID, like
-the translational correction. The heading correction will turn in the closest direction from the
+the direction the robot is facing. The heading correction will turn in the closest direction from the
 robot's current heading to the target heading.
 
 ### Drive Vector
 The drive vector points in the direction of the tangent of the path and it is responsible for moving
-the robot along the path. Similar to the translational and heading corrections, the drive vector
-uses a large and small PID. Using basic kinematics equations, we can use the velocity of the robot
+the robot along the path. Using basic kinematics equations, we can use the velocity of the robot
 along the path, the length of path left, and a specified target rate of deceleration to calculate
 the velocity we should be moving at. Additionally, after finding out the rate of deceleration of the
 robot under 0 power, we can compensate for that with another kinematics equation. Combining these

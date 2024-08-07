@@ -10,7 +10,7 @@ One last thing to note is that Pedro Pathing operates in inches and radians.
 
 ## Tuning
 * To start with, we need the mass of the robot in kg. This is used for the centripetal force
-  correction, and the mass should be put on line `123` in the `FollowerConstants` class under the
+  correction, and the mass should be put on line `80` in the `FollowerConstants` class under the
   `tuning` package.
 
 * Next, we need to find the preferred mecanum drive vectors. The rollers on mecanum wheels point at a
@@ -36,27 +36,23 @@ One last thing to note is that Pedro Pathing operates in inches and radians.
   which point it will display the deceleration in telemetry. This robot will need to drift to a stop
   to properly work, and the higher the velocity the greater the drift distance, so make sure you have
   enough room. Once you're done, put the zero power acceleration for the
-  `Forward Zero Power Acceleration Tuner` on line `130` in the `FollowerConstants` class and the zero
-  power acceleration for the `Lateral Zero Power Acceleration Tuner` on line `134` in the
+  `Forward Zero Power Acceleration Tuner` on line `88` in the `FollowerConstants` class and the zero
+  power acceleration for the `Lateral Zero Power Acceleration Tuner` on line `92` in the
   `FollowerConstants` class.
 
 * After this, we will want to tune the translational PIDs. Go to FTC Dashboard and disable all but
   the `useTranslational` checkboxes under the `Follower` tab. Then, run `StraightBackAndForth`. Make
-  sure you disable the timer on autonomous OpModes. There are two different PIDs for translational
-  error, the `smallTranslationalPIDF` and `largeTranslationalPIDF`. If error is larger than a certain
-  amount, the `largeTranslationalPIDF` will be used, and if error is smaller than that amount the
-  `smallTranslationalPIDF` will be used. If you need to add a feedforward value, use the
-  `smallTranslationalPIDFFeedForward` and `largeTranslationalPIDFFeedForward` since those will add the
-  feedforward in the direction the robot is trying to move, rather than the feedforward in the PIDFs
-  themselves, since those will only add the feedforward one way. You can change the amount of error
-  required to switch PIDFs, as well as the PIDF constants and feedforward values, under the
-  `FollowerConstants` tab in FTC Dashboard. To tune the PIDs, push the robot off the path and see how
-  corrects. You will want to alternate sides you push to reduce field wear and tear as well as push
-  with varying power and distance. I would recommend tuning the large PID first, and tuning it so that
-  the PID is capable of correcting to the point where the PIDs switch with little momentum. Then, tune
-  the small PID to minimize oscillations while still achieving a satisfactory level of accuracy.
-  Overall, try to tune for fewer oscillations rather than higher speeds or perfect accuracy, since
-  this will make the robot run more smoothly under actual pathing conditions.
+  sure you disable the timer on autonomous OpModes. The PID for the translational error is called
+  `translationalPIDF`.  If you need to add a feedforward value, use the `translationalPIDFFeedForward`
+  since that will add the feedforward in the direction the robot is trying to move, rather than the
+  feedforward in the PIDF itself, since those will only add the feedforward one way. You can change
+  the PIDF constants and feedforward values, under the `FollowerConstants` tab in FTC Dashboard.
+  To tune the PID, push the robot off the path and see how corrects. You will want to alternate sides
+  you push to reduce field wear and tear as well as push with varying power and distance. I would 
+  recommend tuning the PID so that it is capable of correcting while minimizing oscillations and still
+  achieving a satisfactory level of accuracy. Overall, try to tune for fewer oscillations rather than
+  higher speeds or perfect accuracy, since this will make the robot run more smoothly under actual
+  pathing conditions.
 
 * Next, we will tune the heading PIDs. The process is essentially the same as above, except you will
   want to only enable `useHeading` under `Follower` on FTC Dashboard, as well as turn the robot from
@@ -68,7 +64,7 @@ One last thing to note is that Pedro Pathing operates in inches and radians.
   `zeroPowerAccelerationMultiplier`. This determines how fast your robot will decelerate as a factor
   of how fast your robot will coast to a stop. Honestly, this is up to you. I personally used 4, but
   what works best for you is most important. Higher numbers will cause a faster brake, but increase
-  oscillations at the end. Lower numbers will do the opposite. This can be found on line `143` in
+  oscillations at the end. Lower numbers will do the opposite. This can be found on line `101` in
   `FollowerConstants`. There are once again two PIDs for the drive vector, but these PIDs are much,
   much more sensitive than the others. For reference, my P values were in the hundredths and
   thousandths place values, and my D values were in the hundred thousandths and millionths place
@@ -95,7 +91,7 @@ One last thing to note is that Pedro Pathing operates in inches and radians.
 * Finally, we will want to tune the centripetal force correction. This is a pretty simple tune. Open
   up FTC Dashboard and enable everything under the `Follower` tab. Then, run `CurvedBackAndForth`
   and turn off its timer. If you notice the robot is correcting towards the inside of the curve
-  as/after running a path, then increase `centripetalScaling`, which can be found on line `126` of
+  as/after running a path, then increase `centripetalScaling`, which can be found on line `83` of
   `FollowerConstants`. If the robot is correcting towards the outside of the curve, then decrease
   `centripetalScaling`.
 
