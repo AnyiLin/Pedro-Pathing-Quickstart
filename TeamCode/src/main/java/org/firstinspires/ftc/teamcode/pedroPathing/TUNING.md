@@ -9,8 +9,8 @@ will help a lot in tuning, and we have a slightly scuffed Desmos path visualizer
 One last thing to note is that Pedro Pathing operates in inches and radians.
 
 ## Tuning
-* To start with, we need the mass of the robot in kg. This is used for the centripetal force
-  correction, and the mass should be put on line `80` in the `FollowerConstants` class under the
+* To start with, we need the mass of the robot in kg. This is used for the centripetal force correction,
+  and the mass should be put on line `80` in the `FollowerConstants` class under the
   `tuning` package.
 
 * Next, we need to find the preferred mecanum drive vectors. The rollers on mecanum wheels point at a
@@ -40,7 +40,7 @@ One last thing to note is that Pedro Pathing operates in inches and radians.
   power acceleration for the `Lateral Zero Power Acceleration Tuner` on line `92` in the
   `FollowerConstants` class.
 
-* After this, we will want to tune the translational PIDs. Go to FTC Dashboard and disable all but
+* After this, we will want to tune the translational PID. Go to FTC Dashboard and disable all but
   the `useTranslational` checkboxes under the `Follower` tab. Then, run `StraightBackAndForth`. Make
   sure you disable the timer on autonomous OpModes. The PID for the translational error is called
   `translationalPIDF`.  If you need to add a feedforward value, use the `translationalPIDFFeedForward`
@@ -54,37 +54,36 @@ One last thing to note is that Pedro Pathing operates in inches and radians.
   higher speeds or perfect accuracy, since this will make the robot run more smoothly under actual
   pathing conditions.
 
-* Next, we will tune the heading PIDs. The process is essentially the same as above, except you will
+* Next, we will tune the heading PID. The process is essentially the same as above, except you will
   want to only enable `useHeading` under `Follower` on FTC Dashboard, as well as turn the robot from
   opposing corners instead of pushing the robot. Naturally, instead of changing the stuff with
   "translational" in the name, you will instead want to look for stuff with "heading" in the name.
   Otherwise, these two PIDs are functionally very similar. The same tips from above will apply to this.
 
-* Afterwards, we will tune the drive PIDs. Before we continue, we will need to set the
+* Afterwards, we will tune the drive PID. Before we continue, we will need to set the
   `zeroPowerAccelerationMultiplier`. This determines how fast your robot will decelerate as a factor
   of how fast your robot will coast to a stop. Honestly, this is up to you. I personally used 4, but
   what works best for you is most important. Higher numbers will cause a faster brake, but increase
   oscillations at the end. Lower numbers will do the opposite. This can be found on line `101` in
-  `FollowerConstants`. There are once again two PIDs for the drive vector, but these PIDs are much,
-  much more sensitive than the others. For reference, my P values were in the hundredths and
-  thousandths place values, and my D values were in the hundred thousandths and millionths place
-  values. To tune this, enable `useDrive`, `useHeading`, and `useTranslational` in the `Follower`
-  dropdown in FTC Dashboard. Next, run `StraightBackAndForth`and don't forget to turn off the timer on
-  the OpMode. Then, tune the large PID and then the small PID following the tips from earlier. For
-  this, it is very important to try to reduce oscillations. Additionally, I would absolutely not
-  recommend using the I, or integral, part of the PID for this. Using integral in drivetrain PIDs is
-  already not ideal, but it will continuously build up error in this PID, causing major issues when
-  it gets too strong. So, just don't use it. P and D are enough. In the versions of Pedro Pathing
-  from after late July 2024, there is a Kalman filter on the drive error and the drive PIDs have a
+  `FollowerConstants`. The drive PID is much, much more sensitive than the others. For reference,
+  my P values were in the hundredths and thousandths place values, and my D values were in the hundred
+  thousandths and millionths place values. To tune this, enable `useDrive`, `useHeading`, and
+  `useTranslational` in the `Follower` dropdown in FTC Dashboard. Next, run `StraightBackAndForth`
+  and don't forget to turn off the timer on the OpMode. Then, tune the PID following the tips from
+  earlier. For this, it is very important to try to reduce oscillations. Additionally, I would
+  absolutely not recommend using the I, or integral, part of the PID for this. Using integral in
+  drivetrain PIDs is already not ideal, but it will continuously build up error in this PID, causing
+  major issues when it gets too strong. Don't use I; P and D are enough. In the versions of Pedro Pathing
+  from after late July 2024, there is a Kalman filter on the drive error and the drive PID has a
   filter as well. These smooth out the drive error and PID response so that there is not as much
   oscillation during the braking portion of each path. The Kalman filter is tuned to have 6 for the
   model covariance and 1 for the data covariance. These values should work, but if you feel inclined
   to tune the Kalman filter yourself, a higher ratio of model covariance to data covariance means that
   the filter will rely more on its previous output rather than the data, and the opposite ratio will
   mean that the filter will rely more so on the data input (the raw drive error) rather than the model.
-  The filtered PIDs function like normal PIDs, except the derivative term is a weighted average of the
+  The filtered PID functions like a normal PID, except the derivative term is a weighted average of the
   current derivative and the previous derivative. Currently, the weighting, or time constant for the
-  drive filtered PIDs is 0.6, so the derivative output is 0.6 times the previous derivative plus 0.4
+  drive filtered PID is 0.6, so the derivative output is 0.6 times the previous derivative plus 0.4
   times the current derivative. Feel free to mess around with these values and find what works best
   for your robot!
 
@@ -100,3 +99,14 @@ One last thing to note is that Pedro Pathing operates in inches and radians.
   `Circle`, but that's more so for fun than anything else. If you notice something could be improved,
   feel free to mess around more with your PIDs. That should be all! If you have any more questions,
   refer to the OVERVIEW readme file or the README readme file. Best of luck to your team this season! :)
+
+## Note About the PIDs
+In versions of Pedro Pathing before early August 2024, there were 2 PIDs used in the translational,
+heading, and drive control. However, now there is only one main PID. The old system can still be used.
+Scroll down to the bottom of `FollowerConstants` and set all the booleans from lines `151` to `153`
+to true. This will enable the two PID system that Pedro Pathing originally used. From there, scroll
+down and all the values pertaining to the secondary PIDs will be there. The two PID system works with
+a PID that handles larger errors (the main PID) and a second PID to handle smaller errors (the
+secondary PID). The main PID should be tuned to move the error within the secondary PID's range
+without providing too much momentum that could cause an overshoot. The secondary PID should be tuned
+to correct within its range quickly and accurately while minimizing oscillations.
