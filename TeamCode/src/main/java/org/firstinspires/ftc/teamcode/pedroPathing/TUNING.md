@@ -5,8 +5,13 @@ You must also have a localizer of some sort. Pedro Pathing has a drive encoder, 
 and a three tracking wheel localizer. You will need to have your localizer tuned before starting to
 tune PedroPathing. Check out the tuning guide under the localization tab if you're planning on using one of the
 localizers available in Pedro Pathing. Additionally, using [FTC Dashboard](http://192.168.43.1:8080/dash)
-will help a lot in tuning, and we have a slightly scuffed Desmos path visualizer [here](https://www.desmos.com/calculator/3so1zx0hcd).
-One last thing to note is that Pedro Pathing operates in inches and radians.
+will help a lot in tuning. Team 16166 Watt'S Up made a path visualizer linked [here](https://pedro-path-generator.vercel.app).
+The old Desmos visualizer is [here](https://www.desmos.com/calculator/3so1zx0hcd), but the one by
+Watt'S Up is honestly a lot better.
+One last thing to note is that Pedro Pathing operates in inches and radians. You can use centimeters
+instead of inches, but you'll have to input all your measurement in centimeters, and any distances
+that the tuners require you to push the robot or the tuners output will say "inches" when the actual
+measurements will be in centimeters.
 
 ## Tuning
 * To start with, we need the mass of the robot in kg. This is used for the centripetal force correction,
