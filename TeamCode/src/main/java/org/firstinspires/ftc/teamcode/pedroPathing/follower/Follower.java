@@ -433,54 +433,56 @@ public class Follower {
         }
 
         if (!teleopDrive) {
-            if (holdingPosition) {
-                closestPose = currentPath.getClosestPoint(poseUpdater.getPose(), 1);
+            if (currentPath != null) {
+                if (holdingPosition) {
+                    closestPose = currentPath.getClosestPoint(poseUpdater.getPose(), 1);
 
-                drivePowers = driveVectorScaler.getDrivePowers(MathFunctions.scalarMultiplyVector(getTranslationalCorrection(), holdPointTranslationalScaling), MathFunctions.scalarMultiplyVector(getHeadingVector(), holdPointHeadingScaling), new Vector(), poseUpdater.getPose().getHeading());
-
-                limitDrivePowers();
-
-                for (int i = 0; i < motors.size(); i++) {
-                    motors.get(i).setPower(drivePowers[i]);
-                }
-            } else {
-                if (isBusy) {
-                    closestPose = currentPath.getClosestPoint(poseUpdater.getPose(), BEZIER_CURVE_BINARY_STEP_LIMIT);
-
-                    if (followingPathChain) updateCallbacks();
-
-                    drivePowers = driveVectorScaler.getDrivePowers(getCorrectiveVector(), getHeadingVector(), getDriveVector(), poseUpdater.getPose().getHeading());
+                    drivePowers = driveVectorScaler.getDrivePowers(MathFunctions.scalarMultiplyVector(getTranslationalCorrection(), holdPointTranslationalScaling), MathFunctions.scalarMultiplyVector(getHeadingVector(), holdPointHeadingScaling), new Vector(), poseUpdater.getPose().getHeading());
 
                     limitDrivePowers();
 
                     for (int i = 0; i < motors.size(); i++) {
                         motors.get(i).setPower(drivePowers[i]);
                     }
-                }
-                if (currentPath.isAtParametricEnd()) {
-                    if (followingPathChain && chainIndex < currentPathChain.size() - 1) {
-                        // Not at last path, keep going
-                        breakFollowing();
-                        pathStartTimes[chainIndex] = System.currentTimeMillis();
-                        isBusy = true;
-                        followingPathChain = true;
-                        chainIndex++;
-                        currentPath = currentPathChain.getPath(chainIndex);
+                } else {
+                    if (isBusy) {
                         closestPose = currentPath.getClosestPoint(poseUpdater.getPose(), BEZIER_CURVE_BINARY_STEP_LIMIT);
-                    } else {
-                        // At last path, run some end detection stuff
-                        // set isBusy to false if at end
-                        if (!reachedParametricPathEnd) {
-                            reachedParametricPathEnd = true;
-                            reachedParametricPathEndTime = System.currentTimeMillis();
-                        }
 
-                        if ((System.currentTimeMillis() - reachedParametricPathEndTime > currentPath.getPathEndTimeoutConstraint()) || (poseUpdater.getVelocity().getMagnitude() < currentPath.getPathEndVelocityConstraint() && MathFunctions.distance(poseUpdater.getPose(), closestPose) < currentPath.getPathEndTranslationalConstraint() && MathFunctions.getSmallestAngleDifference(poseUpdater.getPose().getHeading(), currentPath.getClosestPointHeadingGoal()) < currentPath.getPathEndHeadingConstraint())) {
-                            if (holdPositionAtEnd) {
-                                holdPositionAtEnd = false;
-                                holdPoint(new BezierPoint(currentPath.getLastControlPoint()), currentPath.getHeadingGoal(1));
-                            } else {
-                                breakFollowing();
+                        if (followingPathChain) updateCallbacks();
+
+                        drivePowers = driveVectorScaler.getDrivePowers(getCorrectiveVector(), getHeadingVector(), getDriveVector(), poseUpdater.getPose().getHeading());
+
+                        limitDrivePowers();
+
+                        for (int i = 0; i < motors.size(); i++) {
+                            motors.get(i).setPower(drivePowers[i]);
+                        }
+                    }
+                    if (currentPath.isAtParametricEnd()) {
+                        if (followingPathChain && chainIndex < currentPathChain.size() - 1) {
+                            // Not at last path, keep going
+                            breakFollowing();
+                            pathStartTimes[chainIndex] = System.currentTimeMillis();
+                            isBusy = true;
+                            followingPathChain = true;
+                            chainIndex++;
+                            currentPath = currentPathChain.getPath(chainIndex);
+                            closestPose = currentPath.getClosestPoint(poseUpdater.getPose(), BEZIER_CURVE_BINARY_STEP_LIMIT);
+                        } else {
+                            // At last path, run some end detection stuff
+                            // set isBusy to false if at end
+                            if (!reachedParametricPathEnd) {
+                                reachedParametricPathEnd = true;
+                                reachedParametricPathEndTime = System.currentTimeMillis();
+                            }
+
+                            if ((System.currentTimeMillis() - reachedParametricPathEndTime > currentPath.getPathEndTimeoutConstraint()) || (poseUpdater.getVelocity().getMagnitude() < currentPath.getPathEndVelocityConstraint() && MathFunctions.distance(poseUpdater.getPose(), closestPose) < currentPath.getPathEndTranslationalConstraint() && MathFunctions.getSmallestAngleDifference(poseUpdater.getPose().getHeading(), currentPath.getClosestPointHeadingGoal()) < currentPath.getPathEndHeadingConstraint())) {
+                                if (holdPositionAtEnd) {
+                                    holdPositionAtEnd = false;
+                                    holdPoint(new BezierPoint(currentPath.getLastControlPoint()), currentPath.getHeadingGoal(1));
+                                } else {
+                                    breakFollowing();
+                                }
                             }
                         }
                     }
@@ -851,7 +853,7 @@ public class Follower {
             curvature = (yDoublePrime) / (Math.pow(Math.sqrt(1 + Math.pow(yPrime, 2)), 3));
         }
         if (Double.isNaN(curvature)) return new Vector();
-        centripetalVector = new Vector(MathFunctions.clamp(FollowerConstants.centripetalScaling * FollowerConstants.mass * Math.pow(MathFunctions.dotProduct(poseUpdater.getVelocity(), MathFunctions.normalizeVector(currentPath.getClosestPointTangentVector())), 2) * curvature, -1, 1), currentPath.getClosestPointTangentVector().getTheta() + Math.PI / 2 * MathFunctions.getSign(currentPath.getClosestPointNormalVector().getTheta()));
+        centripetalVector = new Vector(MathFunctions.clamp(FollowerConstants.centripetalScaling * FollowerConstants.mass * Math.pow(MathFunctions.dotProduct(poseUpdater.getVelocity(), MathFunctions.normalizeVector(currentPath.getClosestPointTangentVector())), 2) * Math.abs(curvature), -1, 1), currentPath.getClosestPointTangentVector().getTheta() + Math.PI / 2 * MathFunctions.getSign(currentPath.getClosestPointNormalVector().getTheta()));
         return centripetalVector;
     }
 
