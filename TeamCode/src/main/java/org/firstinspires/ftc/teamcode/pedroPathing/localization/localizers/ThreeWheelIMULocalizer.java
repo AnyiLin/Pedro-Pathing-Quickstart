@@ -18,23 +18,26 @@ import org.firstinspires.ftc.teamcode.pedroPathing.util.NanoTimer;
 /**
  * This is the ThreeWheelIMULocalizer class. This class extends the Localizer superclass and is a
  * localizer that uses the three wheel odometry set up with the IMU to have more accurate heading
- * readings. The diagram below, which is taken from Road Runner, shows a typical set up.
+ * readings. The diagram below, which is modified from Road Runner, shows a typical set up.
  *
- * The view is from the bottom of the robot looking upwards.
+ * The view is from the top of the robot looking downwards.
  *
- * left on robot is y pos
+ * left on robot is the y positive direction
  *
- * front on robot is x pos
+ * forward on robot is the x positive direction
  *
  *    /--------------\
  *    |     ____     |
  *    |     ----     |
  *    | ||        || |
- *    | ||        || |   left (y pos)
+ *    | ||        || |  ----> left (y positive)
  *    |              |
  *    |              |
  *    \--------------/
- *      front (x pos)
+ *           |
+ *           |
+ *           V
+ *    forward (x positive)
  *
  * @author Logan Nash
  * @author Anyi Lin - 10158 Scott's Bots

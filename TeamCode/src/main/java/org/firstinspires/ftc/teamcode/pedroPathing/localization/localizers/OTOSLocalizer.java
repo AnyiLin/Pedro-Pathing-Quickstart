@@ -12,24 +12,27 @@ import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Vector;
 
 /**
  * This is the OTOSLocalizer class. This class extends the Localizer superclass and is a
- * localizer that uses the SparkFun OTOS. The diagram below, which is taken from
+ * localizer that uses the SparkFun OTOS. The diagram below, which is modified from
  * Road Runner, shows a typical set up.
  *
- * The view is from the bottom of the robot looking upwards.
+ * The view is from the top of the robot looking downwards.
  *
- * left on robot is y pos
+ * left on robot is the y positive direction
  *
- * front on robot is x pos
+ * forward on robot is the x positive direction
  *
  *    /--------------\
  *    |     ____     |
  *    |     ----     |
  *    | ||        || |
- *    | ||        || |   left (y pos)
+ *    | ||        || |  ----> left (y positive)
  *    |              |
  *    |              |
  *    \--------------/
- *      front (x pos)
+ *           |
+ *           |
+ *           V
+ *    forward (x positive)
  *
  * @author Anyi Lin - 10158 Scott's Bots
  * @version 1.0, 7/20/2024
