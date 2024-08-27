@@ -24,9 +24,8 @@ that applies to you and follow the directions there.
 
 # Drive Encoders
 * First, you'll need all of your drive motors to have encoders attached.
-* Then, go to `DriveEncoderLocalizer.java`. Go to where it tells you to replace the current statements with your encoder ports in the constructor.
-Replace the `deviceName` parameter with the name of the port that the encoder for each motor is connected
-to. The names of the variables is where on the robot the corresponding motor should be.
+* Then, go to `DriveEncoderLocalizer.java`. The motor names are already set, so you don't have to do
+  anything to change the encoder names there.
 * Then, reverse the direction of any encoders so that all encoders tick up when the robot is moving forward.
 * Now, you'll have to tune the multipliers. These convert your measurements from encoder ticks into 
   inches or radians, essentially scaling your localizer so that your numbers are accurate to the real

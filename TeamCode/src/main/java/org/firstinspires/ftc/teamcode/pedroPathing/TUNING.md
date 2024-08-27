@@ -15,8 +15,8 @@ measurements will be in centimeters.
 
 ## Tuning
 * To start with, we need the mass of the robot in kg. This is used for the centripetal force correction,
-  and the mass should be put on line `80` in the `FollowerConstants` class under the
-  `tuning` package.
+  and the mass, with the variable name `mass`, should be put on line `86` in the `FollowerConstants`
+  class under the `tuning` package.
 
 * Next, we need to find the preferred mecanum drive vectors. The rollers on mecanum wheels point at a
   45 degree angle from the forward direction, but the actual direction the force is output is actually
@@ -26,9 +26,9 @@ measurements will be in centimeters.
   Dashboard under the dropdown for each respective class, but higher distances work better. After the
   distance has finished running, the end velocity will be output to telemetry. The robot may continue
   to drift a little bit after the robot has finished running the distance, so make sure you have
-  plenty of room. Once you're done, put the velocity for the `Forward Velocity Tuner` on line `27` in
-  the `FollowerConstants` class, and the velocity for the `Strafe Velocity Tuner` on line `28` in the
-  `FollowerConstants` class.
+  plenty of room. Once you're done, put the velocity for the `Forward Velocity Tuner` on line `33` in
+  the `FollowerConstants` class, and the velocity for the `Strafe Velocity Tuner` on line `34` in the
+  `FollowerConstants` class. The variable names should be `xMovement` and `yMovement`, respectively.
 
 * The last set of automatic tuners you'll need to run are the zero power acceleration tuners. These
   find the rate at which your robot decelerates when power is cut from the drivetrain. This is used to
@@ -41,9 +41,10 @@ measurements will be in centimeters.
   which point it will display the deceleration in telemetry. This robot will need to drift to a stop
   to properly work, and the higher the velocity the greater the drift distance, so make sure you have
   enough room. Once you're done, put the zero power acceleration for the
-  `Forward Zero Power Acceleration Tuner` on line `88` in the `FollowerConstants` class and the zero
-  power acceleration for the `Lateral Zero Power Acceleration Tuner` on line `92` in the
-  `FollowerConstants` class.
+  `Forward Zero Power Acceleration Tuner` on line `94` in the `FollowerConstants` class and the zero
+  power acceleration for the `Lateral Zero Power Acceleration Tuner` on line `98` in the
+  `FollowerConstants` class. The variable names should be `forwardZeroPowerAcceleration` and
+  `lateralZeroPowerAcceleration`, respectively.
 
 * After this, we will want to tune the translational PID. Go to FTC Dashboard and disable all but
   the `useTranslational` checkboxes under the `Follower` tab. Then, run `StraightBackAndForth`. Make
@@ -69,8 +70,8 @@ measurements will be in centimeters.
   `zeroPowerAccelerationMultiplier`. This determines how fast your robot will decelerate as a factor
   of how fast your robot will coast to a stop. Honestly, this is up to you. I personally used 4, but
   what works best for you is most important. Higher numbers will cause a faster brake, but increase
-  oscillations at the end. Lower numbers will do the opposite. This can be found on line `101` in
-  `FollowerConstants`. The drive PID is much, much more sensitive than the others. For reference,
+  oscillations at the end. Lower numbers will do the opposite. This can be found on line `107` in
+  `FollowerConstants`, named `zeroPowerAccelerationMultiplier`. The drive PID is much, much more sensitive than the others. For reference,
   my P values were in the hundredths and thousandths place values, and my D values were in the hundred
   thousandths and millionths place values. To tune this, enable `useDrive`, `useHeading`, and
   `useTranslational` in the `Follower` dropdown in FTC Dashboard. Next, run `StraightBackAndForth`
@@ -95,7 +96,7 @@ measurements will be in centimeters.
 * Finally, we will want to tune the centripetal force correction. This is a pretty simple tune. Open
   up FTC Dashboard and enable everything under the `Follower` tab. Then, run `CurvedBackAndForth`
   and turn off its timer. If you notice the robot is correcting towards the inside of the curve
-  as/after running a path, then increase `centripetalScaling`, which can be found on line `83` of
+  as/after running a path, then increase `centripetalScaling`, which can be found on line `89` of
   `FollowerConstants`. If the robot is correcting towards the outside of the curve, then decrease
   `centripetalScaling`.
 
@@ -108,8 +109,9 @@ measurements will be in centimeters.
 ## Note About the PIDs
 In versions of Pedro Pathing before early August 2024, there were 2 PIDs used in the translational,
 heading, and drive control. However, now there is only one main PID. The old system can still be used.
-Scroll down to the bottom of `FollowerConstants` and set all the booleans from lines `151` to `153`
-to true. This will enable the two PID system that Pedro Pathing originally used. From there, scroll
+Scroll down to the bottom of `FollowerConstants` and set all the booleans from lines `157` to `159`
+to true. They should be named `useSecondaryTranslationalPID`, `useSecondaryHeadingPID`, and `useSecondaryDrivePID`.
+This will enable the two PID system that Pedro Pathing originally used. From there, scroll
 down and all the values pertaining to the secondary PIDs will be there. The two PID system works with
 a PID that handles larger errors (the main PID) and a second PID to handle smaller errors (the
 secondary PID). The main PID should be tuned to move the error within the secondary PID's range

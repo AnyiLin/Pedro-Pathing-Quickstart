@@ -1,5 +1,10 @@
 package org.firstinspires.ftc.teamcode.pedroPathing.localization.localizers;
 
+import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.leftFrontMotorName;
+import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.leftRearMotorName;
+import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.rightFrontMotorName;
+import static org.firstinspires.ftc.teamcode.pedroPathing.tuning.FollowerConstants.rightRearMotorName;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -20,7 +25,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.util.NanoTimer;
  * @version 1.0, 4/2/2024
  */
 @Config
-public class DriveEncoderLocalizer extends Localizer { // todo: make drive encoders work
+public class DriveEncoderLocalizer extends Localizer {
     private HardwareMap hardwareMap;
     private Pose startPose;
     private Pose displacementPose;
@@ -59,11 +64,10 @@ public class DriveEncoderLocalizer extends Localizer { // todo: make drive encod
     public DriveEncoderLocalizer(HardwareMap map, Pose setStartPose) {
         hardwareMap = map;
 
-        // TODO: replace these with your encoder ports
-        leftFront = new Encoder(hardwareMap.get(DcMotorEx.class, "leftFront"));
-        rightFront = new Encoder(hardwareMap.get(DcMotorEx.class, "rightFront"));
-        leftRear = new Encoder(hardwareMap.get(DcMotorEx.class, "leftRear"));
-        rightRear = new Encoder(hardwareMap.get(DcMotorEx.class, "rightRear"));
+        leftFront = new Encoder(hardwareMap.get(DcMotorEx.class, leftFrontMotorName));
+        leftRear = new Encoder(hardwareMap.get(DcMotorEx.class, leftRearMotorName));
+        rightRear = new Encoder(hardwareMap.get(DcMotorEx.class, rightRearMotorName));
+        rightFront = new Encoder(hardwareMap.get(DcMotorEx.class, rightFrontMotorName));
 
         // TODO: reverse any encoders necessary
         leftFront.setDirection(Encoder.REVERSE);
