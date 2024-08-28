@@ -3,11 +3,11 @@ This is the Pedro Pathing path following program developed by FTC team 10158 Sco
 Nash in the 2023-2024 Centerstage season.
 
 ## Installation
-The quickest way to get started is with the quickstart [here](https://github.com/brotherhobo/Pedro-Pathing-Quickstart).
+The quickest way to get started is with the quickstart [here](https://github.com/AnyiLin/Pedro-Pathing-Quickstart).
 
 Otherwise, take the `pedroPathing` folder and put it under the `teamcode` folder in your project.
 You can do this from either downloading the project from the above quickstart link or the 10158
-CENTERSTAGE repository [here](https://github.com/brotherhobo/10158-Centerstage).
+CENTERSTAGE repository [here](https://github.com/AnyiLin/10158-Centerstage).
 
 For this version of Pedro Pathing, the localizer used is the Road Runner localizer. To install its
 dependencies:
