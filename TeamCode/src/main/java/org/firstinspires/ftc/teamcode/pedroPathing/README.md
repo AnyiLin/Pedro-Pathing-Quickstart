@@ -23,6 +23,6 @@ implementation 'com.acmerobotics.dashboard:dashboard:0.4.5'
 4. Find the `build.gradle` file under the `teamcode` folder.
 5. In this gradle file, add the following dependency:
 ```
-implementation 'com.fasterxml/jackson.core:jackson-databind:2.12.7'
+implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.7'
 implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.4.21'
 ```
