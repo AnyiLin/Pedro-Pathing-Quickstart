@@ -289,4 +289,11 @@ public class TwoWheelLocalizer extends Localizer { // todo: make two wheel odo w
     public double getTurningMultiplier() {
         return 1;
     }
+
+    /**
+     * This resets the IMU.
+     */
+    public void resetIMU() {
+        imu.resetYaw();
+    }
 }

@@ -306,4 +306,11 @@ public class ThreeWheelIMULocalizer extends Localizer {
     public double getTurningMultiplier() {
         return TURN_TICKS_TO_RADIANS;
     }
+
+    /**
+     * This resets the IMU.
+     */
+    public void resetIMU() {
+        imu.resetYaw();
+    }
 }

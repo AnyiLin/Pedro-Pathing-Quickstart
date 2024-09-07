@@ -989,4 +989,11 @@ public class Follower {
     public DashboardPoseTracker getDashboardPoseTracker() {
         return dashboardPoseTracker;
     }
+
+    /**
+     * This resets the IMU, if applicable.
+     */
+    public void resetIMU() {
+        poseUpdater.resetIMU();
+    }
 }
