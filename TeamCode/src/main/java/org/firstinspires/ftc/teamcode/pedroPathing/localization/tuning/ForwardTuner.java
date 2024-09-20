@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.pedroPathing.localization.tuning;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
@@ -27,7 +26,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.util.Drawing;
  */
 @Config
 @Autonomous(name = "Forward Localizer Tuner", group = "Autonomous Pathing Tuning")
-public class FowardTuner extends OpMode {
+public class ForwardTuner extends OpMode {
     private PoseUpdater poseUpdater;
     private DashboardPoseTracker dashboardPoseTracker;
 

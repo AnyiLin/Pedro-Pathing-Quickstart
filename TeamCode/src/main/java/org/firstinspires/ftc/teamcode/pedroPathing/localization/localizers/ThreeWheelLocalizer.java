@@ -283,4 +283,10 @@ public class ThreeWheelLocalizer extends Localizer {
     public double getTurningMultiplier() {
         return TURN_TICKS_TO_RADIANS;
     }
+
+    /**
+     * This does nothing since this localizer does not use the IMU.
+     */
+    public void resetIMU() {
+    }
 }

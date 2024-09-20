@@ -60,7 +60,7 @@ public class Path {
     private double pathEndTValueConstraint = FollowerConstants.pathEndTValueConstraint;
 
     // When the Path is considered at its end parametrically, then the Follower has this many
-    // seconds to further correct by default.
+    // milliseconds to further correct by default.
     // This can be custom set for each Path.
     private double pathEndTimeoutConstraint = FollowerConstants.pathEndTimeoutConstraint;
 
@@ -402,7 +402,7 @@ public class Path {
 
     /**
      * This sets the Path end timeout. If the Path is at its end parametrically, then the Follower
-     * has this many seconds to correct before the Path gets ended anyways.
+     * has this many milliseconds to correct before the Path gets ended anyways.
      *
      * @param set This sets the Path end timeout.
      */

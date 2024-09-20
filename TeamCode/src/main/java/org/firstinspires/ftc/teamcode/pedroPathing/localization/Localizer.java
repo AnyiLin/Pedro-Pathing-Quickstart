@@ -86,4 +86,9 @@ public abstract class Localizer {
      * @return returns the turning ticks to radians multiplier
      */
     public abstract double getTurningMultiplier();
+
+    /**
+     * This resets the IMU of the localizer, if applicable.
+     */
+    public abstract void resetIMU();
 }
