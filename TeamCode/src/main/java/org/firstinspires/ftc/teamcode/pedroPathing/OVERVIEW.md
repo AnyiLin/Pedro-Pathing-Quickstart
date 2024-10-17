@@ -105,4 +105,5 @@ of the curvature formula, we can estimate a centripetal force correction and app
 control.
 
 ## Questions?
-If you still have more questions, feel free to contact us at `scottsbots10158@gmail.com`
+If you still have more questions, feel free to contact us at `scottsbots10158@gmail.com` or
+within our discord linked here(https://discord.gg/2GfC4qBP5s)
