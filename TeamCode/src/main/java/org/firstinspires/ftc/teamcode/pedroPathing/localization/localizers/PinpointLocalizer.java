@@ -143,7 +143,7 @@ public class PinpointLocalizer extends Localizer {
     public void setPose(Pose setPose) {
     resetPinpoint();
     Pose setPinpointPose = MathFunctions.subtractPoses(setPose, startPose);
-    odo.setPosition(new Pose2D(DistanceUnit.INCH, setPinpointPose.getY(), setPinpointPose.getX(), AngleUnit.RADIANS, setPinpointPose.getHeading()));
+    odo.setPosition(new Pose2D(DistanceUnit.INCH, setPinpointPose.getX(), setPinpointPose.getY(), AngleUnit.RADIANS, setPinpointPose.getHeading()));
     }
 
     /**
