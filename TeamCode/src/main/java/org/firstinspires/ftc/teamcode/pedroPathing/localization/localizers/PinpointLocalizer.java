@@ -99,10 +99,7 @@ public class PinpointLocalizer extends Localizer {
         Pose2D rawPose = odo.getPosition();
         Pose pose = new Pose(rawPose.getX(DistanceUnit.INCH), rawPose.getY(DistanceUnit.INCH), rawPose.getHeading(AngleUnit.RADIANS));
 
-        Vector vec = pose.getVector();
-        vec.rotateVector(startPose.getHeading());
-
-        return MathFunctions.addPoses(startPose, new Pose(vec.getXComponent(), vec.getYComponent(), pose.getHeading()));
+        return MathFunctions.addPoses(startPose, MathFunctions.rotatePose(pose, startPose.getHeading(), false));
     }
 
     /**
