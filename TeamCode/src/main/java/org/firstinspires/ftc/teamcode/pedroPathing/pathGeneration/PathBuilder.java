@@ -52,15 +52,46 @@ public class PathBuilder {
     }
 
     /**
+     * This adds a default Path defined by a specified BezierCurve to the PathBuilder.
+     *
+     * @param controlPoints This is the specified control points that define the BezierCurve.
+     * @return This returns itself with the updated data.
+     */
+    public PathBuilder addBezierCurve(Point... controlPoints) {
+        return addPath(new BezierCurve(controlPoints));
+    }
+
+    /**
+     * This adds a default Path defined by a specified BezierCurve to the PathBuilder.
+     *
+     * @param controlPoints This is the specified control points that define the BezierCurve.
+     * @return This returns itself with the updated data.
+     */
+    public PathBuilder addBezierCurve(ArrayList<Point> controlPoints) {
+        return addPath(new BezierCurve(controlPoints));
+    }
+
+    /**
+     * This adds a default Path defined by a specified BezierLine to the PathBuilder.
+     *
+     * @param startPoint start point of the line.
+     * @param endPoint end point of the line.
+     * @return This returns itself with the updated data.
+     */
+    public PathBuilder addBezierLine(Point startPoint, Point endPoint) {
+        return addPath(new BezierLine(startPoint, endPoint));
+    }
+
+    /**
      * This sets a linear heading interpolation on the last Path added to the PathBuilder.
      *
      * @param startHeading The start of the linear heading interpolation.
      * @param endHeading The end of the linear heading interpolation.
-     *                   This will be reached at the end of the Path if no end time is specified.
+     *         This will be reached at the end of the Path if no end time is specified.
      * @return This returns itself with the updated data.
      */
     public PathBuilder setLinearHeadingInterpolation(double startHeading, double endHeading) {
-        this.paths.get(paths.size()-1).setLinearHeadingInterpolation(startHeading, endHeading);
+        this.paths.get(paths.size() - 1).setLinearHeadingInterpolation(startHeading, endHeading);
         return this;
     }
 
@@ -69,13 +100,13 @@ public class PathBuilder {
      *
      * @param startHeading The start of the linear heading interpolation.
      * @param endHeading The end of the linear heading interpolation.
-     *                   This will be reached at the end of the Path if no end time is specified.
+     *         This will be reached at the end of the Path if no end time is specified.
      * @param endTime The end time on the Path that the linear heading interpolation will end.
-     *                This value goes from [0, 1] since Bezier curves are parametric functions.
+     *         This value goes from [0, 1] since Bezier curves are parametric functions.
      * @return This returns itself with the updated data.
      */
     public PathBuilder setLinearHeadingInterpolation(double startHeading, double endHeading, double endTime) {
-        this.paths.get(paths.size()-1).setLinearHeadingInterpolation(startHeading, endHeading, endTime);
+        this.paths.get(paths.size() - 1).setLinearHeadingInterpolation(startHeading, endHeading, endTime);
         return this;
     }
 
@@ -86,7 +117,7 @@ public class PathBuilder {
      * @return This returns itself with the updated data.
      */
     public PathBuilder setConstantHeadingInterpolation(double setHeading) {
-        this.paths.get(paths.size()-1).setConstantHeadingInterpolation(setHeading);
+        this.paths.get(paths.size() - 1).setConstantHeadingInterpolation(setHeading);
         return this;
     }
 
@@ -94,20 +125,21 @@ public class PathBuilder {
      * This sets a reversed or tangent heading interpolation on the last Path added to the PathBuilder.
      *
      * @param set This sets the heading to reversed tangent following if this parameter is true.
-     *            Conversely, this sets a tangent following if this parameter is false.
+     *         Conversely, this sets a tangent following if this parameter is false.
      * @return This returns itself with the updated data.
      */
     public PathBuilder setReversed(boolean set) {
-        this.paths.get(paths.size()-1).setReversed(set);
+        this.paths.get(paths.size() - 1).setReversed(set);
         return this;
     }
+
     /**
      * This sets the heading interpolation to tangential on the last Path added to the PathBuilder.
      * There really shouldn't be a reason to use this since the default heading interpolation is
      * tangential but it's here.
      */
     public PathBuilder setTangentHeadingInterpolation() {
-        this.paths.get(paths.size()-1).setTangentHeadingInterpolation();
+        this.paths.get(paths.size() - 1).setTangentHeadingInterpolation();
         return this;
     }
 
@@ -118,7 +150,7 @@ public class PathBuilder {
      * @return This returns itself with the updated data.
      */
     public PathBuilder setZeroPowerAccelerationMultiplier(double set) {
-        this.paths.get(paths.size()-1).setZeroPowerAccelerationMultiplier(set);
+        this.paths.get(paths.size() - 1).setZeroPowerAccelerationMultiplier(set);
         return this;
     }
 
@@ -129,7 +161,7 @@ public class PathBuilder {
      * @return This returns itself with the updated data.
      */
     public PathBuilder setPathEndVelocityConstraint(double set) {
-        this.paths.get(paths.size()-1).setPathEndVelocityConstraint(set);
+        this.paths.get(paths.size() - 1).setPathEndVelocityConstraint(set);
         return this;
     }
 
@@ -140,7 +172,7 @@ public class PathBuilder {
      * @return This returns itself with the updated data.
      */
     public PathBuilder setPathEndTranslationalConstraint(double set) {
-        this.paths.get(paths.size()-1).setPathEndTranslationalConstraint(set);
+        this.paths.get(paths.size() - 1).setPathEndTranslationalConstraint(set);
         return this;
     }
 
@@ -151,7 +183,7 @@ public class PathBuilder {
      * @return This returns itself with the updated data.
      */
     public PathBuilder setPathEndHeadingConstraint(double set) {
-        this.paths.get(paths.size()-1).setPathEndHeadingConstraint(set);
+        this.paths.get(paths.size() - 1).setPathEndHeadingConstraint(set);
         return this;
     }
 
@@ -162,7 +194,7 @@ public class PathBuilder {
      * @return This returns itself with the updated data.
      */
     public PathBuilder setPathEndTValueConstraint(double set) {
-        this.paths.get(paths.size()-1).setPathEndTValueConstraint(set);
+        this.paths.get(paths.size() - 1).setPathEndTValueConstraint(set);
         return this;
     }
 
@@ -173,7 +205,7 @@ public class PathBuilder {
      * @return This returns itself with the updated data.
      */
     public PathBuilder setPathEndTimeoutConstraint(double set) {
-        this.paths.get(paths.size()-1).setPathEndTimeoutConstraint(set);
+        this.paths.get(paths.size() - 1).setPathEndTimeoutConstraint(set);
         return this;
     }
 
@@ -182,12 +214,12 @@ public class PathBuilder {
      * This callback is set to run at a specified number of milliseconds after the start of the path.
      *
      * @param time This sets the number of milliseconds of wait between the start of the Path and
-     *             the calling of the callback.
+     *         the calling of the callback.
      * @param runnable This sets the code for the callback to run. Use lambda statements for this.
      * @return This returns itself with the updated data.
      */
     public PathBuilder addTemporalCallback(double time, Runnable runnable) {
-        this.callbacks.add(new PathCallback(time, runnable, PathCallback.TIME, paths.size()-1));
+        this.callbacks.add(new PathCallback(time, runnable, PathCallback.TIME, paths.size() - 1));
         return this;
     }
 
@@ -200,7 +232,7 @@ public class PathBuilder {
      * @return This returns itself with the updated data.
      */
     public PathBuilder addParametricCallback(double t, Runnable runnable) {
-        this.callbacks.add(new PathCallback(t, runnable, PathCallback.PARAMETRIC, paths.size()-1));
+        this.callbacks.add(new PathCallback(t, runnable, PathCallback.PARAMETRIC, paths.size() - 1));
         return this;
     }
 

@@ -40,7 +40,7 @@ import java.util.List;
  * @version 1.0, 3/13/2024
  */
 @Config
-@Autonomous (name = "Forward Zero Power Acceleration Tuner", group = "Autonomous Pathing Tuning")
+@Autonomous(name = "Forward Zero Power Acceleration Tuner", group = "Autonomous Pathing Tuning")
 public class ForwardZeroPowerAccelerationTuner extends OpMode {
     private ArrayList<Double> accelerations = new ArrayList<>();
 
@@ -120,6 +120,10 @@ public class ForwardZeroPowerAccelerationTuner extends OpMode {
     @Override
     public void loop() {
         if (gamepad1.cross || gamepad1.a) {
+            for (DcMotorEx motor : motors) {
+                motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                motor.setPower(0);
+            }
             requestOpModeStop();
         }
 
@@ -149,7 +153,7 @@ public class ForwardZeroPowerAccelerationTuner extends OpMode {
             for (Double acceleration : accelerations) {
                 average += acceleration;
             }
-            average /= (double)accelerations.size();
+            average /= (double) accelerations.size();
 
             telemetryA.addData("forward zero power acceleration (deceleration):", average);
             telemetryA.update();
