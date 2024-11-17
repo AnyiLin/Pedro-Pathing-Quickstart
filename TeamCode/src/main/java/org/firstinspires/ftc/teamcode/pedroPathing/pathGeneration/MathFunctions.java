@@ -27,16 +27,16 @@ public class MathFunctions {
         double denom = 1;
 
         // this multiplies up the numerator of the nCr function
-        for (int i = n; i > n-r; i--) {
+        for (int i = n; i > n - r; i--) {
             num *= i;
         }
 
         // this multiplies up the denominator of the nCr function
-        for (int i = 1; i <=r; i++) {
+        for (int i = 1; i <= r; i++) {
             denom *= i;
         }
 
-        return num/denom;
+        return num / denom;
     }
 
     /**
@@ -67,7 +67,7 @@ public class MathFunctions {
 
     /**
      * This normalizes an angle to be between 0 and 2 pi radians, inclusive.
-     *
+     * <p>
      * IMPORTANT NOTE: This method operates in radians.
      *
      * @param angleRadians the angle to be normalized.
@@ -75,8 +75,8 @@ public class MathFunctions {
      */
     public static double normalizeAngle(double angleRadians) {
         double angle = angleRadians;
-        while (angle<0) angle += 2*Math.PI;
-        while (angle>2*Math.PI) angle -= 2*Math.PI;
+        while (angle < 0) angle += 2 * Math.PI;
+        while (angle > 2 * Math.PI) angle -= 2 * Math.PI;
         return angle;
     }
 
@@ -88,7 +88,7 @@ public class MathFunctions {
      * @return returns the smallest angle.
      */
     public static double getSmallestAngleDifference(double one, double two) {
-        return Math.min(MathFunctions.normalizeAngle(one-two), MathFunctions.normalizeAngle(two-one));
+        return Math.min(MathFunctions.normalizeAngle(one - two), MathFunctions.normalizeAngle(two - one));
     }
 
     /**
@@ -98,7 +98,7 @@ public class MathFunctions {
      * @return returns the turn direction.
      */
     public static double getTurnDirection(double startHeading, double endHeading) {
-        if (MathFunctions.normalizeAngle(endHeading-startHeading) >= 0 && MathFunctions.normalizeAngle(endHeading-startHeading) <= Math.PI) {
+        if (MathFunctions.normalizeAngle(endHeading - startHeading) >= 0 && MathFunctions.normalizeAngle(endHeading - startHeading) <= Math.PI) {
             return 1; // counter clock wise
         }
         return -1; // clock wise
@@ -112,7 +112,7 @@ public class MathFunctions {
      * @return returns the distance between the two.
      */
     public static double distance(Pose pose, Point point) {
-        return Math.sqrt(Math.pow(pose.getX()-point.getX(), 2) + Math.pow(pose.getY()-point.getY(), 2));
+        return Math.sqrt(Math.pow(pose.getX() - point.getX(), 2) + Math.pow(pose.getY() - point.getY(), 2));
     }
 
     /**
@@ -123,7 +123,7 @@ public class MathFunctions {
      * @return returns the distance between the two.
      */
     public static double distance(Pose one, Pose two) {
-        return Math.sqrt(Math.pow(one.getX()-two.getX(), 2) + Math.pow(one.getY()-two.getY(), 2));
+        return Math.sqrt(Math.pow(one.getX() - two.getX(), 2) + Math.pow(one.getY() - two.getY(), 2));
     }
 
     /**
@@ -173,6 +173,22 @@ public class MathFunctions {
     }
 
     /**
+     * This rotates the given pose by the given theta,
+     *
+     * @param pose the Pose to rotate.
+     * @param theta the angle to rotate by.
+     * @param rotateHeading whether to adjust the Pose heading too.
+     * @return the rotated Pose.
+     */
+    public static Pose rotatePose(Pose pose, double theta, boolean rotateHeading) {
+        double x = pose.getX() * Math.cos(theta) - pose.getY() * Math.sin(theta);
+        double y = pose.getX() * Math.sin(theta) + pose.getY() * Math.cos(theta);
+        double heading = rotateHeading ? normalizeAngle(pose.getHeading() + theta) : pose.getHeading();
+
+        return new Pose(x, y, heading);
+    }
+
+    /**
      * This multiplies a Point by a scalar and returns the result as a Point
      *
      * @param point the Point being multiplied.
@@ -180,7 +196,7 @@ public class MathFunctions {
      * @return returns the scaled Point.
      */
     public static Point scalarMultiplyPoint(Point point, double scalar) {
-        return new Point(point.getX()*scalar, point.getY()*scalar, Point.CARTESIAN);
+        return new Point(point.getX() * scalar, point.getY() * scalar, Point.CARTESIAN);
     }
 
     /**
@@ -213,7 +229,7 @@ public class MathFunctions {
      * @return returns the scaled Vector.
      */
     public static Vector scalarMultiplyVector(Vector vector, double scalar) {
-        return new Vector(vector.getMagnitude()*scalar, vector.getTheta());
+        return new Vector(vector.getMagnitude() * scalar, vector.getTheta());
     }
 
     /**
@@ -227,7 +243,7 @@ public class MathFunctions {
         if (vector.getMagnitude() == 0) {
             return new Vector(0.0, vector.getTheta());
         } else {
-            return new Vector(vector.getMagnitude()/Math.abs(vector.getMagnitude()), vector.getTheta());
+            return new Vector(vector.getMagnitude() / Math.abs(vector.getMagnitude()), vector.getTheta());
         }
     }
 
@@ -240,7 +256,7 @@ public class MathFunctions {
      */
     public static Vector addVectors(Vector one, Vector two) {
         Vector returnVector = new Vector();
-        returnVector.setOrthogonalComponents(one.getXComponent()+two.getXComponent(), one.getYComponent()+two.getYComponent());
+        returnVector.setOrthogonalComponents(one.getXComponent() + two.getXComponent(), one.getYComponent() + two.getYComponent());
         return returnVector;
     }
 
@@ -254,7 +270,7 @@ public class MathFunctions {
      */
     public static Vector subtractVectors(Vector one, Vector two) {
         Vector returnVector = new Vector();
-        returnVector.setOrthogonalComponents(one.getXComponent()-two.getXComponent(), one.getYComponent()-two.getYComponent());
+        returnVector.setOrthogonalComponents(one.getXComponent() - two.getXComponent(), one.getYComponent() - two.getYComponent());
         return returnVector;
     }
 
@@ -266,7 +282,7 @@ public class MathFunctions {
      * @return returns the dot product of the two Vectors.
      */
     public static double dotProduct(Vector one, Vector two) {
-        return one.getXComponent()*two.getXComponent() + one.getYComponent()*two.getYComponent();
+        return one.getXComponent() * two.getXComponent() + one.getYComponent() * two.getYComponent();
     }
 
     /**
@@ -278,7 +294,7 @@ public class MathFunctions {
      * @return returns the cross product of the two Vectors.
      */
     public static double crossProduct(Vector one, Vector two) {
-        return one.getXComponent()*two.getYComponent() - one.getYComponent()*two.getXComponent();
+        return one.getXComponent() * two.getYComponent() - one.getYComponent() * two.getXComponent();
     }
 
     /**
@@ -286,7 +302,7 @@ public class MathFunctions {
      * specified accuracy amount.
      *
      * @param one first number specified.
-     * @param two second number specified.
+     * @param two Second number specified.
      * @param accuracy the level of accuracy specified.
      * @return returns if the two numbers are within the specified accuracy of each other.
      */

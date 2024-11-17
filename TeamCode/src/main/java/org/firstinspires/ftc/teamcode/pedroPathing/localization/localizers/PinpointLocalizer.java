@@ -23,18 +23,18 @@ import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Vector;
          *
          * forward on robot is the x positive direction
          *
-         *    /--------------\
-         *    |     ____     |
-         *    |     ----     |
-         *    | ||           |
-         *    | ||           |  ----> left (y positive)
-         *    |              |
-         *    |              |
-         *    \--------------/
-         *           |
-         *           |
-         *           V
-         *    forward (x positive)
+         *                    forward (x positive)
+         *                                △
+         *                                |
+         *                                |
+         *                         /--------------\
+         *                         |              |
+         *                         |              |
+         *                         |           || |
+         *  left (y positive) <--- |           || |  
+         *                         |     ____     |
+         *                         |     ----     |
+         *                         \--------------/
          * With the pinpoint your readings will be used in mm
          * to use inches ensure to divide your mm value by 25.4
          * @author Logan Nash
@@ -96,8 +96,10 @@ public class PinpointLocalizer extends Localizer {
      */
     @Override
     public Pose getPose() {
-        Pose2D pose = odo.getPosition();
-        return new Pose(pose.getX(DistanceUnit.INCH), pose.getY(DistanceUnit.INCH), pose.getHeading(AngleUnit.RADIANS));
+        Pose2D rawPose = odo.getPosition();
+        Pose pose = new Pose(rawPose.getX(DistanceUnit.INCH), rawPose.getY(DistanceUnit.INCH), rawPose.getHeading(AngleUnit.RADIANS));
+
+        return MathFunctions.addPoses(startPose, MathFunctions.rotatePose(pose, startPose.getHeading(), false));
     }
 
     /**
