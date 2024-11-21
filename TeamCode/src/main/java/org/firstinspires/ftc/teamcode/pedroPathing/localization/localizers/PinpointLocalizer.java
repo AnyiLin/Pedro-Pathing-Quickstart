@@ -23,18 +23,18 @@ import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Vector;
          *
          * forward on robot is the x positive direction
          *
-         *    /--------------\
-         *    |     ____     |
-         *    |     ----     |
-         *    | ||           |
-         *    | ||           |  ----> left (y positive)
-         *    |              |
-         *    |              |
-         *    \--------------/
-         *           |
-         *           |
-         *           V
-         *    forward (x positive)
+         *                    forward (x positive)
+         *                                △
+         *                                |
+         *                                |
+         *                         /--------------\
+         *                         |              |
+         *                         |              |
+         *                         |           || |
+         *  left (y positive) <--- |           || |  
+         *                         |     ____     |
+         *                         |     ----     |
+         *                         \--------------/
          * With the pinpoint your readings will be used in mm
          * to use inches ensure to divide your mm value by 25.4
          * @author Logan Nash

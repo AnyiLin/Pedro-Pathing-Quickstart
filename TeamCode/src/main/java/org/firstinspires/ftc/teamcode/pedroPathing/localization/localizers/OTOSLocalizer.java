@@ -21,18 +21,18 @@ import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Vector;
  *
  * forward on robot is the x positive direction
  *
- *    /--------------\
- *    |     ____     |
- *    |     ----     |
- *    | ||        || |
- *    | ||        || |  ----> left (y positive)
- *    |              |
- *    |              |
- *    \--------------/
- *           |
- *           |
- *           V
- *    forward (x positive)
+ *                         forward (x positive)
+ *                                △
+ *                                |
+ *                                |
+ *                         /--------------\
+ *                         |              |
+ *                         |              |
+ *                         | ||        || |
+ *  left (y positive) <--- | ||        || |  
+ *                         |     ____     |
+ *                         |     ----     |
+ *                         \--------------/
  *
  * @author Anyi Lin - 10158 Scott's Bots
  * @version 1.0, 7/20/2024
