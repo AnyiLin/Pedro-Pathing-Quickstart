@@ -313,4 +313,14 @@ public class ThreeWheelIMULocalizer extends Localizer {
     public void resetIMU() {
         imu.resetYaw();
     }
+
+    /**
+     * This is returns the IMU.
+     *
+     * @return returns the IMU
+     */
+    @Override
+    public IMU getIMU() {
+        return imu;
+    }
 }

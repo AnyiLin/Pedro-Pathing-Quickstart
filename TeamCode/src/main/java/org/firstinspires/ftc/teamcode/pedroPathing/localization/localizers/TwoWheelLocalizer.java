@@ -296,4 +296,14 @@ public class TwoWheelLocalizer extends Localizer { // todo: make two wheel odo w
     public void resetIMU() {
         imu.resetYaw();
     }
+
+    /**
+     * This is returns the IMU.
+     *
+     * @return returns the IMU
+     */
+    @Override
+    public IMU getIMU() {
+        return imu;
+    }
 }
