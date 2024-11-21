@@ -16,31 +16,31 @@ import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Vector;
  * This is the Pinpoint class. This class extends the Localizer superclass and is a
  * localizer that uses the two wheel odometry set up with the IMU to have more accurate heading
  * readings. The diagram below, which is modified from Road Runner, shows a typical set up.
-         *
-         * The view is from the top of the robot looking downwards.
-         *
-         * left on robot is the y positive direction
-         *
-         * forward on robot is the x positive direction
-         *
-         *                    forward (x positive)
-         *                                △
-         *                                |
-         *                                |
-         *                         /--------------\
-         *                         |              |
-         *                         |              |
-         *                         |           || |
-         *  left (y positive) <--- |           || |  
-         *                         |     ____     |
-         *                         |     ----     |
-         *                         \--------------/
-         * With the pinpoint your readings will be used in mm
-         * to use inches ensure to divide your mm value by 25.4
-         * @author Logan Nash
-         * @author Havish Sripada 12808 - RevAmped Robotics
-         * @author Ethan Doak - Gobilda
-         * @version 1.0, 10/2/2024
+ *
+ * The view is from the top of the robot looking downwards.
+ *
+ * left on robot is the y positive direction
+ *
+ * forward on robot is the x positive direction
+ *
+ *                    forward (x positive)
+ *                                △
+ *                                |
+ *                                |
+ *                         /--------------\
+ *                         |              |
+ *                         |              |
+ *                         |           || |
+ *  left (y positive) <--- |           || |
+ *                         |     ____     |
+ *                         |     ----     |
+ *                         \--------------/
+ * With the pinpoint your readings will be used in mm
+ * to use inches ensure to divide your mm value by 25.4
+ * @author Logan Nash
+ * @author Havish Sripada 12808 - RevAmped Robotics
+ * @author Ethan Doak - Gobilda
+ * @version 1.0, 10/2/2024
  */
 public class PinpointLocalizer extends Localizer {
     private HardwareMap hardwareMap;
