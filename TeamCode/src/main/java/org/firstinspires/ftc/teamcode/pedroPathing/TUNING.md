@@ -35,7 +35,7 @@ measurements will be in centimeters.
   find the rate at which your robot decelerates when power is cut from the drivetrain. This is used to
   get a more accurate estimation of the drive vector. To find this, you will need to run the
   `Forward Zero Power Acceleration Tuner` and the `Lateral Zero Power Acceleration Tuner` OpModes.
-  These will run your robot until it hits a velocity of 10 inches/second forward and to the right,
+  These will run your robot until it hits a velocity of 30 inches/second forward and to the right,
   respectively. The velocity can be changed through FTC Dashboard under the dropdown for each
   respective class, but higher velocities work better. After the velocity has been reached, power will
   be cut from the drivetrain and the robot's deceleration will be tracked until the robot stops, at
