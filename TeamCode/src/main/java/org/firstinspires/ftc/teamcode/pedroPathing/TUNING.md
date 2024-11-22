@@ -20,7 +20,8 @@ measurements will be in centimeters.
 
 * Next, we need to find the preferred mecanum drive vectors. The rollers on mecanum wheels point at a
   45 degree angle from the forward direction, but the actual direction the force is output is actually
-  closer to forward. To find the direction your wheels will go, you will need to run the
+  closer to forward. Before running any OpModes, make sure your motors are reversed properly in the
+  `Follower` class constructor. To find the direction your wheels will go, you will need to run the
   `Forward Velocity Tuner` and `Strafe Velocity Tuner` OpModes. These will run your robot at full
   power for 40 inches forward and to the right, respectively. The distance can be changed through FTC
   Dashboard under the dropdown for each respective class, but higher distances work better. After the
