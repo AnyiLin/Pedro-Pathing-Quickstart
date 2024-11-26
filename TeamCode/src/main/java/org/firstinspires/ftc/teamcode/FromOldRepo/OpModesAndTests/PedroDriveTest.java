@@ -1,35 +1,15 @@
 package org.firstinspires.ftc.teamcode.FromOldRepo.OpModesAndTests;
 
-import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.button.Button;
-import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
-import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
-import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.FromOldRepo.Examples.GobuildaSample.GoBildaPinpointDriver;
 import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Commands.CameraAdjustTeleCommand;
-import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Commands.DriveCommand;
-import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Commands.ExtensionOutCommand;
-import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Commands.LocalizerCommand;
 import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Commands.TelePedroDriveCommand;
-import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Commands.TelemetryCommand;
-import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Commands.VisionCommands.LimelightAprilTagCommand;
-import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Subsystems.DriveSubsystem;
-import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Subsystems.ExtensionSubsystem;
-import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Subsystems.LimelightSubsystem;
-import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Subsystems.LocalizerSubsystem;
-import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Subsystems.OdometrySubsystem;
 import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Subsystems.PedroDriveSubsystem;
-import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Subsystems.TelemetrySubsystem;
 import org.firstinspires.ftc.teamcode.pedroPathing.follower.Follower;
 
 

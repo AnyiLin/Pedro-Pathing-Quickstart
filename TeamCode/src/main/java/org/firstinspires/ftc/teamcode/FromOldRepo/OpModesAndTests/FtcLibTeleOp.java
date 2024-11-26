@@ -9,12 +9,9 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -22,21 +19,13 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
 import org.firstinspires.ftc.teamcode.FromOldRepo.Examples.GobuildaSample.GoBildaPinpointDriver;
 import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Commands.CameraAdjustTeleCommand;
-import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Commands.DriveCommand;
 import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Commands.ExtensionOutCommand;
-import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Commands.ImuCommands.ImuResetCommand;
-import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Commands.LocalizerCommand;
 import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Commands.TelePedroDriveCommand;
 import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Commands.TelemetryCommand;
-import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Commands.VisionCommands.LimelightAprilTagCommand;
-import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Subsystems.AutoDriveSubsystem;
-import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Subsystems.DriveSubsystem;
-import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Subsystems.ExtensionSubsystem;
-import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Subsystems.ImuSubsystem;
+import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Subsystems.oldexten;
 import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Subsystems.LimelightSubsystem;
 import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Subsystems.LocalizerSubsystem;
 import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Subsystems.OdometrySubsystem;
-import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Subsystems.PedroDriveSubsystem;
 import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Subsystems.PedroDriveSubsystem;
 import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Subsystems.TelemetrySubsystem;
 import org.firstinspires.ftc.teamcode.pedroPathing.follower.Follower;
@@ -66,7 +55,7 @@ public class FtcLibTeleOp extends CommandOpMode {
     private GoBildaPinpointDriver odometry;
     private Telemetry mtelemetry;
 
-    private ExtensionSubsystem extensionSubsystem;
+    private oldexten extensionSubsystem;
     private ExtensionOutCommand extensionOutCommand;
 
     private GamepadEx driverOp, operatorOp;
@@ -97,7 +86,7 @@ public class FtcLibTeleOp extends CommandOpMode {
         telePedroDriveCommand = new TelePedroDriveCommand(pedroDriveSubsystem, telemetry, driverOp::getLeftY, driverOp::getLeftX, driverOp::getRightX, true);
 
         extensionMotor = hardwareMap.get(DcMotorEx.class, "extensionMotor");
-        extensionSubsystem = new ExtensionSubsystem(extensionMotor);
+        extensionSubsystem = new oldexten(extensionMotor);
         extensionOutCommand = new ExtensionOutCommand(extensionSubsystem);
 
         limelight = hardwareMap.get(Limelight3A.class, "limelight");

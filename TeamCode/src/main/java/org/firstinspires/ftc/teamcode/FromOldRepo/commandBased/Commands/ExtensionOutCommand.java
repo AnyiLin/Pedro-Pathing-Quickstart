@@ -2,12 +2,12 @@ package org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Commands;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Subsystems.ExtensionSubsystem;
+import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Subsystems.oldexten;
 
 public class ExtensionOutCommand extends CommandBase {
-    private ExtensionSubsystem extensionSubsystem;
+    private oldexten extensionSubsystem;
 
-    public ExtensionOutCommand(ExtensionSubsystem extensionSubsystem) {
+    public ExtensionOutCommand(oldexten extensionSubsystem) {
         this.extensionSubsystem = extensionSubsystem;
         addRequirements(extensionSubsystem);
     }
