@@ -71,7 +71,7 @@ public class DriveEncoderLocalizer extends Localizer {
 
         // TODO: reverse any encoders necessary
         leftFront.setDirection(Encoder.REVERSE);
-        rightRear.setDirection(Encoder.REVERSE);
+        rightFront.setDirection(Encoder.REVERSE);
         leftRear.setDirection(Encoder.FORWARD);
         rightRear.setDirection(Encoder.FORWARD);
 
