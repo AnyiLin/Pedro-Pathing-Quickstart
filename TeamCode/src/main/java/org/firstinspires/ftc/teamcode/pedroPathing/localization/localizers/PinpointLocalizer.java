@@ -152,8 +152,8 @@ public class PinpointLocalizer extends Localizer {
     @Override
     public void update() {
         odo.update();
-        totalHeading += MathFunctions.getSmallestAngleDifference(odo.getHeading(), previousHeading);
-        previousHeading = odo.getHeading();
+        totalHeading += MathFunctions.getSmallestAngleDifference(MathFunctions.normalizeAngle(odo.getHeading()), previousHeading);
+        previousHeading = MathFunctions.normalizeAngle(odo.getHeading());
     }
 
     /**
