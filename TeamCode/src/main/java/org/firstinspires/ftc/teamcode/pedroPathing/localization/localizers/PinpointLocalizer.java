@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.pedroPathing.localization.localizers;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
@@ -207,5 +208,17 @@ public class PinpointLocalizer extends Localizer {
      */
     public void resetPinpoint(){
         odo.resetPosAndIMU();
+    }
+
+    /**
+     * Send the raw Pinpoint location.
+     *
+     * @param telemetry The Telemetry object
+     */
+    public void debug(Telemetry telemetry) {
+        Pose2D rawPose = odo.getPosition();
+        telemetry.addData("raw x", rawPose.getX(DistanceUnit.INCH));
+        telemetry.addData("raw y", rawPose.getY(DistanceUnit.INCH));
+        telemetry.addData("raw heading", rawPose.getHeading(AngleUnit.RADIANS));
     }
 }

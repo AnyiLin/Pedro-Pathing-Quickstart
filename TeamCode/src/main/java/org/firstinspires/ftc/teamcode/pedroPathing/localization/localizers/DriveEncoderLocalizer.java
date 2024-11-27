@@ -9,6 +9,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.pedroPathing.localization.Encoder;
 import org.firstinspires.ftc.teamcode.pedroPathing.localization.Localizer;
 import org.firstinspires.ftc.teamcode.pedroPathing.localization.Matrix;
@@ -268,5 +269,17 @@ public class DriveEncoderLocalizer extends Localizer {
      * This does nothing since this localizer does not use the IMU.
      */
     public void resetIMU() {
+    }
+
+    /**
+     * Send all the motor encoder positions.
+     *
+     * @param telemetry The Telemetry object
+     */
+    public void debug(Telemetry telemetry) {
+        telemetry.addData("leftFront", leftFront.getCurrentPosition());
+        telemetry.addData("leftRear", leftRear.getCurrentPosition());
+        telemetry.addData("rightFront", rightFront.getCurrentPosition());
+        telemetry.addData("rightRear", rightRear.getCurrentPosition());
     }
 }

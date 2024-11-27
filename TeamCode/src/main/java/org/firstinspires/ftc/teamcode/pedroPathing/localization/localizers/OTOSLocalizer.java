@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.pedroPathing.localization.localizers;
 import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.pedroPathing.localization.Localizer;
@@ -221,5 +222,18 @@ public class OTOSLocalizer extends Localizer {
      * This does nothing since this localizer does not use the IMU.
      */
     public void resetIMU() {
+    }
+
+    /**
+     * Send the raw OTOS position.
+     *
+     * @param telemetry The Telemetry object
+     */
+    public void debug(Telemetry telemetry) {
+        SparkFunOTOS.Pose2D rawPose = otos.getPosition();
+        Pose pose = new Pose(rawPose.x, rawPose.y, rawPose.h);
+        telemetry.addData("raw x", rawPose.x);
+        telemetry.addData("raw y", rawPose.y);
+        telemetry.addData("raw heading", rawPose.h);
     }
 }

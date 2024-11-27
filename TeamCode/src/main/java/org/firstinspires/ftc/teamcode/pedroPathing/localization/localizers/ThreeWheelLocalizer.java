@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.pedroPathing.localization.Encoder;
 import org.firstinspires.ftc.teamcode.pedroPathing.localization.Localizer;
 import org.firstinspires.ftc.teamcode.pedroPathing.localization.Matrix;
@@ -288,5 +289,16 @@ public class ThreeWheelLocalizer extends Localizer {
      * This does nothing since this localizer does not use the IMU.
      */
     public void resetIMU() {
+    }
+
+    /**
+     * Send the 3 encoder positions.
+     *
+     * @param telemetry The Telemetry object
+     */
+    public void debug(Telemetry telemetry) {
+        telemetry.addData("leftEncoder", leftEncoder.getCurrentPosition());
+        telemetry.addData("rightEncoder", rightEncoder.getCurrentPosition());
+        telemetry.addData("strafeEncoder", strafeEncoder.getCurrentPosition());
     }
 }

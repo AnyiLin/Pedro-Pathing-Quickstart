@@ -28,6 +28,7 @@ that applies to you and follow the directions there.
 * Then, go to `DriveEncoderLocalizer.java`. The motor names are already set, so you don't have to do
   anything to change the encoder names there.
 * Then, reverse the direction of any encoders so that all encoders tick up when the robot is moving forward.
+ Confirm this by using the `Localizer Direction` op mode.
 * Now, you'll have to tune the multipliers. These convert your measurements from encoder ticks into 
   inches or radians, essentially scaling your localizer so that your numbers are accurate to the real
   world.
@@ -78,6 +79,7 @@ that applies to you and follow the directions there.
   of your robot's.
 * Then, reverse the direction of any encoders so that the forward encoder ticks up when the robot
  is moving forward and the strafe encoder ticks up when the robot moves right.
+ Confirm this by using the `Localizer Direction` op mode.
 * Now, you'll have to tune the multipliers. These convert your measurements from encoder ticks into
   inches or radians, essentially scaling your localizer so that your numbers are accurate to the real
   world.
@@ -117,6 +119,7 @@ that applies to you and follow the directions there.
   variable names correspond to which tracking wheel should be connected.
 * Then, reverse the direction of any encoders so that the forward encoders tick up when the robot
   is moving forward and the strafe encoder ticks up when the robot moves right.
+ Confirm this by using the `Localizer Direction` op mode.
 * First, start with the `Turn Localizer Tuner`. You'll want to position your robot to be facing
   in a direction you can easily find again, like lining up an edge of the robot against a field tile edge.
   By default, you should spin the robot for one rotation going counterclockwise. Once you've spun
@@ -163,6 +166,7 @@ that applies to you and follow the directions there.
   of your robot's.
 * Then, reverse the direction of any encoders so that the forward encoders tick up when the robot
   is moving forward and the strafe encoder ticks up when the robot moves right.
+ Confirm this by using the `Localizer Direction` op mode.
 * Although heading localization is done mostly through the IMU, the tracking wheels are still used for
   small angle adjustments for better stability. So, you will still need to tune your turning multiplier.
 * First, start with the `Turn Localizer Tuner`. Before doing any tuning, go to FTC Dashboard and find
@@ -207,6 +211,7 @@ that applies to you and follow the directions there.
 * Next, enter in the position of your OTOS relative to the center of the wheels of the robot. The
   positions are in inches, so convert measurements accordingly. Use the comment above the class
   declaration as well as to help you with the coordinates.
+* Confirm that your OTOS sensor is returning valid position data by using the `Localizer Direction` op mode.
 * First, start with the `Turn Localizer Tuner`. You'll want to position your robot to be facing
   in a direction you can easily find again, like lining up an edge of the robot against a field tile edge.
   By default, you should spin the robot for one rotation going counterclockwise. Once you've spun
@@ -248,6 +253,7 @@ that applies to you and follow the directions there.
 * Then, go to the `PinpointLocalier.java` file and go to where it tells you to replace
   the current statement with your pinpoint port in the constructor. Replace the `deviceName` parameter
   with the name of the port that the pinpoint is connected to.
+* Confirm that your Pinpoint is returning valid position data using the `Localizer Direction` op mode.
 * Next, follow the instructions left by the TODO: comment and enter in the odometry measurements either in
   mms or inches (We have the conversion rates listed).
 * First, to ensure that your pinpoint is properly connected, please run the `SensorGoBildaPinpointExample.java`

@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.pedroPathing.localization;
 
 import com.qualcomm.robotcore.hardware.IMU;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Vector;
 
 /**
@@ -102,4 +103,11 @@ public abstract class Localizer {
     public IMU getIMU() {
         return null;
     }
+
+
+    /**
+     * Send values used by this localizer to telemetry to check that the direction is set correctly.
+     * @param telemetry The Telemetry object
+     */
+    public void debug(Telemetry telemetry) {}
 }

@@ -80,4 +80,14 @@ public class Encoder {
     public double getDeltaPosition() {
         return getMultiplier() * (currentPosition - previousPosition);
     }
+
+    /**
+     * Returns the current position of the encoder, taking into the account the direction.
+     * Useful to debugging the direction of the encoder.
+     *
+     * @return The current position
+     */
+    public double getCurrentPosition() {
+        return getMultiplier() * currentPosition;
+    }
 }

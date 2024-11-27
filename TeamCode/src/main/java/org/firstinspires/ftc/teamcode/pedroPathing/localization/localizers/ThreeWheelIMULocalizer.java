@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.pedroPathing.localization.Encoder;
 import org.firstinspires.ftc.teamcode.pedroPathing.localization.Localizer;
@@ -322,5 +323,17 @@ public class ThreeWheelIMULocalizer extends Localizer {
     @Override
     public IMU getIMU() {
         return imu;
+    }
+
+    /**
+     * Send the yaw and the 3 encoder positions.
+     *
+     * @param telemetry The Telemetry object
+     */
+    public void debug(Telemetry telemetry) {
+        telemetry.addData("yaw", imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS));
+        telemetry.addData("leftEncoder", leftEncoder.getCurrentPosition());
+        telemetry.addData("rightEncoder", rightEncoder.getCurrentPosition());
+        telemetry.addData("strafeEncoder", strafeEncoder.getCurrentPosition());
     }
 }
