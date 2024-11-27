@@ -59,7 +59,8 @@ that applies to you and follow the directions there.
   replace `STRAFE_TICKS_TO_INCHES` in the localizer with your multiplier. Make sure you replace the number,
   not add on or multiply it to the previous number. The tuner takes into account your current multiplier.
 * Once you're done with all this, your localizer should be tuned. To test it out, you can go to
- `Localization Test` and push around or drive around your robot. Go to [FTC Dashboard](http://192.168.43.1:8080/dash)
+ `Localization Test` and push around or drive around your robot (make sure to set the motor names in
+ `FollowerConstants` and to reverse the motors properly in `LocalizationTest`). Go to [FTC Dashboard](http://192.168.43.1:8080/dash)
  and on the top right, switch the drop down from the default view to the field view. Then, on the bottom
  left corner, you should see a field and the robot being drawn on the field. You can then move your
  robot around and see if the movements look accurate on FTC Dashboard. If they don't, then you'll
@@ -102,7 +103,8 @@ that applies to you and follow the directions there.
   replace `STRAFE_TICKS_TO_INCHES` in the localizer with your multiplier. Make sure you replace the number,
   not add on or multiply it to the previous number. The tuner takes into account your current multiplier.
 * Once you're done with all this, your localizer should be tuned. To test it out, you can go to
- `Localization Test` and push around or drive around your robot. Go to [FTC Dashboard](http://192.168.43.1:8080/dash)
+ `Localization Test` and push around or drive around your robot (make sure to set the motor names in
+ `FollowerConstants` and to reverse the motors properly in `LocalizationTest`). Go to [FTC Dashboard](http://192.168.43.1:8080/dash)
  and on the top right, switch the drop down from the default view to the field view. Then, on the bottom
  left corner, you should see a field and the robot being drawn on the field. You can then move your
  robot around and see if the movements look accurate on FTC Dashboard. If they don't, then you'll
@@ -147,7 +149,8 @@ that applies to you and follow the directions there.
   replace `STRAFE_TICKS_TO_INCHES` in the localizer with your multiplier. Make sure you replace the number,
   not add on or multiply it to the previous number. The tuner takes into account your current multiplier.
 * Once you're done with all this, your localizer should be tuned. To test it out, you can go to
-  `Localization Test` and push around or drive around your robot. Go to [FTC Dashboard](http://192.168.43.1:8080/dash)
+  `Localization Test` and push around or drive around your robot (make sure to set the motor names in
+  `FollowerConstants` and to reverse the motors properly in `LocalizationTest`). Go to [FTC Dashboard](http://192.168.43.1:8080/dash)
   and on the top right, switch the drop down from the default view to the field view. Then, on the bottom
   left corner, you should see a field and the robot being drawn on the field. You can then move your
   robot around and see if the movements look accurate on FTC Dashboard. If they don't, then you'll
@@ -197,7 +200,8 @@ that applies to you and follow the directions there.
   replace `STRAFE_TICKS_TO_INCHES` in the localizer with your multiplier. Make sure you replace the number,
   not add on or multiply it to the previous number. The tuner takes into account your current multiplier.
 * Once you're done with all this, your localizer should be tuned. Make sure that `useIMU` is turned back on. To test it out, you can go to
-  `Localization Test` and push around or drive around your robot. Go to [FTC Dashboard](http://192.168.43.1:8080/dash)
+  `Localization Test` and push around or drive around your robot (make sure to set the motor names in
+  `FollowerConstants` and to reverse the motors properly in `LocalizationTest`). Go to [FTC Dashboard](http://192.168.43.1:8080/dash)
   and on the top right, switch the drop down from the default view to the field view. Then, on the bottom
   left corner, you should see a field and the robot being drawn on the field. You can then move your
   robot around and see if the movements look accurate on FTC Dashboard. If they don't, then you'll
@@ -241,7 +245,8 @@ that applies to you and follow the directions there.
   replace the linear scalar on line `77` in the localizer with your scalar. Make sure you replace the number,
   not add on or multiply it to the previous number. The tuner takes into account your current scalar.
 * Once you're done with all this, your localizer should be tuned. To test it out, you can go to
-  `Localization Test` and push around or drive around your robot. Go to [FTC Dashboard](http://192.168.43.1:8080/dash)
+  `Localization Test` and push around or drive around your robot (make sure to set the motor names in
+  `FollowerConstants` and to reverse the motors properly in `LocalizationTest`). Go to [FTC Dashboard](http://192.168.43.1:8080/dash)
   and on the top right, switch the drop down from the default view to the field view. Then, on the bottom
   left corner, you should see a field and the robot being drawn on the field. You can then move your
   robot around and see if the movements look accurate on FTC Dashboard. If they don't, then you'll
@@ -259,7 +264,8 @@ that applies to you and follow the directions there.
 * First, to ensure that your pinpoint is properly connected, please run the `SensorGoBildaPinpointExample.java`
   file left in the `tuning` folder located within `localization`.
 * Once completed, the localizer should be properly tuned. To test it out, you can go to
-  `Localization Test` and push around or drive around your robot. Go to [FTC Dashboard](http://192.168.43.1:8080/dash)
+  `Localization Test` and push around or drive around your robot (make sure to set the motor names in
+  `FollowerConstants` and to reverse the motors properly in `LocalizationTest`). Go to [FTC Dashboard](http://192.168.43.1:8080/dash)
   and on the top right, switch the drop down from the default view to the field view. Then, on the bottom
   left corner, you should see a field and the robot being drawn on the field. You can then move your
   robot around and see if the movements look accurate on FTC Dashboard. If they don't, then you'll
