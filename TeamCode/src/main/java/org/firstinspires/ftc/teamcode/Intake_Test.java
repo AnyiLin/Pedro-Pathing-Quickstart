@@ -1,23 +1,22 @@
-package org.firstinspires.ftc.teamcode.FromOldRepo;
+package org.firstinspires.ftc.teamcode;
 
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.ServoImplEx;
 
-import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Commands.IntakeCommands.CancelCommand;
-import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Commands.IntakeCommands.CollectSample;
-import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Commands.IntakeCommands.EjectCommand;
-import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Commands.IntakeCommands.ToggleAlliance;
-import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Subsystems.IntakeSubsystem;
+import org.firstinspires.ftc.teamcode.commands.IntakeCommands.CancelCommand;
+import org.firstinspires.ftc.teamcode.commands.IntakeCommands.CollectSample;
+import org.firstinspires.ftc.teamcode.commands.IntakeCommands.EjectCommand;
+import org.firstinspires.ftc.teamcode.commands.IntakeCommands.ToggleAlliance;
+import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
+
 @TeleOp
-@Disabled
 public class Intake_Test extends CommandOpMode {
     private IntakeSubsystem subsystem;
     private GamepadEx gamepad;

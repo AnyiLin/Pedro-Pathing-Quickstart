@@ -1,8 +1,8 @@
-package org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Commands.IntakeCommands;
+package org.firstinspires.ftc.teamcode.commands.IntakeCommands;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Subsystems.IntakeSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 
 public class ToggleAlliance extends CommandBase {
     private IntakeSubsystem subsystem;

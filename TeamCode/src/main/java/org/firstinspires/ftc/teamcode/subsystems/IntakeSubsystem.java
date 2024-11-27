@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Subsystems;
+package org.firstinspires.ftc.teamcode.subsystems;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
@@ -14,13 +14,13 @@ public class IntakeSubsystem extends SubsystemBase {
     private DcMotor motor;
     private Telemetry telemetry;
     private ColorSensor colorSensor;
-   private RevBlinkinLedDriver blinkin;
+    private RevBlinkinLedDriver blinkin;
     private boolean RedAlliance = false;
     private DistanceSensor distanceSensor;
     private ServoImplEx allianceColor;
 
     public IntakeSubsystem(Telemetry telemetry, DcMotor motor, ColorSensor colorSensor, RevBlinkinLedDriver blinkin,
-                          DistanceSensor distanceSensor, ServoImplEx allianceColor) {
+                           DistanceSensor distanceSensor, ServoImplEx allianceColor) {
         this.telemetry = telemetry;
         this.motor = motor;
         this.colorSensor = colorSensor;
@@ -59,7 +59,7 @@ public class IntakeSubsystem extends SubsystemBase {
         telemetry.update();
     }
     public void runMotor() {
-        motor.setPower(0.75);
+        motor.setPower(-0.75);
     }
     public void redlight(){
         blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.RED);

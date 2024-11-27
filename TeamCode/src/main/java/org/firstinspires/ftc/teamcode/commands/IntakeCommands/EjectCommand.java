@@ -1,9 +1,9 @@
-package org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Commands.IntakeCommands;
+package org.firstinspires.ftc.teamcode.commands.IntakeCommands;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.util.Timing;
 
-import org.firstinspires.ftc.teamcode.FromOldRepo.commandBased.Subsystems.IntakeSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 
 import java.util.concurrent.TimeUnit;
 
@@ -37,3 +37,4 @@ public class EjectCommand extends CommandBase {
         return timer.done();
     }
 }
+
