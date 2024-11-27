@@ -59,7 +59,7 @@ public class IntakeSubsystem extends SubsystemBase {
         telemetry.update();
     }
     public void runMotor() {
-        motor.setPower(0.75);
+        motor.setPower(-0.75);
     }
     public void redlight(){
         blinkin.setPattern(RevBlinkinLedDriver.BlinkinPattern.RED);

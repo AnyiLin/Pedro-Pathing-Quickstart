@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.commands.IntakeCommands.EjectCommand;
 import org.firstinspires.ftc.teamcode.commands.IntakeCommands.ToggleAlliance;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 
-
+@TeleOp
 public class Intake_Test extends CommandOpMode {
     private IntakeSubsystem subsystem;
     private GamepadEx gamepad;
