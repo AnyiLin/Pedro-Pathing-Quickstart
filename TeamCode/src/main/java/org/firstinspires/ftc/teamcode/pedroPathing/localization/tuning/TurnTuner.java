@@ -20,7 +20,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.util.Drawing;
  * When you're at the end of the angle, record the ticks to inches multiplier. Feel free to run
  * multiple trials and average the results. Then, input the multiplier into the turning ticks to
  * radians in your localizer of choice.
- * You can adjust the target angle on FTC Dashboard: 192/168/43/1:8080/dash
+ * You can adjust the target angle on FTC Dashboard: http://192.168.43.1:8080/dash
  *
  * @author Anyi Lin - 10158 Scott's Bots
  * @version 1.0, 5/6/2024

@@ -32,7 +32,7 @@ import java.util.List;
  * is, when paired with ForwardVelocityTuner, allows FollowerConstants to create a Vector that
  * empirically represents the direction your mecanum wheels actually prefer to go in, allowing for
  * more accurate following.
- * You can adjust the distance the robot will travel on FTC Dashboard: 192/168/43/1:8080/dash
+ * You can adjust the distance the robot will travel on FTC Dashboard: http://192.168.43.1:8080/dash
  *
  * @author Anyi Lin - 10158 Scott's Bots
  * @author Aaron Yang - 10158 Scott's Bots

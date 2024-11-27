@@ -32,7 +32,7 @@ import java.util.List;
  * that number is then printed. This is used to determine how the robot will decelerate in the
  * forward direction when power is cut, making the estimations used in the calculations for the
  * drive Vector more accurate and giving better braking at the end of Paths.
- * You can adjust the max velocity the robot will hit on FTC Dashboard: 192/168/43/1:8080/dash
+ * You can adjust the max velocity the robot will hit on FTC Dashboard: http://192.168.43.1:8080/dash
  *
  * @author Anyi Lin - 10158 Scott's Bots
  * @author Aaron Yang - 10158 Scott's Bots

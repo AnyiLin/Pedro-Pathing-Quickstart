@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * This is the LocalizationTest OpMode. This is basically just a simple mecanum drive attached to a
  * PoseUpdater. The OpMode will print out the robot's pose to telemetry as well as draw the robot
- * on FTC Dashboard (192/168/43/1:8080/dash). You should use this to check the robot's localization.
+ * on FTC Dashboard (http://192.168.43.1:8080/dash). You should use this to check the robot's localization.
  *
  * @author Anyi Lin - 10158 Scott's Bots
  * @version 1.0, 5/6/2024
