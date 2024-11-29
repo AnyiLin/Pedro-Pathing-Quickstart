@@ -143,6 +143,13 @@ public class ForwardVelocityTuner extends OpMode {
                 velocities.remove(0);
             }
         } else {
+            leftFront.setPower(0);
+            leftRear.setPower(0);
+            rightFront.setPower(0);
+            rightRear.setPower(0);
+            for (DcMotorEx motor : motors) {
+                motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            }
             double average = 0;
             for (Double velocity : velocities) {
                 average += velocity;
