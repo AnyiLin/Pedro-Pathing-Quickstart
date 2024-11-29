@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.util.NanoTimer;
 
 /**
  * This is the TwoWheelPinpointIMULocalizer class. This class extends the Localizer superclass and is a
- * localizer that uses the two wheel odometry set up. The diagram below, which is modified from
+ * localizer that uses the two wheel odometry with the Pinpoint IMU set up. The diagram below, which is modified from
  * Road Runner, shows a typical set up.
  *
  * The view is from the top of the robot looking downwards.
@@ -25,15 +25,15 @@ import org.firstinspires.ftc.teamcode.pedroPathing.util.NanoTimer;
  *
  * forward on robot is the x positive direction
  *
- *                         forward (x positive)
+*                         forward (x positive)
  *                                △
  *                                |
  *                                |
  *                         /--------------\
  *                         |              |
  *                         |              |
- *                         | ||        || |
- *  left (y positive) <--- | ||        || |  
+ *                         |           || |
+ *  left (y positive) <--- |           || |  
  *                         |     ____     |
  *                         |     ----     |
  *                         \--------------/
