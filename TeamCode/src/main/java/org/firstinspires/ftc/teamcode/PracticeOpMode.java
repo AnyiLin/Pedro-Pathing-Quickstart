@@ -29,7 +29,7 @@ public class PracticeOpMode extends CommandOpMode {
     private ExtendSubsystem extend;
     private IntakeSubsystem intake;
     private GamepadEx driverOp;
-    private GamepadEx Optwo;
+    private GamepadEx operatorOp;
     private WristSubsystem wrist;
 
     @Override
@@ -37,7 +37,7 @@ public class PracticeOpMode extends CommandOpMode {
         extend = new ExtendSubsystem(hardwareMap.get(Servo.class, "extension"));
         wrist = new WristSubsystem(hardwareMap.get(Servo.class, "wrist"));
         driverOp = new GamepadEx(gamepad1);
-        Optwo = new GamepadEx(gamepad2);
+        operatorOp = new GamepadEx(gamepad2);
         intake = new IntakeSubsystem(telemetry, hardwareMap.get(DcMotor.class, "Intake"),
                 hardwareMap.get(ColorSensor.class, "intakeColor"),
                 hardwareMap.get(RevBlinkinLedDriver.class, "blinkin"),
