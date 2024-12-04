@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoImplEx;
 
 import org.firstinspires.ftc.teamcode.commands.ExtendCommand;
+import org.firstinspires.ftc.teamcode.commands.HandoffCommand;
 import org.firstinspires.ftc.teamcode.commands.IntakeCommands.CancelCommand;
 import org.firstinspires.ftc.teamcode.commands.IntakeCommands.CollectSample;
 import org.firstinspires.ftc.teamcode.commands.IntakeCommands.EjectCommand;
@@ -50,6 +51,8 @@ public class PracticeOpMode extends CommandOpMode {
                 .whenPressed(new RetractCommand(extend));
         driverOp.getGamepadButton(GamepadKeys.Button.DPAD_UP)
                 .whenPressed(new RaiseWrist(wrist));
+        driverOp.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
+                .whenPressed(new HandoffCommand(wrist));
         driverOp.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
                 .whenPressed(new LowerWrist(wrist));
         driverOp.getGamepadButton(GamepadKeys.Button.Y)
