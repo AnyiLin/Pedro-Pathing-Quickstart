@@ -13,24 +13,29 @@ public class LiftSubsystem extends SubsystemBase {
     private Telemetry telemetry;
     private double power = 1;
 
-//    public enum liftPosition {
-//        TOP,
-//        BOTTOM
-//
-//    }
+    public enum liftPosition {
+        TOP,
+        BOTTOM
+
+    }
+    public liftPosition liftPos;
+
     public LiftSubsystem (Motor liftMotor, Telemetry telemetry) {
         this.liftMotor = liftMotor;
         this.telemetry = telemetry;
         this.liftMotor.setRunMode(Motor.RunMode.PositionControl);
         this.liftMotor.resetEncoder();
         this.liftMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        liftPos = liftPosition.BOTTOM;
+
     }
     public void setTopPosition () {
         liftMotor.setTargetPosition(topPosition);
-//        liftPosition = TOP;
+        liftPos = liftPosition.TOP;
     }
     public void setBottomPosition () {
         liftMotor.setTargetPosition(0);
+        liftPos = liftPosition.BOTTOM;
     }
     public boolean isBusy () {
         return !liftMotor.atTargetPosition();
