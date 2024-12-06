@@ -1,0 +1,18 @@
+package org.firstinspires.ftc.teamcode.subsystems;
+
+import com.arcrobotics.ftclib.command.SubsystemBase;
+import com.qualcomm.robotcore.hardware.Servo;
+
+public class SwingArmSubsystem extends SubsystemBase {
+    private Servo SwingArmServo;
+    private double TopPos = 1.0;
+    public SwingArmSubsystem(Servo SwingArmServo) {
+        this.SwingArmServo = SwingArmServo;
+    }
+    public void up() {
+        SwingArmServo.setPosition(TopPos);
+    }
+    public void down() {
+        SwingArmServo.setPosition(0.0);
+    }
+}
