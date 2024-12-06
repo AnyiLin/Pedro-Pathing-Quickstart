@@ -14,6 +14,7 @@ public class LiftTopCommand extends CommandBase {
     }
     @Override
     public void execute () {
+        liftSubsystem.getLiftTelemetry();
         liftSubsystem.setTopPosition();
         liftSubsystem.runLift();
     }

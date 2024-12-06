@@ -47,4 +47,10 @@ public class LiftSubsystem extends SubsystemBase {
             liftMotor.stopMotor();
         }
     }
+    public void getLiftTelemetry () {
+        telemetry.addData("liftEnum", liftPos);
+        telemetry.addData("rawpos", liftMotor.getCurrentPosition());
+        telemetry.update();
+
+    }
 }
