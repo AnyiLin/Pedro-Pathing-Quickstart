@@ -105,7 +105,7 @@
 //    @Override
 //    public Pose getVelocity() {
 //        Pose2D pose = odo.getVelocity();
-//        return new Pose(pose.getX(DistanceUnit.INCH), pose.getY(DistanceUnit.INCH), pose.getHeading(AngleUnit.RADIANS));
+//        return new Pose(pose.getX(DistanceUnit.INCH), pose.getY(DistanceUnit.INCH), odo.getHeadingVelocity());
 //    }
 //
 //    /**
