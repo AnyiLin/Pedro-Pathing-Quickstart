@@ -79,13 +79,11 @@
 //        //TODO: Set encoder directions
 //        odo.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.FORWARD, GoBildaPinpointDriver.EncoderDirection.FORWARD);
 //
-//        odo.resetPosAndIMU();
-//
+//        resetPinpoint();;
+
 //        setStartPose(setStartPose);
 //        totalHeading = 0;
 //        previousHeading = setStartPose.getHeading();
-//
-//        resetPinpoint();
 //    }
 //
 //    /**
@@ -107,7 +105,7 @@
 //    @Override
 //    public Pose getVelocity() {
 //        Pose2D pose = odo.getVelocity();
-//        return new Pose(pose.getX(DistanceUnit.INCH), pose.getY(DistanceUnit.INCH), pose.getHeading(AngleUnit.RADIANS));
+//        return new Pose(pose.getX(DistanceUnit.INCH), pose.getY(DistanceUnit.INCH), odo.getHeadingVelocity());
 //    }
 //
 //    /**
@@ -142,7 +140,6 @@
 //     */
 //    @Override
 //    public void setPose(Pose setPose) {
-//        resetPinpoint();
 //        odo.setPosition(new Pose2D(DistanceUnit.INCH, setPose.getX(), setPose.getY(), AngleUnit.RADIANS, setPose.getHeading()));
 //    }
 //
@@ -195,17 +192,29 @@
 //    }
 //
 //    /**
-//     * This resets the IMU.
+//     * This resets the IMU. Note: This does not change the estimated heading orientation.
 //     */
 //    @Override
-//    public void resetIMU() {
-//    odo.recalibrateIMU();
+//    public void resetIMU() throws InterruptedException {
+//        odo.recalibrateIMU();
+//
+//        try {
+//            Thread.sleep(300);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
 //    }
 //
 //    /**
-//     * This resets the OTOS.
+//     * This resets the pinpoint.
 //     */
-//    public void resetPinpoint(){
+//    private void resetPinpoint() {
 //        odo.resetPosAndIMU();
+//
+//        try {
+//            Thread.sleep(300);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
 //    }
 //}
