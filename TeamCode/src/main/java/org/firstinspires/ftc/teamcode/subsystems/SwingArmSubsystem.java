@@ -5,9 +5,10 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class SwingArmSubsystem extends SubsystemBase {
     private Servo SwingArmServo;
-    private double TopPos = 1.0;
+    private double TopPos = 0.75;
     public SwingArmSubsystem(Servo SwingArmServo) {
         this.SwingArmServo = SwingArmServo;
+        this.SwingArmServo.setDirection(Servo.Direction.REVERSE);
     }
     public void up() {
         SwingArmServo.setPosition(TopPos);
