@@ -15,10 +15,14 @@ public class LiftBottomCommand extends CommandBase {
     public void execute () {
         liftSubsystem.getLiftTelemetry();
         liftSubsystem.setBottomPosition();
-        liftSubsystem.runLift();
+//        liftSubsystem.runLift();
     }
     @Override
     public boolean isFinished () {
-        return liftSubsystem.isBusy();
+        return !liftSubsystem.isBusy();
+    }
+    @Override
+    public void end(boolean interrupted){
+        liftSubsystem.stopLift();
     }
 }
