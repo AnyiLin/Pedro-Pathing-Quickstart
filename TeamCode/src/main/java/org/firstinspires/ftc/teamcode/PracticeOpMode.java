@@ -1,8 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.arcrobotics.ftclib.command.CommandOpMode;
+import com.arcrobotics.ftclib.command.button.Button;
+import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.arcrobotics.ftclib.gamepad.TriggerReader;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -67,31 +70,30 @@ public class PracticeOpMode extends CommandOpMode {
                 new Motor(hardwareMap,"backLeft", Motor.GoBILDA.RPM_312),
                 new Motor(hardwareMap,"backRight", Motor.GoBILDA.RPM_312));
         liftSubsystem.setDefaultCommand(new LiftTelemetryCommand(liftSubsystem));
+
         intake = new IntakeSubsystem(telemetry, hardwareMap.get(DcMotor.class, "Intake"),
                 hardwareMap.get(ColorSensor.class, "intakeColor"),
                 hardwareMap.get(RevBlinkinLedDriver.class, "blinkin"),
                 hardwareMap.get(DistanceSensor.class, "intakeDistance"),
                 hardwareMap.get(ServoImplEx.class, "allianceColor"));
+
         drive.setDefaultCommand(new DriveCommand(drive, driverOp::getLeftX,driverOp::getLeftY,driverOp::getRightX));
-       driverOp.getGamepadButton(GamepadKeys.Button.A)
-                       .whenPressed(new LowerWrist(wrist));
-        driverOp.getGamepadButton(GamepadKeys.Button.B)
-                .whenPressed(new HandoffCommand(wrist));
-        driverOp.getGamepadButton(GamepadKeys.Button.Y)
-                .whenPressed(new RaiseWrist(wrist));
+        
+
         operatorOp.getGamepadButton(GamepadKeys.Button.A)
-                .whenPressed(new LiftTopCommand(liftSubsystem));
+                .toggleWhenPressed(new LiftTopCommand(liftSubsystem), new LiftBottomCommand(liftSubsystem));
         operatorOp.getGamepadButton(GamepadKeys.Button.B)
-                .whenPressed(new LiftBottomCommand(liftSubsystem));
+                .whenPressed(new RaiseWrist(wrist));
+        operatorOp.getGamepadButton(GamepadKeys.Button.X)
+                .toggleWhenPressed(new SwingArmUpCommand(swingArmSubsystem), new SwingArmDownCommand(swingArmSubsystem));
+        operatorOp.getGamepadButton(GamepadKeys.Button.Y)
+                .whenPressed(new LowerWrist(wrist));
         operatorOp.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
+                .whenPressed(new HandoffCommand(wrist))
                 .whenPressed(new ExtendCommand(extend));
         operatorOp.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
+                .whenPressed(new HandoffCommand(wrist))
                 .whenPressed(new RetractCommand(extend));
-        operatorOp.getGamepadButton(GamepadKeys.Button.X)
-                .whenPressed(new SwingArmUpCommand(swingArmSubsystem));
-        operatorOp.getGamepadButton(GamepadKeys.Button.Y)
-                .whenPressed(new SwingArmDownCommand(swingArmSubsystem));
-        pass.setDefaultCommand(new PassCommand(pass,operatorOp::getLeftY));
         operatorOp.getGamepadButton(GamepadKeys.Button.DPAD_UP)
                 .whenPressed(new EjectCommand(intake));
         operatorOp.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
@@ -100,6 +102,15 @@ public class PracticeOpMode extends CommandOpMode {
                 .whenPressed(new ToggleAlliance(intake));
         operatorOp.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
                 .whenPressed(new CollectSample(intake));
+        operatorOp.getGamepadButton(GamepadKeys.Button.START)
+                .whenPressed(new HandoffCommand(wrist));
+
+
+
+
+
+
+        pass.setDefaultCommand(new PassCommand(pass,operatorOp::getLeftY));
         intake.rainbowlight();
 
     }
