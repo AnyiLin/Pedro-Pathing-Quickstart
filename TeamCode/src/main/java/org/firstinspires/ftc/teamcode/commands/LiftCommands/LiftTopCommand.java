@@ -11,6 +11,7 @@ public class LiftTopCommand extends CommandBase {
     public LiftTopCommand (LiftSubsystem liftSubsystem) {
         this.liftSubsystem = liftSubsystem;
         addRequirements(liftSubsystem);
+
     }
     @Override
     public void execute () {

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.commands;
+package org.firstinspires.ftc.teamcode.commands.WristCommands;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 

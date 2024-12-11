@@ -1,12 +1,12 @@
-package org.firstinspires.ftc.teamcode.commands;
+package org.firstinspires.ftc.teamcode.commands.BoxxyCommands;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.subsystems.BoxxySubsystem;
 
-public class OpenBox extends CommandBase {
+public class OpenBoxxy extends CommandBase {
     private BoxxySubsystem subsystem;
-    public OpenBox(BoxxySubsystem subsystem) {
+    public OpenBoxxy(BoxxySubsystem subsystem) {
         this.subsystem = subsystem;
         addRequirements(subsystem);
     }
