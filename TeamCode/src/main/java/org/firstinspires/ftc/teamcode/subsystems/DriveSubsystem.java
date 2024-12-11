@@ -15,9 +15,9 @@ public class DriveSubsystem extends SubsystemBase {
         this.drive = new MecanumDrive(false, frontleft, frontRight,backLeft,backRight);
     }
     public void drive(double strafe, double forward, double turn) {
-        frontleft.setInverted(false);
+        frontleft.setInverted(true);
         frontRight.setInverted(false);
-        backLeft.setInverted(false);
+        backLeft.setInverted(true);
         backRight.setInverted(false);
         drive.driveRobotCentric(strafe,forward,turn);
     }

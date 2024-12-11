@@ -9,7 +9,7 @@ public class WristSubsystem extends SubsystemBase {
         this.servo = servo;
     }
     public void up() {
-        servo.setPosition(1.0);
+        servo.setPosition(0.15);
     }
     public void down() {
         servo.setPosition(0.0);
@@ -17,5 +17,5 @@ public class WristSubsystem extends SubsystemBase {
     public void test() {
         servo.getPosition();
     }
-    public void middle() { servo.setPosition(0.5);}
+    public void middle() { servo.setPosition(0.05);}
 }
