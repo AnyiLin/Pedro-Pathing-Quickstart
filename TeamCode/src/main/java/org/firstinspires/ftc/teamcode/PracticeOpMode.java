@@ -1,11 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.arcrobotics.ftclib.command.CommandOpMode;
-import com.arcrobotics.ftclib.command.button.Button;
-import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
-import com.arcrobotics.ftclib.gamepad.TriggerReader;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -27,27 +24,33 @@ import org.firstinspires.ftc.teamcode.commands.LiftCommands.LiftBottomCommand;
 import org.firstinspires.ftc.teamcode.commands.LiftCommands.LiftTelemetryCommand;
 import org.firstinspires.ftc.teamcode.commands.LiftCommands.LiftTopCommand;
 import org.firstinspires.ftc.teamcode.commands.ExtendCommands.RetractCommand;
+import org.firstinspires.ftc.teamcode.commands.PedroDriveCommand;
 import org.firstinspires.ftc.teamcode.commands.SwingArmCommand.SwingArmDownCommand;
 import org.firstinspires.ftc.teamcode.commands.SwingArmCommand.SwingArmUpCommand;
 import org.firstinspires.ftc.teamcode.commands.WristCommands.HandoffCommand;
 import org.firstinspires.ftc.teamcode.commands.WristCommands.LowerWrist;
 import org.firstinspires.ftc.teamcode.commands.WristCommands.RaiseWrist;
+import org.firstinspires.ftc.teamcode.pedroPathing.follower.Follower;
 import org.firstinspires.ftc.teamcode.subsystems.DriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.ExtendSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.LiftSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.PassSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.PedroDriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.SwingArmSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.WristSubsystem;
 
 @TeleOp(name = "PracticeOpMode")
 public class PracticeOpMode extends CommandOpMode {
+    private Motor frontLeft, frontRight, backLeft, backRight;
+    private Follower follower;
+    private PedroDriveSubsystem pedroDriveSubsystem;
     private ExtendSubsystem extend;
     private LiftSubsystem liftSubsystem;
     private SwingArmSubsystem swingArmSubsystem;
     private PassSubsystem pass;
     private IntakeSubsystem intake;
-//-8300
+
     private GamepadEx driverOp;
     private GamepadEx operatorOp;
     private Motor liftMotor;
@@ -64,11 +67,31 @@ public class PracticeOpMode extends CommandOpMode {
         liftSubsystem = new LiftSubsystem(liftMotor, telemetry);
         pass = new PassSubsystem(hardwareMap.get(DcMotorEx.class, "pass"));
         wrist = new WristSubsystem(hardwareMap.get(Servo.class,"wrist"));
+
+
+        frontLeft = new Motor(hardwareMap,"frontLeft", Motor.GoBILDA.RPM_312);
+        frontRight = new Motor(hardwareMap,"frontRight", Motor.GoBILDA.RPM_312);
+        backLeft = new Motor(hardwareMap,"backLeft", Motor.GoBILDA.RPM_312);
+        backRight = new Motor(hardwareMap,"backRight", Motor.GoBILDA.RPM_312);
+        frontLeft.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        backLeft.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        backRight.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        frontRight.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+//        follower = new Follower(hardwareMap);
+//        follower.startTeleopDrive();
+//        follower.setMaxPower(1);
+
+
+//        pedroDriveSubsystem = new PedroDriveSubsystem( follower);
+//        pedroDriveSubsystem.setDefaultCommand(new PedroDriveCommand(pedroDriveSubsystem, telemetry, driverOp::getLeftY, driverOp::getLeftX, driverOp::getRightX, true));
+
+
         drive = new DriveSubsystem(
-                new Motor(hardwareMap,"frontLeft", Motor.GoBILDA.RPM_312),
-                new Motor(hardwareMap,"frontRight", Motor.GoBILDA.RPM_312),
-                new Motor(hardwareMap,"backLeft", Motor.GoBILDA.RPM_312),
-                new Motor(hardwareMap,"backRight", Motor.GoBILDA.RPM_312));
+                frontLeft,
+                frontRight,
+                backLeft,
+                backRight);
+
         liftSubsystem.setDefaultCommand(new LiftTelemetryCommand(liftSubsystem));
 
         intake = new IntakeSubsystem(telemetry, hardwareMap.get(DcMotor.class, "Intake"),
@@ -78,7 +101,7 @@ public class PracticeOpMode extends CommandOpMode {
                 hardwareMap.get(ServoImplEx.class, "allianceColor"));
 
         drive.setDefaultCommand(new DriveCommand(drive, driverOp::getLeftX,driverOp::getLeftY,driverOp::getRightX));
-        
+
 
         operatorOp.getGamepadButton(GamepadKeys.Button.A)
                 .toggleWhenPressed(new LiftTopCommand(liftSubsystem), new LiftBottomCommand(liftSubsystem));

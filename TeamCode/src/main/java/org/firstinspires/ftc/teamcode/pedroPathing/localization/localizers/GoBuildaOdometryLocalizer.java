@@ -33,9 +33,9 @@ public class GoBuildaOdometryLocalizer extends Localizer {
     public GoBuildaOdometryLocalizer(HardwareMap map, Pose setStartPose) {
         hardwareMap = map;
         odometry = hardwareMap.get(GoBildaPinpointDriver.class, "odometry");
-        odometry.setOffsets(-119.79, -135.29);
+        odometry.setOffsets(-143, -156.5);
         odometry.setEncoderResolution(GoBildaPinpointDriver.GoBildaOdometryPods.goBILDA_4_BAR_POD);
-        odometry.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.REVERSED, GoBildaPinpointDriver.EncoderDirection.FORWARD);
+        odometry.setEncoderDirections(GoBildaPinpointDriver.EncoderDirection.REVERSED, GoBildaPinpointDriver.EncoderDirection.REVERSED);
         odometry.resetPosAndIMU();
         startPose = setStartPose;
         setStartPose(startPose);
