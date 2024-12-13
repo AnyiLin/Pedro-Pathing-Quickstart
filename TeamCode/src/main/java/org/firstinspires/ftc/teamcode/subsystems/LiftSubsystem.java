@@ -26,7 +26,7 @@ public class LiftSubsystem extends SubsystemBase {
         this.liftMotor.setRunMode(Motor.RunMode.PositionControl);
         this.liftMotor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
         this.liftMotor.setInverted(true);
-        this.liftMotor.setPositionTolerance(50);
+        this.liftMotor.setPositionTolerance(100);
         this.liftMotor.resetEncoder();
         liftPos = liftPosition.BOTTOM;
 
@@ -51,9 +51,9 @@ public class LiftSubsystem extends SubsystemBase {
         liftMotor.stopMotor();
     }
     public void getLiftTelemetry () {
-        telemetry.addData("liftEnum", liftPos);
-        telemetry.addData("rawpos", liftMotor.getCurrentPosition());
-        telemetry.update();
+//        telemetry.addData("liftEnum", liftPos);
+//        telemetry.addData("rawpos", liftMotor.getCurrentPosition());
+//        telemetry.update();
 
     }
 }

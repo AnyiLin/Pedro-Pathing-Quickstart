@@ -31,8 +31,8 @@ public class Intake_Test extends CommandOpMode {
 
         gamepad.getGamepadButton(GamepadKeys.Button.Y)
                 .whenPressed(new EjectCommand(subsystem));
-        gamepad.getGamepadButton(GamepadKeys.Button.B)
-                .whenPressed(new CancelCommand(subsystem));
+//        gamepad.getGamepadButton(GamepadKeys.Button.B)
+//                .whenPressed(new CancelCommand(subsystem));
         gamepad.getGamepadButton(GamepadKeys.Button.X)
                 .whenPressed(new ToggleAlliance(subsystem));
         gamepad.getGamepadButton(GamepadKeys.Button.A)

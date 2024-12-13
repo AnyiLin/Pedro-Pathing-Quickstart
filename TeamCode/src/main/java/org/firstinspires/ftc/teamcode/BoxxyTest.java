@@ -17,12 +17,12 @@ public class BoxxyTest extends CommandOpMode {
     private GamepadEx gamepadEx;
     @Override
     public void initialize() {
-        subsystem = new BoxxySubsystem( hardwareMap.get(Servo.class, "Boxxy"));
-        gamepadEx = new GamepadEx(gamepad1);
-        gamepadEx.getGamepadButton(GamepadKeys.Button.A)
-                .whenPressed(new OpenBoxxy(subsystem));
-        gamepadEx.getGamepadButton(GamepadKeys.Button.B)
-                .whenPressed(new CloseBoxxy(subsystem));
+//        subsystem = new BoxxySubsystem( hardwareMap.get(Servo.class, "Boxxy"));
+//        gamepadEx = new GamepadEx(gamepad1);
+//        gamepadEx.getGamepadButton(GamepadKeys.Button.A)
+//                .whenPressed(new OpenBoxxy(subsystem));
+//        gamepadEx.getGamepadButton(GamepadKeys.Button.B)
+//                .whenPressed(new CloseBoxxy(subsystem));
 
     }
 }

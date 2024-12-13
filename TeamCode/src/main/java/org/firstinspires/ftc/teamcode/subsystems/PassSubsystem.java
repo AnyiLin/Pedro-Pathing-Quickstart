@@ -12,4 +12,10 @@ public class PassSubsystem extends SubsystemBase {
     public void PassMotorControl(double motorPower){
         motor1.setPower(motorPower);
     }
+    public void PassOn(){
+        motor1.setPower(0.75);
+    }
+    public void PassOff(){
+        motor1.setPower(0);
+    }
 }

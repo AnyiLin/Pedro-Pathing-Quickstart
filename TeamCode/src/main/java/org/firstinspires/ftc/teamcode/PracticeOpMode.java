@@ -18,6 +18,7 @@ import org.firstinspires.ftc.teamcode.commands.IntakeCommands.CancelCommand;
 import org.firstinspires.ftc.teamcode.commands.IntakeCommands.CollectSample;
 import org.firstinspires.ftc.teamcode.commands.IntakeCommands.EjectCommand;
 import org.firstinspires.ftc.teamcode.commands.IntakeCommands.ToggleAlliance;
+import org.firstinspires.ftc.teamcode.commands.PassAuto;
 import org.firstinspires.ftc.teamcode.commands.PassCommands.PassCommand;
 import org.firstinspires.ftc.teamcode.commands.ExtendCommands.ExtendCommand;
 import org.firstinspires.ftc.teamcode.commands.LiftCommands.LiftBottomCommand;
@@ -31,6 +32,7 @@ import org.firstinspires.ftc.teamcode.commands.WristCommands.HandoffCommand;
 import org.firstinspires.ftc.teamcode.commands.WristCommands.LowerWrist;
 import org.firstinspires.ftc.teamcode.commands.WristCommands.RaiseWrist;
 import org.firstinspires.ftc.teamcode.pedroPathing.follower.Follower;
+import org.firstinspires.ftc.teamcode.subsystems.BoxxySubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.DriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.ExtendSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
@@ -50,12 +52,14 @@ public class PracticeOpMode extends CommandOpMode {
     private SwingArmSubsystem swingArmSubsystem;
     private PassSubsystem pass;
     private IntakeSubsystem intake;
+    private BoxxySubsystem box;
 
     private GamepadEx driverOp;
     private GamepadEx operatorOp;
     private Motor liftMotor;
     private DriveSubsystem drive;
     private WristSubsystem wrist;
+
 
     @Override
     public void initialize() {
@@ -67,6 +71,7 @@ public class PracticeOpMode extends CommandOpMode {
         liftSubsystem = new LiftSubsystem(liftMotor, telemetry);
         pass = new PassSubsystem(hardwareMap.get(DcMotorEx.class, "pass"));
         wrist = new WristSubsystem(hardwareMap.get(Servo.class,"wrist"));
+        box = new BoxxySubsystem(hardwareMap.get(DistanceSensor.class,"boxDistance"), telemetry);
 
 
         frontLeft = new Motor(hardwareMap,"frontLeft", Motor.GoBILDA.RPM_312);
@@ -118,9 +123,9 @@ public class PracticeOpMode extends CommandOpMode {
                 .whenPressed(new HandoffCommand(wrist))
                 .whenPressed(new RetractCommand(extend));
         operatorOp.getGamepadButton(GamepadKeys.Button.DPAD_UP)
-                .whenPressed(new EjectCommand(intake));
+                .whenPressed(new PassAuto(pass, box, intake));
         operatorOp.getGamepadButton(GamepadKeys.Button.DPAD_RIGHT)
-                .whenPressed(new CancelCommand(intake));
+                .whenPressed(new CancelCommand(intake, pass));
         operatorOp.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
                 .whenPressed(new ToggleAlliance(intake));
         operatorOp.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
