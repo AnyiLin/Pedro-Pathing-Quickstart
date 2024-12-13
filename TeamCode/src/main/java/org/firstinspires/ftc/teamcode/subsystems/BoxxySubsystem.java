@@ -26,7 +26,7 @@ public class BoxxySubsystem extends SubsystemBase {
 //        servo.setPosition(0.5);
 //    }
     public boolean haveSample() {
-        return(distanceSensor.getDistance(DistanceUnit.INCH) < 1.8);
+        return(distanceSensor.getDistance(DistanceUnit.INCH) < 2.0);
     }
     public void periodic() {
         telemetry.addData("box distance", distanceSensor.getDistance(DistanceUnit.INCH));
