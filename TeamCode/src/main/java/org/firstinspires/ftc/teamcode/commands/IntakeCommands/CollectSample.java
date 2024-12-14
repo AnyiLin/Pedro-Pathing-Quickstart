@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.commands.IntakeCommands;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.util.Timing;
-import com.qualcomm.hardware.rev.RevBlinkinLedDriver;
 
 import org.firstinspires.ftc.teamcode.subsystems.IntakeSubsystem;
 
@@ -84,6 +83,8 @@ public class CollectSample extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         subsystem.stopMotor();
+
+
         // Exit if command is interrupted
         if(interrupted) validSample = true;
     }

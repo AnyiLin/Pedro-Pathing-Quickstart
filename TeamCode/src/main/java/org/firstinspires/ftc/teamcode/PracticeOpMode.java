@@ -17,6 +17,7 @@ import org.firstinspires.ftc.teamcode.commands.DriveCommand;
 import org.firstinspires.ftc.teamcode.commands.IntakeCommands.CancelCommand;
 import org.firstinspires.ftc.teamcode.commands.IntakeCommands.CollectSample;
 import org.firstinspires.ftc.teamcode.commands.IntakeCommands.EjectCommand;
+import org.firstinspires.ftc.teamcode.commands.IntakeCommands.IntakeScore;
 import org.firstinspires.ftc.teamcode.commands.IntakeCommands.ToggleAlliance;
 import org.firstinspires.ftc.teamcode.commands.PassAuto;
 import org.firstinspires.ftc.teamcode.commands.PassCommands.PassCommand;
@@ -129,7 +130,7 @@ public class PracticeOpMode extends CommandOpMode {
         operatorOp.getGamepadButton(GamepadKeys.Button.DPAD_LEFT)
                 .whenPressed(new ToggleAlliance(intake));
         operatorOp.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
-                .whenPressed(new CollectSample(intake));
+                .whenPressed(new IntakeScore(intake, wrist, pass,extend,swingArmSubsystem,box,liftSubsystem));
         operatorOp.getGamepadButton(GamepadKeys.Button.START)
                 .whenPressed(new HandoffCommand(wrist));
 
