@@ -7,7 +7,7 @@ by Tyler Veness. However, the OTOS localizer uses its own onboard system for cal
 which we do not know about.
 
 ## Setting Your Localizer
-Go to line `70` in the `PoseUpdater` class, and replace the `new ThreeWheelLocalizer(hardwareMap)`
+Go to line `73` in the `PoseUpdater` class, and replace the `new ThreeWheelLocalizer(hardwareMap)`
 with the localizer that applies to you:
 * If you're using drive encoders, put `new DriveEncoderLocalizer(hardwareMap)`
 * If you're using two wheel odometry, put `new TwoWheelLocalizer(hardwareMap)`
