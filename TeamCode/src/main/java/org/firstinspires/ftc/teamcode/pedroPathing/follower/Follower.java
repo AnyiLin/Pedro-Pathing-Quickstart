@@ -205,11 +205,10 @@ public class Follower {
                 .mapToObj(Math::abs).max(Double::compare)
                 .orElse(0.0);
 
-        if (biggestPower > maxPower) {
-            for (int i = 0; i < drivePowers.length; i++) {
-                drivePowers[i] = (drivePowers[i] / biggestPower) * maxPower;
-            }
-        }
+        if (biggestPower > maxPower)
+            drivePowers = Arrays.stream(drivePowers)
+                    .map(power -> (power / biggestPower) * maxPower)
+                    .toArray();
     }
 
     /**
