@@ -15,6 +15,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.pathGeneration.Vector;
 public class DriveVectorScaler {
     // This is ordered left front, left back, right front, right back. These are also normalized.
     private Vector[] mecanumVectors;
+    private double maxPowerScaling = 1;
 
     /**
      * This creates a new DriveVectorScaler, which takes in various movement vectors and outputs
@@ -52,9 +53,9 @@ public class DriveVectorScaler {
      */
     public double[] getDrivePowers(Vector correctivePower, Vector headingPower, Vector pathingPower, double robotHeading) {
         // clamps down the magnitudes of the input vectors
-        if (correctivePower.getMagnitude() > 1) correctivePower.setMagnitude(1);
-        if (headingPower.getMagnitude() > 1) headingPower.setMagnitude(1);
-        if (pathingPower.getMagnitude() > 1) pathingPower.setMagnitude(1);
+        if (correctivePower.getMagnitude() > maxPowerScaling) correctivePower.setMagnitude(maxPowerScaling);
+        if (headingPower.getMagnitude() > maxPowerScaling) headingPower.setMagnitude(maxPowerScaling);
+        if (pathingPower.getMagnitude() > maxPowerScaling) pathingPower.setMagnitude(maxPowerScaling);
 
         // the powers for the wheel vectors
         double [] wheelPowers = new double[4];
@@ -65,8 +66,8 @@ public class DriveVectorScaler {
         // this contains the pathing vectors, one for each side (heading control requires 2)
         Vector[] truePathingVectors = new Vector[2];
 
-        if (correctivePower.getMagnitude() == 1) {
-            // checks for corrective power equal to 1 in magnitude. if equal to one, then set pathing power to that
+        if (correctivePower.getMagnitude() == maxPowerScaling) {
+            // checks for corrective power equal to max power scaling in magnitude. if equal, then set pathing power to that
             truePathingVectors[0] = MathFunctions.copyVector(correctivePower);
             truePathingVectors[1] = MathFunctions.copyVector(correctivePower);
         } else {
@@ -74,7 +75,7 @@ public class DriveVectorScaler {
             Vector leftSideVector = MathFunctions.subtractVectors(correctivePower, headingPower);
             Vector rightSideVector = MathFunctions.addVectors(correctivePower, headingPower);
 
-            if (leftSideVector.getMagnitude() > 1 || rightSideVector.getMagnitude() > 1) {
+            if (leftSideVector.getMagnitude() > maxPowerScaling || rightSideVector.getMagnitude() > maxPowerScaling) {
                 //if the combined corrective and heading power is greater than 1, then scale down heading power
                 double headingScalingFactor = Math.min(findNormalizingScaling(correctivePower, headingPower), findNormalizingScaling(correctivePower, MathFunctions.scalarMultiplyVector(headingPower, -1)));
                 truePathingVectors[0] = MathFunctions.subtractVectors(correctivePower, MathFunctions.scalarMultiplyVector(headingPower, headingScalingFactor));
@@ -84,7 +85,7 @@ public class DriveVectorScaler {
                 Vector leftSideVectorWithPathing = MathFunctions.addVectors(leftSideVector, pathingPower);
                 Vector rightSideVectorWithPathing = MathFunctions.addVectors(rightSideVector, pathingPower);
 
-                if (leftSideVectorWithPathing.getMagnitude() > 1 || rightSideVectorWithPathing.getMagnitude() > 1) {
+                if (leftSideVectorWithPathing.getMagnitude() > maxPowerScaling || rightSideVectorWithPathing.getMagnitude() > maxPowerScaling) {
                     // too much power now, so we scale down the pathing vector
                     double pathingScalingFactor = Math.min(findNormalizingScaling(leftSideVector, pathingPower), findNormalizingScaling(rightSideVector, pathingPower));
                     truePathingVectors[0] = MathFunctions.addVectors(leftSideVector, MathFunctions.scalarMultiplyVector(pathingPower, pathingScalingFactor));
@@ -113,7 +114,7 @@ public class DriveVectorScaler {
         wheelPowers[3] = (mecanumVectorsCopy[2].getXComponent()*truePathingVectors[1].getYComponent() - truePathingVectors[1].getXComponent()*mecanumVectorsCopy[2].getYComponent()) / (mecanumVectorsCopy[2].getXComponent()*mecanumVectorsCopy[3].getYComponent() - mecanumVectorsCopy[3].getXComponent()*mecanumVectorsCopy[2].getYComponent());
 
         double wheelPowerMax = Math.max(Math.max(Math.abs(wheelPowers[0]), Math.abs(wheelPowers[1])), Math.max(Math.abs(wheelPowers[2]), Math.abs(wheelPowers[3])));
-        if (wheelPowerMax > 1) {
+        if (wheelPowerMax > maxPowerScaling) {
             wheelPowers[0] /= wheelPowerMax;
             wheelPowers[1] /= wheelPowerMax;
             wheelPowers[2] /= wheelPowerMax;
@@ -126,12 +127,12 @@ public class DriveVectorScaler {
     /**
      * This takes in two Vectors, one static and one variable, and returns the scaling factor that,
      * when multiplied to the variable Vector, results in magnitude of the sum of the static Vector
-     * and the scaled variable Vector being 1.
+     * and the scaled variable Vector being the max power scaling.
      *
      * IMPORTANT NOTE: I did not intend for this to be used for anything other than the method above
-     * this one in this class, so there will be errors if you input Vectors of length greater than 1,
+     * this one in this class, so there will be errors if you input Vectors of length greater than maxPowerScaling,
      * and it will scale up the variable Vector if the magnitude of the sum of the two input Vectors
-     * isn't greater than 1. So, just don't use this elsewhere. There's gotta be a better way to do
+     * isn't greater than maxPowerScaling. So, just don't use this elsewhere. There's gotta be a better way to do
      * whatever you're trying to do.
      *
      * I know that this is used outside of this class, however, I created this method so I get to
@@ -140,13 +141,32 @@ public class DriveVectorScaler {
      *
      * @param staticVector the Vector that is held constant.
      * @param variableVector the Vector getting scaled to make the sum of the input Vectors have a
-     *                       magnitude of 1.
+     *                       magnitude of maxPowerScaling.
      * @return returns the scaling factor for the variable Vector.
      */
     public double findNormalizingScaling(Vector staticVector, Vector variableVector) {
             double a = Math.pow(variableVector.getXComponent(), 2) + Math.pow(variableVector.getYComponent(), 2);
             double b = staticVector.getXComponent() * variableVector.getXComponent() + staticVector.getYComponent() * variableVector.getYComponent();
-            double c = Math.pow(staticVector.getXComponent(), 2) + Math.pow(staticVector.getYComponent(), 2) - 1.0;
+            double c = Math.pow(staticVector.getXComponent(), 2) + Math.pow(staticVector.getYComponent(), 2) - Math.pow(maxPowerScaling, 2);
             return (-b + Math.sqrt(Math.pow(b, 2) - a*c))/(a);
+
+    }
+
+    /**
+     * Sets the maximum power that can be used by the drive vector scaler. Clamped between 0 and 1.
+     *
+     * @param maxPowerScaling setting the max power scaling
+     */
+    public void setMaxPowerScaling(double maxPowerScaling) {
+        this.maxPowerScaling = MathFunctions.clamp(maxPowerScaling, 0, 1);
+    }
+
+    /**
+     * Gets the maximum power that can be used by the drive vector scaler. Ranges between 0 and 1.
+     *
+     * @return returns the max power scaling
+     */
+    public double getMaxPowerScaling() {
+        return maxPowerScaling;
     }
 }
