@@ -25,7 +25,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.util.NanoTimer;
  *
  * forward on robot is the x positive direction
  *
-*                         forward (x positive)
+ *                         forward (x positive)
  *                                △
  *                                |
  *                                |
@@ -81,20 +81,20 @@ public class TwoWheelPinpointIMULocalizer extends Localizer {
      * @param setStartPose the Pose to start from
      */
     public TwoWheelPinpointIMULocalizer(HardwareMap map, Pose setStartPose) {
-        // TODO: replace these with your encoder positions
-        forwardEncoderPose = new Pose(-18.5/25.4 - 0.1, 164.4/25.4, 0);
-        strafeEncoderPose = new Pose(-107.9/25.4+0.25, -1.1/25.4-0.23, Math.toRadians(90));
+        // TODO: replace these with your encoder positions DONE
+        forwardEncoderPose = new Pose(0.1, -7.7, 0);
+        strafeEncoderPose = new Pose(-3.4, -7.4, Math.toRadians(90));
 
         hardwareMap = map;
 
         pinpoint = hardwareMap.get(GoBildaPinpointDriver.class, "pinpoint");
         pinpoint.resetPosAndIMU();
 
-        // TODO: replace these with your encoder ports
-        forwardEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "leftRear"));
-        strafeEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "strafeEncoder"));
+        // TODO: replace these with your encoder ports Done
+        forwardEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "right_front"));
+        strafeEncoder = new Encoder(hardwareMap.get(DcMotorEx.class, "left_back"));
 
-        // TODO: reverse any encoders necessary
+        // TODO: reverse any encoders necessary Done
         forwardEncoder.setDirection(Encoder.REVERSE);
         strafeEncoder.setDirection(Encoder.FORWARD);
 
