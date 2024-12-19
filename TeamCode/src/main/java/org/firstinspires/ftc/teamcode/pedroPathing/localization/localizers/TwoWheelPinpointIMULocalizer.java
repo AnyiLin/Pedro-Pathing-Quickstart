@@ -308,7 +308,7 @@ public class TwoWheelPinpointIMULocalizer extends Localizer {
     /**
      * This resets the pinpoint.
      */
-    private void resetPinpoint() {
+    private void resetPinpoint() throws InterruptedException{
         pinpoint.resetPosAndIMU();
 
         try {
