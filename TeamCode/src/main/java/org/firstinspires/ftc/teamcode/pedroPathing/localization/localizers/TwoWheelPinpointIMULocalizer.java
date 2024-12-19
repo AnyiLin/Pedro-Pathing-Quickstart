@@ -103,6 +103,7 @@ public class TwoWheelPinpointIMULocalizer extends Localizer {
         deltaTimeNano = 1;
         displacementPose = new Pose();
         currentVelocity = new Pose();
+        previousHeading = startPose.getHeading();
         deltaRadians = 0;
     }
 
@@ -293,8 +294,28 @@ public class TwoWheelPinpointIMULocalizer extends Localizer {
      * This resets the IMU.
      */
 
-    public void resetIMU() {
+    @Override
+    public void resetIMU() throws InterruptedException {
+        pinpoint.recalibrateIMU();
+
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * This resets the pinpoint.
+     */
+    private void resetPinpoint() throws InterruptedException{
         pinpoint.resetPosAndIMU();
+
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 
